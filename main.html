@@ -12,28 +12,31 @@
 
     <p>Paragraph</p>
 
+    <!-- add div elements -->
+    <!-- add labels to inputs -->
+    No. Holes <input type="text" id="NumHoles"><br>
+    Bolt Hole Dia <input type="text" id="BoltHoleDia" value="0.846"> <input type="text" id="UpperTol" value="0.020"> <input type="text" id="LowerTol" value="0.020"><br>
+    True Position <input type="text" id="TruePosition"><br>
+    MMC <input type="text" id="MMC"><br>
+    Bolt circle Dia <input type="text" id="circleDia"><br>
+    Pilot Hole <input type="text" id="pilotHoleMax"> <input type="text" id="pilotHoleMin"><br>
+    <br>
 
-    No. Holes <input type="text"><br>
-    Bolt Hole Dia <input type="text"> <input type="text"> <input type="text"><br>
-    True Position <input type="text"><br>
-    MMC <input type="text"><br>
-    Bolt circle Dia <input type="text"><br>
-    Pilot Hole <input type="text"> <input type="text"><br>
 
-    
+    bolt hole<br>
     <table id="inputTable">
         <tr>
-            <td><input type="text"></td>
+            <td><input type="text" value="0.8360"></td>
             <td>none</td>
         </tr>
         <tr>
-            <td><input type="text"></td>
+            <td><input type="text" value="0.8360"></td>
             <td>none</td>
         </tr>
     </table>
 
     <!-- run script -->
-    <button onclick="calculate('inputTable', 0, 1)">Test</button>
+    <button onclick="doCalculation('inputTable', 0, 1)">Test</button>
 
 </body>
 
