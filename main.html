@@ -1,29 +1,40 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <link rel="stylesheet" href="style.css">
-        <script src="script.js"></script>
-    <head>
 
-    <body>
+<head>
+    <link rel="stylesheet" href="style.css">
+    <script src="script.js"></script>
+<head>
 
-        <h1>HTML First Program</h1>
+<body>
 
-        <p>HTML Hello World.</p>
+    <h1>Header 1</h1>
 
-        <table id="inputTable">
-            <tr>
-                <td><input type="text" id="valueTest"></td>
-                <td>none</td>
-            </tr>
-            <tr>
-                <td><input type="text" id="valueTest"></td>
-                <td>none</td>
-            </tr>
-        </table>
+    <p>Paragraph</p>
 
-        <!-- run script -->
-        <button onclick="calculate(0,1)">Test</button>
 
-    </body>
+    No. Holes <input type="text"><br>
+    Bolt Hole Dia <input type="text"> <input type="text"> <input type="text"><br>
+    True Position <input type="text"><br>
+    MMC <input type="text"><br>
+    Bolt circle Dia <input type="text"><br>
+    Pilot Hole <input type="text"> <input type="text"><br>
+
+    
+    <table id="inputTable">
+        <tr>
+            <td><input type="text"></td>
+            <td>none</td>
+        </tr>
+        <tr>
+            <td><input type="text"></td>
+            <td>none</td>
+        </tr>
+    </table>
+
+    <!-- run script -->
+    <button onclick="calculate('inputTable', 0, 1)">Test</button>
+
+</body>
+
 </html>

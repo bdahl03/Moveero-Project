@@ -1,6 +1,3 @@
-// something is off with the table
-
-
 
 // ==bolt hole==
 
@@ -21,13 +18,19 @@
 //     NOK
 // else:
 //   NOK
-function calculate(input_index, output_index) {
-    var table = document.getElementById("inputTable");
+
+function calculate(id_name, input_index, output_index) {
+    var table = document.getElementById(id_name);
     inputs = getInputsTable(input_index, table);
-    var length = inputs.length;
+    console.log(inputs);
+
+    testlist = [0,0]
+
+
+
 
     for (var i = 0, row; row = table.rows[i]; i++) {
-        row.cells[output_index].innerHTML = 0
+        row.cells[output_index].innerHTML = testlist[i]
     }
 }
 
@@ -38,18 +41,9 @@ function getInputsTable(input_index, table) {
 
     // loop though rows and cols of the table
     for (var i = 0, row; row = table.rows[i]; i++) {
-        // console.log(row);
-        for (var j = 0, col; col = row.cells[j]; j++) {
 
-            // console.log(col);
-            console.log(col);
-            // console.log(col.firstChild);
-            // console.log(col.firstChild.value);
-            var col_val = parseInt(col.childNodes[input_index].value);
-            console.log(col_val);
-
-            input_list.push(col_val);
-        }
+        col_val = parseInt(row.cells[input_index].firstChild.value)
+        input_list.push(col_val);
     }
 
     return input_list;
