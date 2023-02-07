@@ -6,7 +6,7 @@
     <script src="script.js"></script>
 <head>
 
-<body>
+<body onload="updateTables()">
 
     <h1>Header 1</h1>
 
@@ -16,7 +16,7 @@
     <div class="inputalign">
         <p class="inputalign">
             <label for="NumHoles" class="inputalign">No. Holes:&nbsp</label>
-            <input type="number" step="any" min="0" id="NumHoles" class="inputalign">
+            <input type="number" step="1" min="0" id="NumHoles" value="8" class="inputalign">
         </p>
 
         <p class="inputalign">
@@ -51,15 +51,15 @@
         </p>
     </div>
 
-
-    <table id="inputTable">
+    <!-- table is created in js -->
+    <table id="boltHoleTable">
         <caption>Bolt Hole</caption>
         <!-- header doesnt work with js -->
         <!-- <thead>
             <th>head 1</th>
             <th>head 2</th>
         </thead> -->
-        <tr>
+        <!-- <tr>
             <td><input type="number" step="any" min="0" value="0.8360"></td>
             <td>none</td>
         </tr>
@@ -70,12 +70,12 @@
         <tr>
             <td><input type="number" step="any" min="0" value="0.8360"></td>
             <td>none</td>
-        </tr>
+        </tr> -->
     </table>
 
     <!-- run script -->
     <button onclick="calculate()">Test</button>
-    <button onclick="updateTableSize()">Table</button>
+    <button onclick="updateTables()">Table</button>
 
 </body>
 

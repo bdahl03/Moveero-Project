@@ -1,36 +1,35 @@
 
-// ==bolt hole==
+function updateTables() {
+    const num_holes = parseInt(document.getElementById("NumHoles").value)
+    var bolt_hole_table = document.getElementById("boltHoleTable")
 
-// =IF(B22<=$G$7,IF(B22>=$H$7,"OK","NOK"),"NOK")
-// B22: hole (input); $G$7: max; $H$7: min;
+    updateTableSize(bolt_hole_table, num_holes, 3)
 
-// hole = input
-// BoltHoleDia = input
-// UpperTol = input
-// LowerTol = input
-// max = BoltHoleDia + UpperTol
-// min = BoltHoleDia - LowerTol
 
-// if hole <= max:
-//   if hole >= min:
-//     OK
-//   else:
-//     NOK
-// else:
-//   NOK
+    // writeOutputsTableRepeat(0, bolt_hole_table, input_obj)
+    for (var i = 0, row; row = bolt_hole_table.rows[i]; i++) {
+        row.cells[0].appendChild(createNumberInputObject())
+        row.cells[1].innerHTML = "0.0"
+        row.cells[2].innerHTML = "None"
+    }
+}
 
-function updateTableSize() {
-    var table = document.getElementById("inputTable")
+function updateTableSize(table, num_rows, num_cols) {
     removeAllTableRows(table)
+    for (var i = 0; i < num_rows; i++) {
+        row = table.insertRow()
+        for (var j = 0; j < num_cols; j++) {
+            cell = row.insertCell()
+        }
+    }
 }
 
 function removeAllTableRows(table) {
     var len = table.rows.length
-    console.log(len)
+    // console.log(len)
     for (var i = 0; i < len; i++) {
         table.deleteRow(0)
     }
-
 }
 
 function calculate() {
@@ -42,20 +41,39 @@ function calculate() {
     const max = bolt_hole_dia + upper_tol
 
     var input_index = 0
-    var output_index = 1
-    var table = document.getElementById("inputTable")
+    var tolerance_output_index = 1
+    var ok_output_index = 2
+    var table = document.getElementById("boltHoleTable")
     holes = getInputsTable(input_index, table)
-    console.log(holes)
-
-    doCheckOk(table, holes, min, max)
+    // console.log(holes)
+    doCheckTolerance(tolerance_output_index, table, holes, min, max)
+    doCheckOk(ok_output_index, table, holes, min, max)
 }
 
-function doCheckOk(table, holes, min, max) {
+
+//====Calculations====
+// =ABS(B22 - AVERAGE($G$7, $H$7)) / (($G$7 - $H$7) / 2)
+// abs(hole-avg(max,min)) / ((max-min) / 2)
+function doCheckTolerance(output_index, table, holes, min, max) {
+    var outputs = []
+    for (var i = 0; i < table.rows.length; i++) {
+        outputs.push(calculateTolerance(holes[i], min, max))
+    }
+    writeOutputsTable(output_index, table, outputs)
+}
+
+function calculateTolerance(hole, min, max) {
+    return Math.abs(hole - ((max + min) / 2)) / ((max - min) / 2)
+}
+
+// =IF(B22<=$G$7,IF(B22>=$H$7,"OK","NOK"),"NOK")
+// 
+function doCheckOk(output_index, table, holes, min, max) {
     var outputs = []
     for (var i = 0; i < table.rows.length; i++) {
         outputs.push(calculateOk(holes[i], min, max))
     }
-    writeOutputsTable(1, table, outputs)
+    writeOutputsTable(output_index, table, outputs)
 }
 
 function calculateOk(hole, min, max) {
@@ -87,4 +105,20 @@ function writeOutputsTable(output_index, table, outputs) {
     for (var i = 0, row; row = table.rows[i]; i++) {
         row.cells[output_index].innerHTML = outputs[i]
     }
+}
+
+function writeOutputsTableRepeat(output_index, table, output) {
+    for (var i = 0, row; row = table.rows[i]; i++) {
+        row.cells[output_index].innerHTML = output
+    }
+}
+
+function createNumberInputObject() {
+    // <input type="number" step="any" min="0" value="0.8360">
+    var input_obj = document.createElement("INPUT")
+    input_obj.setAttribute("type", "number")
+    input_obj.setAttribute("step", "any")
+    input_obj.setAttribute("min", "0")
+    input_obj.setAttribute("value", "0.8360")
+    return input_obj
 }
