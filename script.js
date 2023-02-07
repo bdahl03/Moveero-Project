@@ -19,23 +19,43 @@
 // else:
 //   NOK
 
-function doCalculation(id_name, input_index, output_index) {
-    var table = document.getElementById(id_name)
-    inputs = getInputsTable(input_index, table)
-    // console.log(inputs)
+function updateTableSize() {
+    var table = document.getElementById("inputTable")
+    removeAllTableRows(table)
+}
 
-    testlist = [0,0]
-
-    var bolt_hole_dia = parseFloat(document.getElementById("BoltHoleDia").value)
-    var upper_tol = parseFloat(document.getElementById("UpperTol").value)
-    var lower_tol = parseFloat(document.getElementById("LowerTol").value)
-    var min = bolt_hole_dia - lower_tol
-    var max = bolt_hole_dia + upper_tol
-
-
-    for (var i = 0, row; row = table.rows[i]; i++) {
-        row.cells[output_index].innerHTML = calculateOk(inputs[i], min, max)
+function removeAllTableRows(table) {
+    var len = table.rows.length
+    console.log(len)
+    for (var i = 0; i < len; i++) {
+        table.deleteRow(0)
     }
+
+}
+
+function calculate() {
+
+    const bolt_hole_dia = parseFloat(document.getElementById("BoltHoleDia").value)
+    const upper_tol = parseFloat(document.getElementById("UpperTol").value)
+    const lower_tol = parseFloat(document.getElementById("LowerTol").value)
+    const min = bolt_hole_dia - lower_tol
+    const max = bolt_hole_dia + upper_tol
+
+    var input_index = 0
+    var output_index = 1
+    var table = document.getElementById("inputTable")
+    holes = getInputsTable(input_index, table)
+    console.log(holes)
+
+    doCheckOk(table, holes, min, max)
+}
+
+function doCheckOk(table, holes, min, max) {
+    var outputs = []
+    for (var i = 0; i < table.rows.length; i++) {
+        outputs.push(calculateOk(holes[i], min, max))
+    }
+    writeOutputsTable(1, table, outputs)
 }
 
 function calculateOk(hole, min, max) {
@@ -48,17 +68,23 @@ function calculateOk(hole, min, max) {
 
 }
 
-function getInputsTable(input_index, table) {
+function getInputsTable(input_index, table, row_min = 0) {
     // input_index: the column for inputs
     // console.log(table)
     var input_list = []
 
     // loop though rows and cols of the table
-    for (var i = 0, row; row = table.rows[i]; i++) {
+    for (var i = row_min, row; row = table.rows[i]; i++) {
 
         col_val = parseFloat(row.cells[input_index].firstChild.value)
         input_list.push(col_val)
     }
 
     return input_list
+}
+
+function writeOutputsTable(output_index, table, outputs) {
+    for (var i = 0, row; row = table.rows[i]; i++) {
+        row.cells[output_index].innerHTML = outputs[i]
+    }
 }

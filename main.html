@@ -12,31 +12,70 @@
 
     <p>Paragraph</p>
 
-    <!-- add div elements -->
-    <!-- add labels to inputs -->
-    No. Holes <input type="text" id="NumHoles"><br>
-    Bolt Hole Dia <input type="text" id="BoltHoleDia" value="0.846"> <input type="text" id="UpperTol" value="0.020"> <input type="text" id="LowerTol" value="0.020"><br>
-    True Position <input type="text" id="TruePosition"><br>
-    MMC <input type="text" id="MMC"><br>
-    Bolt circle Dia <input type="text" id="circleDia"><br>
-    Pilot Hole <input type="text" id="pilotHoleMax"> <input type="text" id="pilotHoleMin"><br>
-    <br>
+    <!-- global inputs -->
+    <div class="inputalign">
+        <p class="inputalign">
+            <label for="NumHoles" class="inputalign">No. Holes:&nbsp</label>
+            <input type="number" step="any" min="0" id="NumHoles" class="inputalign">
+        </p>
+
+        <p class="inputalign">
+            <label for="BoltHoleDia" class="inputalign">Bolt Hole Diameter:&nbsp</label>
+            <input type="number" step="any" min="0" id="BoltHoleDia" value="0.846" class="inputalign">
+        </p>
+
+        <p class="inputalign">
+            <label class="inputalign">Tolerance:&nbsp</label>
+            <input type="number" step="any" min="0" id="UpperTol" placeholder="Upper Tolerance" value="0.020" class="inputalign">
+            <input type="number" step="any" min="0" id="LowerTol" placeholder="Lower Tolerance" value="0.020" class="inputalign">
+        </p>
+
+        <p class="inputalign">
+            <label for="TruePosition" class="inputalign">True Position:&nbsp</label>
+            <input type="number" step="any" min="0" id="TruePosition" class="inputalign">
+        </p>
+
+        <p class="inputalign">
+            <label class="inputalign">MMC:&nbsp</label>
+            <input type="number" step="any" min="0" id="MMC" class="inputalign">
+        </p>
+
+        <p class="inputalign">
+            <label for="circleDia" class="inputalign">Bolt circle Diameter:&nbsp</label>
+            <input type="number" step="any" min="0" id="circleDia" class="inputalign">
+        </p>
+
+        <p class="inputalign">
+            <label class="inputalign">Pilot Hole:&nbsp</label>
+            <input type="number" step="any" min="0" id="pilotHoleMax" placeholder="Pilot Hole Max" class="inputalign"> <input type="number" id="pilotHoleMin" placeholder="Pilot Hole Min" class="inputalign">
+        </p>
+    </div>
 
 
-    bolt hole<br>
     <table id="inputTable">
+        <caption>Bolt Hole</caption>
+        <!-- header doesnt work with js -->
+        <!-- <thead>
+            <th>head 1</th>
+            <th>head 2</th>
+        </thead> -->
         <tr>
-            <td><input type="text" value="0.8360"></td>
+            <td><input type="number" step="any" min="0" value="0.8360"></td>
             <td>none</td>
         </tr>
         <tr>
-            <td><input type="text" value="0.8360"></td>
+            <td><input type="number" step="any" min="0" value="0.8360"></td>
+            <td>none</td>
+        </tr>
+        <tr>
+            <td><input type="number" step="any" min="0" value="0.8360"></td>
             <td>none</td>
         </tr>
     </table>
 
     <!-- run script -->
-    <button onclick="doCalculation('inputTable', 0, 1)">Test</button>
+    <button onclick="calculate()">Test</button>
+    <button onclick="updateTableSize()">Table</button>
 
 </body>
 
