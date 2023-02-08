@@ -47,13 +47,15 @@
 
     <p class="inputalign">
         <label class="inputalign">Pilot Hole:&nbsp</label>
-        <input type="number" step="any" min="0" id="pilotHoleMax" placeholder="Pilot Hole Max" class="inputalign"> <input type="number" id="pilotHoleMin" placeholder="Pilot Hole Min" class="inputalign">
+        <input type="number" step="any" min="0" id="pilotHoleMax" placeholder="Pilot Hole Max" class="inputalign">
+        <input type="number" id="pilotHoleMin" placeholder="Pilot Hole Min" class="inputalign">
     </p>
 </div>
 
 <!-- tables are created in js -->
-<div>
-    <table id="boltHoleTable">
+<!-- fix id capitalization -->
+<!-- <div class="flex-container"> -->
+    <table id="BoltHoleTable">
         <caption>Bolt Hole</caption>
         <thead>
             <tr> 
@@ -66,8 +68,8 @@
         </tbody>
     </table>
 
-    <table id="boltCircleTable">
-        <caption>Bolt Hole</caption>
+    <table id="BoltCircleTable">
+        <caption>Bolt Circle</caption>
         <thead>
             <tr> 
                 <th colspan="1">Hole Number</th>
@@ -79,8 +81,8 @@
         </tbody>
     </table>
 
-    <table id="holeToPilotTable">
-        <caption>Bolt Hole</caption>
+    <table id="HoleToPilotTable">
+        <caption>Bolt to Pilot</caption>
         <thead>
             <tr> 
                 <th colspan="1">Hole Number</th>
@@ -92,8 +94,8 @@
         </tbody>
     </table>
 
-    <table id="holeToHoleTable">
-        <caption>Bolt Hole</caption>
+    <table id="HoleToHoleTable">
+        <caption>Bolt to Hole</caption>
         <thead>
             <tr> 
                 <th colspan="1">Hole Number</th>
@@ -105,7 +107,7 @@
         </tbody>
     </table>
 
-</div>
+<!-- </div> -->
 
 <!-- run script -->
 <button onclick="calculate()">Test</button>

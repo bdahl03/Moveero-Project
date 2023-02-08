@@ -3,7 +3,6 @@ table, th, td {
 }
 
 div {
-  padding: 1em;
   border:1px solid black;
 }
 
@@ -16,7 +15,15 @@ p.inputalign  {
 }
 label.inputalign  {
   display: table-cell;
+  text-align: center;
 }
 input.inputalign  {
   display: table-cell;
+}
+
+
+.flex-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
 }

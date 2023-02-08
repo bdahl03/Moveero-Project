@@ -2,11 +2,20 @@
 function updateTables() {
     const num_holes = parseInt(document.getElementById("NumHoles").value)
 
-    //====bolt hole table====
-    var bolt_hole_table = document.getElementById("boltHoleTable") // gets table
-    updateTableSize(bolt_hole_table, num_holes, 4)
+    updateBoltHoleTable(num_holes)
+    updateBoltCircleTable(num_holes)
+    updateHoleToPilotTable(num_holes)
+    updateHoleToHoleTable(num_holes)
+
+}
+
+function updateBoltHoleTable(num_holes) {
+    const num_cols = 4
+    var bolt_hole_table = document.getElementById("BoltHoleTable") // gets table
+    updateTableSize(bolt_hole_table, num_holes, num_cols)
     var table_rows = getHTMLTableRows(bolt_hole_table)
-    // writeOutputsTableRepeat(0, bolt_hole_table, input_obj)
+
+
     for (var i = 0, row; row = table_rows[i]; i++) {
         row.cells[0].innerHTML = i + 1
         row.cells[0].style.textAlign = "center"
@@ -17,8 +26,85 @@ function updateTables() {
 
         row.cells[3].innerHTML = "None"
     }
-    //====
-    
+}
+
+function updateBoltCircleTable(num_holes) {
+    num_holes = Math.floor(num_holes / 2) // divide by 2 rounded down
+    const num_cols = 4
+    var bolt_hole_table = document.getElementById("BoltCircleTable") // gets table
+    updateTableSize(bolt_hole_table, num_holes, num_cols)
+    var table_rows = getHTMLTableRows(bolt_hole_table)
+
+
+    for (var i = 0, row; row = table_rows[i]; i++) {
+        row.cells[0].innerHTML = (1 + i) + " to "+ (num_holes + 1 + i)
+        row.cells[0].style.textAlign = "center"
+
+        row.cells[1].appendChild(createNumberInputObject())
+
+        row.cells[2].innerHTML = "0.0"
+
+        row.cells[3].innerHTML = "None"
+    }
+}
+
+
+function updateBoltCircleTable(num_holes) {
+    num_holes = Math.floor(num_holes / 2) // divide by 2 rounded down
+    const num_cols = 4
+    var bolt_hole_table = document.getElementById("BoltCircleTable") // gets table
+    updateTableSize(bolt_hole_table, num_holes, num_cols)
+    var table_rows = getHTMLTableRows(bolt_hole_table)
+
+
+    for (var i = 0, row; row = table_rows[i]; i++) {
+        row.cells[0].innerHTML = (1 + i) + " to "+ (num_holes + 1 + i)
+        row.cells[0].style.textAlign = "center"
+
+        row.cells[1].appendChild(createNumberInputObject())
+
+        row.cells[2].innerHTML = "0.0"
+
+        row.cells[3].innerHTML = "None"
+    }
+}
+
+function updateHoleToPilotTable(num_holes) {
+    const num_cols = 4
+    var bolt_hole_table = document.getElementById("HoleToPilotTable") // gets table
+    updateTableSize(bolt_hole_table, num_holes, num_cols)
+    var table_rows = getHTMLTableRows(bolt_hole_table)
+
+
+    for (var i = 0, row; row = table_rows[i]; i++) {
+        row.cells[0].innerHTML = i + 1
+        row.cells[0].style.textAlign = "center"
+
+        row.cells[1].appendChild(createNumberInputObject())
+
+        row.cells[2].innerHTML = "0.0"
+
+        row.cells[3].innerHTML = "None"
+    }
+}
+
+function updateHoleToHoleTable(num_holes) {
+    const num_cols = 4
+    var bolt_hole_table = document.getElementById("HoleToHoleTable") // gets table
+    updateTableSize(bolt_hole_table, num_holes, num_cols)
+    var table_rows = getHTMLTableRows(bolt_hole_table)
+
+
+    for (var i = 0, row; row = table_rows[i]; i++) {
+        row.cells[0].innerHTML = (i + 1) + " to " + (((i + 1) % 8) + 1)
+        row.cells[0].style.textAlign = "center"
+
+        row.cells[1].appendChild(createNumberInputObject())
+
+        row.cells[2].innerHTML = "0.0"
+
+        row.cells[3].innerHTML = "None"
+    }
 }
 
 function updateTableSize(table, num_rows, num_cols) {
@@ -59,7 +145,7 @@ function calculate() {
     var input_index = 1
     var tolerance_output_index = 2
     var ok_output_index = 3
-    var table = document.getElementById("boltHoleTable")
+    var table = document.getElementById("BoltHoleTable")
     holes = getInputsTable(input_index, table)
     // console.log(holes)
     doCheckTolerance(tolerance_output_index, table, holes, min, max)
@@ -140,7 +226,7 @@ function createNumberInputObject() {
     input_obj.setAttribute("type", "number")
     input_obj.setAttribute("step", "any")
     input_obj.setAttribute("min", "0")
-    input_obj.setAttribute("value", "0.8360")
+    input_obj.setAttribute("placeholder", "Enter...")
     return input_obj
 }
 
