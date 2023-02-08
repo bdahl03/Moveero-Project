@@ -2,6 +2,11 @@ table, th, td {
   border:1px solid black;
 }
 
+div {
+  padding: 1em;
+  border:1px solid black;
+}
+
 /* align inputs */
 .inputalign  {
   display: table;

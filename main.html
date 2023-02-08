@@ -8,74 +8,108 @@
 
 <body onload="updateTables()">
 
-    <h1>Header 1</h1>
+<h1>Header 1</h1>
 
-    <p>Paragraph</p>
+<p>Paragraph</p>
 
-    <!-- global inputs -->
-    <div class="inputalign">
-        <p class="inputalign">
-            <label for="NumHoles" class="inputalign">No. Holes:&nbsp</label>
-            <input type="number" step="1" min="0" id="NumHoles" value="8" class="inputalign">
-        </p>
+<!-- global inputs -->
+<div class="inputalign">
+    <p class="inputalign">
+        <label for="NumHoles" class="inputalign">No. Holes:&nbsp</label>
+        <input type="number" step="1" min="0" id="NumHoles" value="8" class="inputalign">
+    </p>
 
-        <p class="inputalign">
-            <label for="BoltHoleDia" class="inputalign">Bolt Hole Diameter:&nbsp</label>
-            <input type="number" step="any" min="0" id="BoltHoleDia" value="0.846" class="inputalign">
-        </p>
+    <p class="inputalign">
+        <label for="BoltHoleDia" class="inputalign">Bolt Hole Diameter:&nbsp</label>
+        <input type="number" step="any" min="0" id="BoltHoleDia" value="0.846" class="inputalign">
+    </p>
 
-        <p class="inputalign">
-            <label class="inputalign">Tolerance:&nbsp</label>
-            <input type="number" step="any" min="0" id="UpperTol" placeholder="Upper Tolerance" value="0.020" class="inputalign">
-            <input type="number" step="any" min="0" id="LowerTol" placeholder="Lower Tolerance" value="0.020" class="inputalign">
-        </p>
+    <p class="inputalign">
+        <label class="inputalign">Tolerance:&nbsp</label>
+        <input type="number" step="any" min="0" id="UpperTol" placeholder="Upper Tolerance" value="0.020" class="inputalign">
+        <input type="number" step="any" min="0" id="LowerTol" placeholder="Lower Tolerance" value="0.020" class="inputalign">
+    </p>
 
-        <p class="inputalign">
-            <label for="TruePosition" class="inputalign">True Position:&nbsp</label>
-            <input type="number" step="any" min="0" id="TruePosition" class="inputalign">
-        </p>
+    <p class="inputalign">
+        <label for="TruePosition" class="inputalign">True Position:&nbsp</label>
+        <input type="number" step="any" min="0" id="TruePosition" class="inputalign">
+    </p>
 
-        <p class="inputalign">
-            <label class="inputalign">MMC:&nbsp</label>
-            <input type="number" step="any" min="0" id="MMC" class="inputalign">
-        </p>
+    <p class="inputalign">
+        <label class="inputalign">MMC:&nbsp</label>
+        <input type="number" step="any" min="0" id="MMC" class="inputalign">
+    </p>
 
-        <p class="inputalign">
-            <label for="circleDia" class="inputalign">Bolt circle Diameter:&nbsp</label>
-            <input type="number" step="any" min="0" id="circleDia" class="inputalign">
-        </p>
+    <p class="inputalign">
+        <label for="circleDia" class="inputalign">Bolt circle Diameter:&nbsp</label>
+        <input type="number" step="any" min="0" id="circleDia" class="inputalign">
+    </p>
 
-        <p class="inputalign">
-            <label class="inputalign">Pilot Hole:&nbsp</label>
-            <input type="number" step="any" min="0" id="pilotHoleMax" placeholder="Pilot Hole Max" class="inputalign"> <input type="number" id="pilotHoleMin" placeholder="Pilot Hole Min" class="inputalign">
-        </p>
-    </div>
+    <p class="inputalign">
+        <label class="inputalign">Pilot Hole:&nbsp</label>
+        <input type="number" step="any" min="0" id="pilotHoleMax" placeholder="Pilot Hole Max" class="inputalign"> <input type="number" id="pilotHoleMin" placeholder="Pilot Hole Min" class="inputalign">
+    </p>
+</div>
 
-    <!-- table is created in js -->
+<!-- tables are created in js -->
+<div>
     <table id="boltHoleTable">
         <caption>Bolt Hole</caption>
-        <!-- header doesnt work with js -->
-        <!-- <thead>
-            <th>head 1</th>
-            <th>head 2</th>
-        </thead> -->
-        <!-- <tr>
-            <td><input type="number" step="any" min="0" value="0.8360"></td>
-            <td>none</td>
-        </tr>
-        <tr>
-            <td><input type="number" step="any" min="0" value="0.8360"></td>
-            <td>none</td>
-        </tr>
-        <tr>
-            <td><input type="number" step="any" min="0" value="0.8360"></td>
-            <td>none</td>
-        </tr> -->
+        <thead>
+            <tr> 
+                <th colspan="1">Hole Number</th>
+                <!-- <th></th> -->
+            </tr> 
+        </thead>
+        <!-- row header doesn't work with js -->
+        <tbody>
+        </tbody>
     </table>
 
-    <!-- run script -->
-    <button onclick="calculate()">Test</button>
-    <button onclick="updateTables()">Table</button>
+    <table id="boltCircleTable">
+        <caption>Bolt Hole</caption>
+        <thead>
+            <tr> 
+                <th colspan="1">Hole Number</th>
+                <!-- <th></th> -->
+            </tr> 
+        </thead>
+        <!-- row header doesn't work with js -->
+        <tbody>
+        </tbody>
+    </table>
+
+    <table id="holeToPilotTable">
+        <caption>Bolt Hole</caption>
+        <thead>
+            <tr> 
+                <th colspan="1">Hole Number</th>
+                <!-- <th></th> -->
+            </tr> 
+        </thead>
+        <!-- row header doesn't work with js -->
+        <tbody>
+        </tbody>
+    </table>
+
+    <table id="holeToHoleTable">
+        <caption>Bolt Hole</caption>
+        <thead>
+            <tr> 
+                <th colspan="1">Hole Number</th>
+                <!-- <th></th> -->
+            </tr> 
+        </thead>
+        <!-- row header doesn't work with js -->
+        <tbody>
+        </tbody>
+    </table>
+
+</div>
+
+<!-- run script -->
+<button onclick="calculate()">Test</button>
+<button onclick="updateTables()">Table</button>
 
 </body>
 
