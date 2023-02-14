@@ -2,22 +2,27 @@ table, th, td {
   border:1px solid black;
 }
 
-div {
-  border:1px solid black;
+input {
+  width: 100px;
 }
+
+/* div {
+  border:1px solid black;
+} */
 
 /* align inputs */
 .inputalign  {
   display: table;
+  margin: 10px 0px;
 }
-p.inputalign  {
+.inputalign > p {
   display: table-row;
 }
-label.inputalign  {
+.inputalign > p > label {
   display: table-cell;
   text-align: center;
 }
-input.inputalign  {
+.inputalign > p > input {
   display: table-cell;
 }
 
@@ -25,5 +30,9 @@ input.inputalign  {
 .flex-container {
   display: flex;
   flex-wrap: wrap;
-  justify-content: space-around;
+  justify-content: flex-start;
+}
+
+.flex-container > div {
+  margin: 10px 10px 10px 10px;
 }

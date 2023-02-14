@@ -13,48 +13,66 @@
 
 <!-- global inputs -->
 <div class="inputalign">
-    <p class="inputalign">
-        <label for="NumHoles" class="inputalign">No. Holes:&nbsp</label>
-        <input type="number" step="1" min="0" id="NumHoles" value="8" class="inputalign">
+    <p>
+        <label for="NumHoles">No. Holes:&nbsp</label>
+        <input type="number" step="1" min="0" id="NumHoles" value="8">
     </p>
 
-    <p class="inputalign">
-        <label for="BoltHoleDia" class="inputalign">Bolt Hole Diameter:&nbsp</label>
-        <input type="number" step="any" min="0" id="BoltHoleDia" value="0.846" class="inputalign">
+    <p>
+        <label for="BoltHoleDia">Bolt Hole Diameter:&nbsp</label>
+        <input type="number" step="any" min="0" id="BoltHoleDia" value="0.846">
     </p>
 
-    <p class="inputalign">
-        <label class="inputalign">Tolerance:&nbsp</label>
-        <input type="number" step="any" min="0" id="UpperTol" placeholder="Upper Tolerance" value="0.020" class="inputalign">
-        <input type="number" step="any" min="0" id="LowerTol" placeholder="Lower Tolerance" value="0.020" class="inputalign">
+    <p>
+        <label>Tolerance:&nbsp</label>
+        <input type="number" step="any" min="0" id="UpperTol" placeholder="Upper Tolerance" value="0.020">
+        <input type="number" step="any" min="0" id="LowerTol" placeholder="Lower Tolerance" value="0.020">
     </p>
 
-    <p class="inputalign">
-        <label for="TruePosition" class="inputalign">True Position:&nbsp</label>
-        <input type="number" step="any" min="0" id="TruePosition" class="inputalign">
+    <p>
+        <label for="TruePosition">True Position:&nbsp</label>
+        <input type="number" step="any" min="0" id="TruePosition" value="0.020">
     </p>
 
-    <p class="inputalign">
-        <label class="inputalign">MMC:&nbsp</label>
-        <input type="number" step="any" min="0" id="MMC" class="inputalign">
+    <p>
+        <label for="MMC">MMC:&nbsp</label>
+        <select name="MMC" id="MMC">
+            <option value="YES">Yes</option>
+            <option value="NO">No</option>
+        </select>
     </p>
 
-    <p class="inputalign">
-        <label for="circleDia" class="inputalign">Bolt circle Diameter:&nbsp</label>
-        <input type="number" step="any" min="0" id="circleDia" class="inputalign">
+    <p>
+        <label for="BoltCircleDia">Bolt circle Diameter:&nbsp</label>
+        <input type="number" step="any" min="0" id="BoltCircleDia" value="10.827">
     </p>
 
-    <p class="inputalign">
-        <label class="inputalign">Pilot Hole:&nbsp</label>
-        <input type="number" step="any" min="0" id="pilotHoleMax" placeholder="Pilot Hole Max" class="inputalign">
-        <input type="number" id="pilotHoleMin" placeholder="Pilot Hole Min" class="inputalign">
+    <p>
+        <label>Pilot Hole:&nbsp</label>
+        <input type="number" step="any" min="0" id="pilotHoleMax" placeholder="Pilot Hole Max" value="8.721">
+        <input type="number" id="pilotHoleMin" placeholder="Pilot Hole Min" value="8.701">
     </p>
 </div>
 
+
+<!-- run script -->
+<button onclick="calculate()">Test</button>
+<button onclick="updateTables()">Table</button>
+
 <!-- tables are created in js -->
-<!-- fix id capitalization -->
+
+<!-- pilot hole table -->
+
+<div style="border:1px solid black; margin: 10px 10px;">
+<table id="PilotHoleTable" style="margin: 10px 10px 10px 10px;">
+    <caption>Pilot Hole</caption>
+    <!-- row header doesn't work with js -->
+    <tbody>
+    </tbody>
+</table>
+
 <div class="flex-container">
-    <table id="BoltHoleTable">
+    <div><table id="BoltHoleTable">
         <caption>Bolt Hole</caption>
         <thead>
             <tr> 
@@ -65,9 +83,9 @@
         <!-- row header doesn't work with js -->
         <tbody>
         </tbody>
-    </table>
+    </table></div>
 
-    <table id="BoltCircleTable">
+    <div><table id="BoltCircleTable">
         <caption>Bolt Circle</caption>
         <thead>
             <tr> 
@@ -78,9 +96,9 @@
         <!-- row header doesn't work with js -->
         <tbody>
         </tbody>
-    </table>
+    </table></div>
 
-    <table id="HoleToPilotTable">
+    <div><table id="HoleToPilotTable">
         <caption>Hole to Pilot</caption>
         <thead>
             <tr> 
@@ -91,9 +109,9 @@
         <!-- row header doesn't work with js -->
         <tbody>
         </tbody>
-    </table>
+    </table></div>
 
-    <table id="HoleToHoleTable">
+    <div><table id="HoleToHoleTable">
         <caption>Hole to Hole</caption>
         <thead>
             <tr> 
@@ -104,13 +122,9 @@
         <!-- row header doesn't work with js -->
         <tbody>
         </tbody>
-    </table>
+    </table></div>
 
-</div>
-
-<!-- run script -->
-<button onclick="calculate()">Test</button>
-<button onclick="updateTables()">Table</button>
+</div></div>
 
 <script src="script.js"></script>
 </body>
