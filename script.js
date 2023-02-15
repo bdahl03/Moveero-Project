@@ -73,8 +73,8 @@ class InputTable extends Table {
         return input_list
     }
 
-    calculateTolerance(){}
-    calculateOK(){}
+    // calculateTolerance(){}
+    // calculateOK(){}
 }
 
 // InputTable(HTMLTableTag, num_rows, num_cols, input_index, tolerance_output_index, ok_output_index)
@@ -86,82 +86,121 @@ const HoleToPilotTable = new InputTable('HoleToPilotTable', 1, 7, 1, 5, 6)
 const HoleToHoleTable  = new InputTable('HoleToHoleTable', 1, 7, 1, 5, 6)
 
 // set individual functions
+setTables()
 
-PilotHoleTable.calculateTolerance   = function(min, max) {
-    var pilot_hole = this.getInputsTable()[0]
-    // row = this.getHTMLTableRows()
+function setTables() {
 
-    var tol = Math.abs((pilot_hole - (max + min) / 2) / (max - min) / 2)
-    writeOutputsTable(this.tolerance_output_index, this, [tol])
-}
-
-PilotHoleTable.calculateOK          = function(min, max) {
-    var pilot_hole = this.getInputsTable()[0]
-
-    var isOK = null
-    if (pilot_hole <= max) {
-        if (pilot_hole >= min) {isOK = "OK"}
-        else {isOK = "NOK"}
+    PilotHoleTable.calculateTolerance   = function(min, max) {
+        var pilot_hole = this.getInputsTable()[0]
+        // row = this.getHTMLTableRows()
+    
+        var tol = Math.abs((pilot_hole - (max + min) / 2) / (max - min) / 2)
+        writeOutputsTable(this.tolerance_output_index, this, [tol])
     }
-    else {isOK = "NOK"}
-
-    writeOutputsTable(this.ok_output_index, this, [isOK])
-}
-// abs(hole-avg(max,min)) / ((max-min) / 2)
-BoltHoleTable.calculateTolerance    = function(min, max) {
-    console.log("BoltHoleTable calculateTolerance")
-    var holes = this.getInputsTable()
-    var outputs = []
-    var len = this.getHTMLTableRows().length
-
-    for (let i = 0; i < len; i++) {
-        // add image to table here
-        let tol = Math.abs(holes[i] - ((max + min) / 2)) / ((max - min) / 2)
-        outputs.push(tol)
-    }
-
-    writeOutputsTable(this.tolerance_output_index, this, outputs)
-}
-// if hole <= max: { if hole >= min: {return "OK"}} else: {return "NOK"}
-BoltHoleTable.calculateOK           = function(min, max) {
-    console.log("BoltHoleTable calculateOK")
-    var holes = this.getInputsTable()
-    var outputs = []
-
-    for (let i = 0; i < this.table.rows.length; i++) {
+    
+    PilotHoleTable.calculateOK          = function(min, max) {
+        var pilot_hole = this.getInputsTable()[0]
+    
         var isOK = null
-        if (holes[i] <= max) {
-            if (holes[i] >= min) {isOK = "OK"}
+        if (pilot_hole <= max) {
+            if (pilot_hole >= min) {isOK = "OK"}
             else {isOK = "NOK"}
         }
         else {isOK = "NOK"}
-        outputs.push(isOK)
+    
+        writeOutputsTable(this.ok_output_index, this, [isOK])
+    }
+
+
+    // abs(hole-avg(max,min)) / ((max-min) / 2)
+    BoltHoleTable.calculateTolerance    = function(min, max) {
+        var holes = this.getInputsTable()
+        var outputs = []
+        var len = this.getHTMLTableRows().length
+    
+        for (let i = 0; i < len; i++) {
+            // add image to table here
+            let tol = Math.abs(holes[i] - ((max + min) / 2)) / ((max - min) / 2)
+            outputs.push(tol)
+        }
+    
+        writeOutputsTable(this.tolerance_output_index, this, outputs)
+    }
+    // if hole <= max: { if hole >= min: {return "OK"}} else: {return "NOK"}
+    BoltHoleTable.calculateOK           = function(min, max) {
+        var holes = this.getInputsTable()
+        var outputs = []
+    
+        for (let i = 0; i < this.table.rows.length; i++) {
+            var isOK = null
+            if (holes[i] <= max) {
+                if (holes[i] >= min) {isOK = "OK"}
+                else {isOK = "NOK"}
+            }
+            else {isOK = "NOK"}
+            outputs.push(isOK)
+        }
+        
+        writeOutputsTable(this.ok_output_index, this, outputs)
+    }
+
+
+    BoltCircleTable.calculateTolerance  = function() {
+        console.log("BoltCircleTable calculateTolerance")
+    }
+    BoltCircleTable.calculateOK         = function() {
+        console.log("BoltCircleTable calculateOK")
+    }
+
+
+    HoleToPilotTable.calculateTolerance = function() {
+        console.log("HoleToPilotTable calculateTolerance")
+    }
+    HoleToPilotTable.calculateOK        = function() {
+        console.log("HoleToPilotTable calculateOK")
     }
     
-    writeOutputsTable(this.ok_output_index, this, outputs)
+
+    HoleToHoleTable.calculateTolerance  = function() {
+        console.log("HoleToHoleTable calculateTolerance")
+    }
+    HoleToHoleTable.calculateOK         = function() {
+        console.log("HoleToHoleTable calculateOK")
+    }
 }
 
-BoltCircleTable.calculateTolerance  = function() {
-    console.log("BoltCircleTable calculateTolerance")
-}
-BoltCircleTable.calculateOK         = function() {
-    console.log("BoltCircleTable calculateOK")
-}
+function calculate() {
 
-HoleToPilotTable.calculateTolerance = function() {
-    console.log("HoleToPilotTable calculateTolerance")
-}
-HoleToPilotTable.calculateOK        = function() {
-    console.log("HoleToPilotTable calculateOK")
-}
+    const bolt_hole_dia = parseFloat(document.getElementById("BoltHoleDia").value)
+    const upper_tol     = parseFloat(document.getElementById("UpperTol").value)
+    const lower_tol     = parseFloat(document.getElementById("LowerTol").value)
+    
+    const min = bolt_hole_dia - lower_tol
+    const max = bolt_hole_dia + upper_tol
 
-HoleToHoleTable.calculateTolerance  = function() {
-    console.log("HoleToHoleTable calculateTolerance")
-}
-HoleToHoleTable.calculateOK         = function() {
-    console.log("HoleToHoleTable calculateOK")
-}
+    const true_pos        = parseFloat(document.getElementById("TruePosition").value)
+    const MMC             = document.getElementById("MMC").value
+    const bolt_circle_dia = parseFloat(document.getElementById("BoltCircleDia").value)
+    const pilot_hole_min  = parseFloat(document.getElementById("pilotHoleMin").value)
+    const pilot_hole_max  = parseFloat(document.getElementById("pilotHoleMax").value)
 
+    // calculate table inputs
+    // tolerance is weird for PilotHoleTable
+    PilotHoleTable.calculateTolerance(pilot_hole_min, pilot_hole_max)
+    PilotHoleTable.calculateOK(pilot_hole_min, pilot_hole_max)
+
+    BoltHoleTable.calculateTolerance(min, max)
+    BoltHoleTable.calculateOK(min, max)
+
+    BoltCircleTable.calculateTolerance()
+    BoltCircleTable.calculateOK()
+
+    HoleToPilotTable.calculateTolerance()
+    HoleToPilotTable.calculateOK()
+
+    HoleToHoleTable.calculateTolerance()
+    HoleToHoleTable.calculateOK()
+}
 
 function updateTables() {
     const num_holes = parseInt(document.getElementById("NumHoles").value)
@@ -217,39 +256,6 @@ function updateHoleToHoleTable(num_holes) {
         row.cells[0].innerHTML = (i + 1) + " to " + (((i + 1) % num_holes) + 1)
         row.cells[0].style.textAlign = "center"
     }
-}
-
-function calculate() {
-
-    const bolt_hole_dia = parseFloat(document.getElementById("BoltHoleDia").value)
-    const upper_tol     = parseFloat(document.getElementById("UpperTol").value)
-    const lower_tol     = parseFloat(document.getElementById("LowerTol").value)
-    
-    const min = bolt_hole_dia - lower_tol
-    const max = bolt_hole_dia + upper_tol
-
-    const true_pos        = parseFloat(document.getElementById("TruePosition").value)
-    const MMC             = document.getElementById("MMC").value
-    const bolt_circle_dia = parseFloat(document.getElementById("BoltCircleDia").value)
-    const pilot_hole_min  = parseFloat(document.getElementById("pilotHoleMin").value)
-    const pilot_hole_max  = parseFloat(document.getElementById("pilotHoleMax").value)
-
-    // calculate table inputs
-    // tolerance is weird for PilotHoleTable
-    PilotHoleTable.calculateTolerance(pilot_hole_min, pilot_hole_max)
-    PilotHoleTable.calculateOK(pilot_hole_min, pilot_hole_max)
-
-    BoltHoleTable.calculateTolerance(min, max)
-    BoltHoleTable.calculateOK(min, max)
-
-    BoltCircleTable.calculateTolerance()
-    BoltCircleTable.calculateOK()
-
-    HoleToPilotTable.calculateTolerance()
-    HoleToPilotTable.calculateOK()
-
-    HoleToHoleTable.calculateTolerance()
-    HoleToHoleTable.calculateOK()
 }
 
 
