@@ -317,7 +317,7 @@ function setTables() {
 
         for (let i = 0; i < length; i++) {
             let nom = hole_to_hole_calculation - (bolt_holes[i] / 2) - (bolt_holes[(i + 1) % length] / 2)
-            outputs.push(roundDecimal(nom, 3))
+            outputs.push(roundDecimal(nom, 4))
         }
 
         writeOutputsTable(this.nom_index, this, outputs)
@@ -352,7 +352,7 @@ function setTables() {
         for (let i = 0, row; row = table_rows[i]; i++) {
             let tol = parseFloat(row.cells[this.tol_index].innerHTML)
             let dev = parseFloat(row.cells[this.dev_index].innerHTML)
-            let tolerance = tol/dev
+            let tolerance = dev/tol
             outputs.push(roundDecimal(tolerance, 3))
         }
         writeOutputsTable(this.tolerance_index, this, outputs)
