@@ -1,17 +1,23 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
+
 
 <head>
+    <title>Moveero Tool</title>
     <link rel="stylesheet" href="style.css">
 <head>
 
 <body onload="updateTables()">
 
-<h1>Header 1</h1>
+<!-- <h1>Header 1</h1>
 
-<p>Paragraph</p>
+<p>Paragraph</p> -->
+
+
+<img src="images/moveero_logo_white.png" alt="Moveero logo" width="200">
 
 <!-- global inputs -->
+<main>
 <div class="inputalign">
     <p>
         <label for="NumHoles">No. Holes:&nbsp</label>
@@ -57,14 +63,13 @@
 
 <!-- run script -->
 <button onclick="calculate()">Test</button>
-<button onclick="updateTables()">Table</button>
 <button onclick="fillInputs()">Demo</button>
 
 <!-- tables are created in js -->
 
 <!-- pilot hole table -->
 
-<div style="border:1px solid black; margin: 10px 10px;">
+<div id="TableContainer">
 <table id="PilotHoleTable" style="margin: 10px 10px 10px 10px;">
     <caption>Pilot Hole</caption>
     <!-- row header doesn't work with js -->
@@ -127,6 +132,8 @@
 
 </div></div>
 
+<button onclick="updateTables()">Reset</button>
+</main>
 <script src="script.js"></script>
 </body>
 

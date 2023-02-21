@@ -1,14 +1,56 @@
-table, th, td {
+/* colors
+Aqua #2d8992
+ - #005760
+ - #147079
+ - #2d8992
+ - #46A2AB
+ - #5FBBC4
+
+Black #1e1e1e
+
+Orange #e14f10
+
+Grey #cbcbcc
+*/
+body {
+  background-color: #46A2AB;
+}
+
+main {
+  background-color: #5FBBC4;
+  box-shadow: 2px 2px 5px 3px;
+  margin: auto;
+  padding: 5px 5px 5px 5px;
+  max-width: 15in;
+  /* align-self: center; */
+}
+
+/* table, th, td {
   border:1px solid black;
+} */
+
+table {
+  border: 1px solid black;
+  border-collapse: collapse;
+  background-color: #46A2AB;
+}
+
+th {
+  text-align: center;
+}
+tr {min-width: 1in;}
+tr:nth-child(even) {
+  background-color: #147079;
 }
 
 input {
   width: 100px;
 }
 
-/* div {
-  border:1px solid black;
-} */
+div {
+  /* border:1px solid black; */
+  margin: 1px;
+}
 
 /* align inputs */
 .inputalign  {
@@ -30,9 +72,14 @@ input {
 .flex-container {
   display: flex;
   flex-wrap: wrap;
-  justify-content: flex-start;
+  justify-content:space-between;
 }
 
-.flex-container > div {
-  margin: 10px 10px 10px 10px;
+/* .flex-container > div {
+  margin: auto;
+} */
+
+#TableContainer {
+  border: 1px dotted #147079;
+  margin: 10px 10px;
 }

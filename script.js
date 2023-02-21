@@ -260,8 +260,10 @@ function setTables() {
             }
         }
         else {
-            let tol = true_pos / 2
-            outputs.push(tol)
+            for (let i = 0; i < this.table.rows.length; i++) {
+                let tol = true_pos / 2
+                outputs.push(tol)
+            }
         }
 
         this.writeOutputsTable(this.tol_index, outputs)
