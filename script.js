@@ -1,4 +1,6 @@
 
+
+// need to add a list as a copy of data to print to the page instead of reading directly from the page
 class Table {
     constructor(HTMLTableTag, num_rows, num_cols) {
         this.table = document.getElementById(HTMLTableTag)
@@ -29,6 +31,12 @@ class Table {
         var table_body = this.table.getElementsByTagName('tbody')[0]
         var table_rows = table_body.getElementsByTagName('tr')
         return table_rows
+    }
+    writeOutputsTable(output_index, outputs) {
+        var table_rows = this.getHTMLTableRows()
+        for (let i = 0, row; row = table_rows[i]; i++) {
+            row.cells[output_index].innerHTML = outputs[i]
+        }
     }
 }
 
@@ -85,8 +93,6 @@ class InputTable extends Table {
     
         return list
     }
-    // calculateTolerance(){}
-    // calculateOK(){}
 }
 
 // InputTable(HTMLTableTag, num_rows, num_cols, input_index, tolerance_index, ok_index)
@@ -102,13 +108,14 @@ setTables()
 
 // fillInputs()
 
+// may be a better way
 function setTables() {
     PilotHoleTable.calculateTolerance   = function(min, max) {
         var pilot_hole = this.getInputsTable()[0]
         // row = this.getHTMLTableRows()
     
         var tol = Math.abs((pilot_hole - (max + min) / 2) / (max - min) / 2)
-        writeOutputsTable(this.tolerance_index, this, [tol])
+        this.writeOutputsTable(this.tolerance_index, [tol])
     }
     PilotHoleTable.calculateOK          = function(min, max) {
         var pilot_hole = this.getInputsTable()[0]
@@ -120,7 +127,7 @@ function setTables() {
         }
         else {isOK = "NOK"}
     
-        writeOutputsTable(this.ok_index, this, [isOK])
+        this.writeOutputsTable(this.ok_index, [isOK])
     }
 
 
@@ -136,7 +143,7 @@ function setTables() {
             outputs.push(tol)
         }
     
-        writeOutputsTable(this.tolerance_index, this, outputs)
+        this.writeOutputsTable(this.tolerance_index, outputs)
     }
     // if hole <= max: { if hole >= min: {return "OK"}} else: {return "NOK"}
     BoltHoleTable.calculateOK           = function(min, max) {
@@ -153,7 +160,7 @@ function setTables() {
             outputs.push(isOK)
         }
         
-        writeOutputsTable(this.ok_index, this, outputs)
+        this.writeOutputsTable(this.ok_index, outputs)
     }
 
 
@@ -168,7 +175,7 @@ function setTables() {
             outputs.push(roundDecimal(nom, 3))
         }
 
-        writeOutputsTable(this.nom_index, this, outputs)
+        this.writeOutputsTable(this.nom_index, outputs)
     }
     BoltCircleTable.calculateTol = function(bolt_circle_dia, hole_to_pilot_tol_rows) {
         var outputs = []
@@ -178,7 +185,7 @@ function setTables() {
             outputs.push(roundDecimal(tol, 3))
         }
 
-        writeOutputsTable(this.tol_index, this, outputs)
+        this.writeOutputsTable(this.tol_index, outputs)
     }
     BoltCircleTable.calculateDev = function(bolt_holes) {
         var outputs = []
@@ -189,7 +196,7 @@ function setTables() {
             outputs.push(roundDecimal(dev, 3))
         }
 
-        writeOutputsTable(this.dev_index, this, outputs)
+        this.writeOutputsTable(this.dev_index, outputs)
     }
     BoltCircleTable.calculateTolerance  = function(bolt_circle_dia) {
         var outputs = []
@@ -201,7 +208,7 @@ function setTables() {
         outputs.push(roundDecimal(tolerance, 3))
     }
 
-        writeOutputsTable(this.tolerance_index, this, outputs)
+    this.writeOutputsTable(this.tolerance_index, outputs)
     }
     BoltCircleTable.calculateOK         = function() {
         var outputs = []
@@ -225,7 +232,7 @@ function setTables() {
             outputs.push(isOK)
         }
 
-        writeOutputsTable(this.ok_index, this, outputs)
+        this.writeOutputsTable(this.ok_index, outputs)
     }
 
 
@@ -241,7 +248,7 @@ function setTables() {
             outputs.push(roundDecimal(nom, 3))
         }
 
-        writeOutputsTable(this.nom_index, this, outputs)
+        this.writeOutputsTable(this.nom_index, outputs)
     }
     HoleToPilotTable.calculateTol = function(MMC, true_pos, min, bolt_holes) {
         var outputs = []
@@ -257,7 +264,7 @@ function setTables() {
             outputs.push(tol)
         }
 
-        writeOutputsTable(this.tol_index, this, outputs)
+        this.writeOutputsTable(this.tol_index, outputs)
     }
     HoleToPilotTable.calculateDev = function() {
         var outputs = []
@@ -270,7 +277,7 @@ function setTables() {
             outputs.push(roundDecimal(dev, 3))
         }
 
-        writeOutputsTable(this.dev_index, this, outputs)
+        this.writeOutputsTable(this.dev_index, outputs)
     }
     HoleToPilotTable.calculateTolerance = function() {
         var outputs = []
@@ -284,7 +291,7 @@ function setTables() {
             outputs.push(roundDecimal(tolerance, 3))
         }
 
-        writeOutputsTable(this.tolerance_index, this, outputs)
+        this.writeOutputsTable(this.tolerance_index, outputs)
     }
     HoleToPilotTable.calculateOK        = function() {
         var outputs = []
@@ -303,7 +310,7 @@ function setTables() {
             outputs.push(isOK)
         }
 
-        writeOutputsTable(this.ok_index, this, outputs)
+        this.writeOutputsTable(this.ok_index, outputs)
     }
     
 
@@ -320,7 +327,7 @@ function setTables() {
             outputs.push(roundDecimal(nom, 4))
         }
 
-        writeOutputsTable(this.nom_index, this, outputs)
+        this.writeOutputsTable(this.nom_index, outputs)
     }
     HoleToHoleTable.calculateTol  = function(hole_to_pilot_tol_rows) {
         var outputs = []
@@ -331,7 +338,7 @@ function setTables() {
             outputs.push(roundDecimal(tol, 3))
         }
 
-        writeOutputsTable(this.tol_index, this, outputs)
+        this.writeOutputsTable(this.tol_index, outputs)
     }
     HoleToHoleTable.calculateDev  = function() {
         var outputs = []
@@ -342,7 +349,7 @@ function setTables() {
             let hole = parseFloat(row.cells[this.input_index].firstChild.value)
             let dev = Math.abs(hole - nom)
             outputs.push(roundDecimal(dev, 3))
-            writeOutputsTable(this.dev_index, this, outputs)
+            this.writeOutputsTable(this.dev_index, outputs)
         }
     }
     HoleToHoleTable.calculateTolerance  = function() {
@@ -355,7 +362,7 @@ function setTables() {
             let tolerance = dev/tol
             outputs.push(roundDecimal(tolerance, 3))
         }
-        writeOutputsTable(this.tolerance_index, this, outputs)
+        this.writeOutputsTable(this.tolerance_index, outputs)
     }
     HoleToHoleTable.calculateOK         = function() {
         var outputs = []
@@ -375,7 +382,7 @@ function setTables() {
 
             outputs.push(isOK)
         }
-        writeOutputsTable(this.ok_index, this, outputs)
+        this.writeOutputsTable(this.ok_index, outputs)
 
     }
 }
@@ -491,12 +498,12 @@ function calculateBoltHoleTable() {
 }
 
 // could move to the table class
-function writeOutputsTable(output_index, table, outputs) {
-    table_rows = table.getHTMLTableRows()
-    for (let i = 0, row; row = table_rows[i]; i++) {
-        row.cells[output_index].innerHTML = outputs[i]
-    }
-}
+// function writeOutputsTable(output_index, table, outputs) {
+//     table_rows = table.getHTMLTableRows()
+//     for (let i = 0, row; row = table_rows[i]; i++) {
+//         row.cells[output_index].innerHTML = outputs[i]
+//     }
+// }
 
 function createNumberInputObject() {
     // <input type="number" step="any" min="0" value="0.8360">
@@ -560,7 +567,7 @@ function fillInputs() {
 
     for (let i = 0, input; input = all_inputs[i]; i++) {
         input.value = demo_list[i]
-        console.log(input.value)
+        // console.log(input.value)
     }
 }
 
