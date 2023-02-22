@@ -2,26 +2,28 @@
 Aqua #2d8992
  - #005760
  - #147079
- - #2d8992
+ - #2D8992
  - #46A2AB
  - #5FBBC4
 
-Black #1e1e1e
+Black #1E1E1E
 
-Orange #e14f10
+Orange #E14F10
 
-Grey #cbcbcc
+Grey #CBCBCC
 */
 body {
   background-color: #46A2AB;
+  font-family: 'Times New Roman', Times, serif;
 }
 
 main {
   background-color: #5FBBC4;
-  box-shadow: 2px 2px 5px 3px;
+  box-shadow: 2px 2px 5px 3px #1E1E1E;
   margin: auto;
   padding: 5px 5px 5px 5px;
   max-width: 15in;
+  min-width: 4in;
   /* align-self: center; */
 }
 
@@ -33,24 +35,33 @@ table {
   border: 1px solid black;
   border-collapse: collapse;
   background-color: #46A2AB;
-}
-
-th {
   text-align: center;
 }
-tr {min-width: 1in;}
+
+table > text {
+  margin-left: 1px;
+}
+
+/* tr {
+  min-width: 1in;
+} */
+
 tr:nth-child(even) {
   background-color: #147079;
 }
 
+/* th {
+  text-align: center;
+} */
+
 input {
-  width: 100px;
+  width: 0.8in;
 }
 
-div {
-  /* border:1px solid black; */
+/* div {
+  border:1px solid black;
   margin: 1px;
-}
+} */
 
 /* align inputs */
 .inputalign  {
