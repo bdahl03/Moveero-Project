@@ -79,6 +79,40 @@ class Table {
         var table_rows = table_body.getElementsByTagName('tr')
         return table_rows
     }
+
+    HideColumns(indexes) {
+        var table_rows = this.getHTMLTableRows()
+        for (let i = 0, index; index = indexes[i]; i++) {
+            for (let i = 0, row; row = table_rows[i]; i++) {
+                let x = row.childNodes[index]
+                x.style.display = "none";
+            }
+        }
+    }
+
+    ShowColumns(indexes) {
+        var table_rows = this.getHTMLTableRows()
+        for (let i = 0, index; index = indexes[i]; i++) {
+            for (let i = 0, row; row = table_rows[i]; i++) {
+                let x = row.childNodes[index]
+                x.style.display = "";
+            }
+        }
+    }
+
+    toggleHideColumns(indexes) {
+        var table_rows = this.getHTMLTableRows()
+        for (let i = 0, index; index = indexes[i]; i++) {
+            for (let i = 0, row; row = table_rows[i]; i++) {
+                let x = row.childNodes[index]
+                if (x.style.display == "none") {
+                  x.style.display = "";
+                } else {
+                  x.style.display = "none";
+                }
+            }
+        }
+    }
     // writeOutputsTable(output_index, outputs) {
     //     var table_rows = this.getHTMLTableRows()
     //     for (let i = 0, row; row = table_rows[i]; i++) {
@@ -151,6 +185,7 @@ const BoltCircleTable  = new InputTable('BoltCircleTable', 1, 7, 1, 5, 6)
 const HoleToPilotTable = new InputTable('HoleToPilotTable', 1, 7, 1, 5, 6)
 const HoleToHoleTable  = new InputTable('HoleToHoleTable', 1, 7, 1, 5, 6)
 
+var show_additional_info = false
 // set individual functions
 setTables()
 
@@ -516,11 +551,21 @@ function calculate() {
     HoleToHoleTable.calculateTolerance()
     HoleToHoleTable.calculateOK()
 
+    // write to table
     PilotHoleTable.internalToHTMLTable()
     BoltHoleTable.internalToHTMLTable()
     BoltCircleTable.internalToHTMLTable()
     HoleToPilotTable.internalToHTMLTable()
     HoleToHoleTable.internalToHTMLTable()
+
+    // show columns
+    PilotHoleTable.ShowColumns  ([PilotHoleTable.ok_index,   PilotHoleTable.tolerance_index])
+    BoltHoleTable.ShowColumns   ([BoltHoleTable.ok_index,    BoltHoleTable.tolerance_index])
+    BoltCircleTable.ShowColumns ([BoltCircleTable.ok_index,  BoltCircleTable.tolerance_index])
+    HoleToPilotTable.ShowColumns([HoleToPilotTable.ok_index, HoleToPilotTable.tolerance_index])
+    HoleToHoleTable.ShowColumns ([HoleToHoleTable.ok_index,  HoleToHoleTable.tolerance_index])
+
+    colorAllHTMLOk()
 }
 
 function updateTables() {
@@ -643,4 +688,64 @@ function fillInputs() {
 
 function roundDecimal(number, digits) {
     return Math.round((number + Number.EPSILON) * (10 ** digits)) / (10 ** digits)
+}
+
+function toggleAdditionalInfo() {
+
+}
+
+function showTables() {
+    toggleHidables("HidableTables")
+    updateTables()
+    
+    PilotHoleTable.HideColumns  ([PilotHoleTable.ok_index,   PilotHoleTable.tolerance_index])
+    BoltHoleTable.HideColumns   ([BoltHoleTable.ok_index,    BoltHoleTable.tolerance_index])
+    BoltCircleTable.HideColumns ([BoltCircleTable.nom_index, BoltCircleTable.tol_index, BoltCircleTable.dev_index, BoltCircleTable.ok_index,  BoltCircleTable.tolerance_index])
+    HoleToPilotTable.HideColumns([BoltCircleTable.nom_index, BoltCircleTable.tol_index, BoltCircleTable.dev_index, HoleToPilotTable.ok_index, HoleToPilotTable.tolerance_index])
+    HoleToHoleTable.HideColumns ([BoltCircleTable.nom_index, BoltCircleTable.tol_index, BoltCircleTable.dev_index, HoleToHoleTable.ok_index,  HoleToHoleTable.tolerance_index])
+}
+
+function toggleHidables(className) {
+    var hidables = document.getElementsByClassName(className)
+    console.log(hidables)
+    for (var i = 0, hidable; hidable = hidables[i]; i++) {
+        if (hidable.style.display == "none") {
+            hidable.style.display = ""
+        } else {
+            hidable.style.display = "none"
+        }
+    }
+}
+
+function colorHTMLOk(HTML_Ok) {
+    if (HTML_Ok.innerHTML == "OK")       {HTML_Ok.style.backgroundColor='#00FF00'}
+    else if (HTML_Ok.innerHTML == "NOK") {HTML_Ok.style.backgroundColor='#FF0000'}
+}
+
+function colorAllHTMLOk() {
+    var table_rows = PilotHoleTable.getHTMLTableRows()
+    for (let i = 0, row; row = table_rows[i]; i++) {
+        colorHTMLOk(row.cells[PilotHoleTable.ok_index])
+    }
+
+
+    var table_rows = BoltHoleTable.getHTMLTableRows()
+    for (let i = 0, row; row = table_rows[i]; i++) {
+        colorHTMLOk(row.cells[BoltHoleTable.ok_index])
+    }
+
+    var table_rows = BoltCircleTable.getHTMLTableRows()
+    for (let i = 0, row; row = table_rows[i]; i++) {
+        colorHTMLOk(row.cells[BoltCircleTable.ok_index])
+    }
+
+    var table_rows = HoleToPilotTable.getHTMLTableRows()
+    for (let i = 0, row; row = table_rows[i]; i++) {
+        colorHTMLOk(row.cells[HoleToPilotTable.ok_index])
+    }
+
+    var table_rows = HoleToHoleTable.getHTMLTableRows()
+    for (let i = 0, row; row = table_rows[i]; i++) {
+        colorHTMLOk(row.cells[HoleToHoleTable.ok_index])
+    }
 }

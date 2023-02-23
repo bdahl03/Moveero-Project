@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="style.css">
 <head>
 
-<body onload="updateTables()">
+<body>
 
 <!-- <h1>Header 1</h1>
 
@@ -21,23 +21,23 @@
 <div class="inputalign">
     <p>
         <label for="NumHoles">No. Holes:&nbsp</label>
-        <input type="number" step="1" min="0" id="NumHoles" value="8">
+        <input type="number" step="1" min="0" id="NumHoles">
     </p>
 
     <p>
         <label for="BoltHoleDia">Bolt Hole Diameter:&nbsp</label>
-        <input type="number" step="any" min="0" id="BoltHoleDia" value="0.846">
+        <input type="number" step="any" min="0" id="BoltHoleDia">
     </p>
 
     <p>
         <label>Tolerance:&nbsp</label>
-        <input type="number" step="any" min="0" id="UpperTol" placeholder="Upper Tolerance" value="0.020">
-        <input type="number" step="any" min="0" id="LowerTol" placeholder="Lower Tolerance" value="0.020">
+        <input type="number" step="any" min="0" id="UpperTol" placeholder="Upper Tolerance">
+        <input type="number" step="any" min="0" id="LowerTol" placeholder="Lower Tolerance">
     </p>
 
     <p>
         <label for="TruePosition">True Position:&nbsp</label>
-        <input type="number" step="any" min="0" id="TruePosition" value="0.020">
+        <input type="number" step="any" min="0" id="TruePosition">
     </p>
 
     <p>
@@ -50,20 +50,21 @@
 
     <p>
         <label for="BoltCircleDia">Bolt circle Diameter:&nbsp</label>
-        <input type="number" step="any" min="0" id="BoltCircleDia" value="10.827">
+        <input type="number" step="any" min="0" id="BoltCircleDia">
     </p>
 
     <p>
         <label>Pilot Hole:&nbsp</label>
-        <input type="number" step="any" min="0" id="pilotHoleMax" placeholder="Pilot Hole Max" value="8.721">
-        <input type="number" id="pilotHoleMin" placeholder="Pilot Hole Min" value="8.701">
+        <input type="number" step="any" min="0" id="pilotHoleMax" placeholder="Pilot Hole Max">
+        <input type="number" id="pilotHoleMin" placeholder="Pilot Hole Min">
     </p>
 </div>
 
+<button class="HidableTables" onclick="showTables()">Start</button>
 
+<div class="HidableTables" style="display: none;">
 <!-- run script -->
 <button onclick="calculate()">Test</button>
-<button onclick="fillInputs()">Demo</button>
 
 <!-- tables are created in js -->
 
@@ -81,10 +82,10 @@
     <div><table id="BoltHoleTable">
         <caption>Bolt Hole</caption>
         <thead>
-            <tr> 
-                <th colspan="1">Hole Number</th>
-                <!-- <th></th> -->
-            </tr> 
+            <tr>
+                <th>Hole Number</th>
+                <th></th>
+            </tr>
         </thead>
         <tbody>
         </tbody>
@@ -93,10 +94,13 @@
     <div><table id="BoltCircleTable">
         <caption>Bolt Circle</caption>
         <thead>
-            <tr> 
-                <th colspan="1">Hole Number</th>
-                <!-- <th></th> -->
-            </tr> 
+            <tr>
+                <th>Hole Number</th>
+                <th></th>
+                <!-- <th style="display: none;">Nom</th>
+                <th style="display: none;">Tol</th>
+                <th style="display: none;">Dev</th> -->
+            </tr>
         </thead>
         <tbody>
         </tbody>
@@ -105,10 +109,13 @@
     <div><table id="HoleToPilotTable">
         <caption>Hole to Pilot</caption>
         <thead>
-            <tr> 
-                <th colspan="1">Hole Number</th>
-                <!-- <th></th> -->
-            </tr> 
+            <tr>
+                <th>Hole Number</th>
+                <th></th>
+                <!-- <th style="display: none;">Nom</th>
+                <th style="display: none;">Tol</th>
+                <th style="display: none;">Dev</th> -->
+            </tr>
         </thead>
         <tbody>
         </tbody>
@@ -117,10 +124,13 @@
     <div><table id="HoleToHoleTable">
         <caption>Hole to Hole</caption>
         <thead>
-            <tr> 
-                <th colspan="1">Hole Number</th>
-                <!-- <th></th> -->
-            </tr> 
+            <tr>
+                <th>Hole Number</th>
+                <th></th>
+                <!-- <th style="display: none;">Nom</th>
+                <th style="display: none;">Tol</th>
+                <th style="display: none;">Dev</th> -->
+            </tr>
         </thead>
         <tbody>
         </tbody>
@@ -129,8 +139,11 @@
 </div></div>
 
 <button onclick="updateTables()">Reset</button>
+</div>
+
+<button onclick="fillInputs()">Demo</button>
 </main>
+
 <script src="script.js"></script>
 </body>
-
 </html>

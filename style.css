@@ -1,5 +1,5 @@
 /* colors
-Aqua #2d8992
+Aqua #2D8992
  - #005760
  - #147079
  - #2D8992
@@ -12,8 +12,9 @@ Orange #E14F10
 
 Grey #CBCBCC
 */
+
 body {
-  background-color: #46A2AB;
+  background-color: #005760;
   font-family: 'Times New Roman', Times, serif;
 }
 
@@ -27,43 +28,12 @@ main {
   /* align-self: center; */
 }
 
-/* table, th, td {
-  border:1px solid black;
-} */
 
-table {
-  border: 1px solid black;
-  border-collapse: collapse;
-  background-color: #46A2AB;
-  text-align: center;
-}
-
-table > text {
-  margin-left: 1px;
-}
-
-/* tr {
-  min-width: 1in;
-} */
-
-tr:nth-child(even) {
-  background-color: #147079;
-}
-
-/* th {
-  text-align: center;
-} */
-
+/* ===inputs=== */
 input {
-  width: 0.8in;
+  width: 1.2in;
 }
 
-/* div {
-  border:1px solid black;
-  margin: 1px;
-} */
-
-/* align inputs */
 .inputalign  {
   display: table;
   margin: 10px 0px;
@@ -86,11 +56,40 @@ input {
   justify-content:space-between;
 }
 
-/* .flex-container > div {
-  margin: auto;
-} */
-
 #TableContainer {
   border: 1px dotted #147079;
   margin: 10px 10px;
+}
+
+/* ===table=== */
+table {
+  border: 1px solid #1E1E1E;
+  border-collapse: collapse;
+  background-color: #46A2AB;
+  text-align: center;
+  padding: 1px 1px 1px 1px;
+}
+
+table > input {
+  width: 0.8in;
+}
+
+thead {
+  border:1px solid #1E1E1E;
+}
+
+tr:nth-child(even) {
+  background-color: #147079;
+}
+
+td {
+  border-left: 1px solid #1E1E1E;
+}
+
+#isOK {
+  background-color: green;
+}
+
+#isNOK {
+  background-color: red;
 }
