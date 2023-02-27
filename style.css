@@ -98,7 +98,7 @@ td > input {
 }
 
 .pie-chart {
-  background: conic-gradient(Grey 50%, White 50% 100%);
+  background: conic-gradient(Grey 50%, White 50% 100%); /* only changes default view */
   border-radius: 50%;
   width: 20px;
   height: 20px;

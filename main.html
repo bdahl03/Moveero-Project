@@ -22,7 +22,7 @@
 <div class="inputalign">
     <p>
         <label for="NumHoles">No. Holes:&nbsp</label>
-        <input type="number" step="1" min="0" id="NumHoles" required>
+        <input type="number" step="1" min="0" id="NumHoles" class="DisableableInput" required>
     </p>
 
     <p>
@@ -61,24 +61,33 @@
     </p>
 </div>
 
-<button type="submit" class="HidableTables" onclick="showTables()">Start</button>
+<button type="submit" id="StartButton" onclick="showTables()">Start</button>
 
 </form>
+
+
+
 <div class="HidableTables" style="display: none;">
+
+
 <!-- run script -->
 <button onclick="calculate()">Test</button>
-<button>Show More</button>
+<button id="toggleAdditionalInfoButton" onclick="toggleAdditionalInfo()" disabled>Show More</button>
 <!-- tables are created in js -->
 
-<!-- pilot hole table -->
+
 
 <div id="TableContainer">
+
+
+
 <table id="PilotHoleTable" style="margin: 10px 10px 10px 10px;">
     <caption>Pilot Hole</caption>
     <!-- row header doesn't work with js -->
     <tbody>
     </tbody>
 </table>
+
 
 <div class="flex-container">
     <div><table id="BoltHoleTable">
@@ -93,20 +102,22 @@
         </tbody>
     </table></div>
 
+
     <div><table id="BoltCircleTable">
         <caption>Bolt Circle</caption>
         <thead>
             <tr>
                 <th>Hole Number</th>
                 <th></th>
-                <!-- <th style="display: none;">Nom</th>
-                <th style="display: none;">Tol</th>
-                <th style="display: none;">Dev</th> -->
+                <th class="HidableInfo" style="display: none;">Nom</th>
+                <th class="HidableInfo" style="display: none;">Tol</th>
+                <th class="HidableInfo" style="display: none;">Dev</th>
             </tr>
         </thead>
         <tbody>
         </tbody>
     </table></div>
+
 
     <div><table id="HoleToPilotTable">
         <caption>Hole to Pilot</caption>
@@ -114,14 +125,15 @@
             <tr>
                 <th>Hole Number</th>
                 <th></th>
-                <!-- <th style="display: none;">Nom</th>
-                <th style="display: none;">Tol</th>
-                <th style="display: none;">Dev</th> -->
+                <th class="HidableInfo" style="display: none;">Nom</th>
+                <th class="HidableInfo" style="display: none;">Tol</th>
+                <th class="HidableInfo" style="display: none;">Dev</th>
             </tr>
         </thead>
         <tbody>
         </tbody>
     </table></div>
+
 
     <div><table id="HoleToHoleTable">
         <caption>Hole to Hole</caption>
@@ -129,21 +141,30 @@
             <tr>
                 <th>Hole Number</th>
                 <th></th>
-                <!-- <th style="display: none;">Nom</th>
-                <th style="display: none;">Tol</th>
-                <th style="display: none;">Dev</th> -->
+                <th class="HidableInfo" style="display: none;">Nom</th>
+                <th class="HidableInfo" style="display: none;">Tol</th>
+                <th class="HidableInfo" style="display: none;">Dev</th>
             </tr>
         </thead>
         <tbody>
         </tbody>
     </table></div>
 
-</div></div>
-
-<button onclick="updateTables()">Reset</button>
+</div>
 </div>
 
+
+<button onclick="resetTables()">Reset</button>
+<button onclick="resetAll()">Reset All</button>
+</div>
+
+
+
+<!-- debug -->
 <button onclick="fillInputs()">Demo</button>
+
+
+
 </main>
 </div>
 
