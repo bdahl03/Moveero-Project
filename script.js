@@ -2,8 +2,10 @@
 
 // need to add a list as a copy of data to print to the page instead of reading directly from the page
 class Table {
-    constructor(HTMLTableTag, num_rows, num_cols) {
+    constructor(HTMLTableTag, num_rows, num_cols, tolerance_index, ok_index) {
         this.table = document.getElementById(HTMLTableTag)
+        this.tolerance_index = tolerance_index
+        this.ok_index = ok_index
         this.num_rows = num_rows
         this.num_cols = num_cols
     }
@@ -64,6 +66,12 @@ class Table {
         for (let i = 0, row; row = html_table[i]; i++) {
             for (let j = 0, cell; cell = row.cells[j]; j++) {
                 if (cell.firstChild == null || cell.firstChild.nodeName != "INPUT") {
+                    if (j == this.tolerance_index) {
+                        let percent = Math.round(this.internal_table[i][j] * 100)
+                        let string = "conic-gradient(Grey " + percent + "%, White " + percent + "% 100%)"
+                        cell.firstChild.style.background = string
+                        continue
+                    }
                     cell.innerHTML = this.internal_table[i][j]
                 }
                 // if (cell == null)             {
@@ -113,6 +121,17 @@ class Table {
             }
         }
     }
+
+    updateTable(num_rows = this.num_rows, num_cols = this.num_cols) {
+        this.updateTableSize(num_rows, num_cols)
+        var table_rows = this.getHTMLTableRows()
+
+        for (let i = 0, row; row = table_rows[i]; i++) {
+            row.cells[this.tolerance_index].appendChild(createPieChartObject())
+    
+            // row.cells[this.ok_index].innerHTML = "None"
+        }
+    }
     // writeOutputsTable(output_index, outputs) {
     //     var table_rows = this.getHTMLTableRows()
     //     for (let i = 0, row; row = table_rows[i]; i++) {
@@ -124,10 +143,10 @@ class Table {
 // separate class with inputs and outputs that extends the from the Table class
 class InputTable extends Table {
     constructor(HTMLTableTag, num_rows, num_cols, input_index, tolerance_index, ok_index) {
-        super(HTMLTableTag, num_rows, num_cols)
+        super(HTMLTableTag, num_rows, num_cols, tolerance_index, ok_index)
         this.input_index = input_index
-        this.tolerance_index = tolerance_index
-        this.ok_index = ok_index
+        // this.tolerance_index = tolerance_index
+        // this.ok_index = ok_index
     }
 
     updateTable(num_rows = this.num_rows, num_cols = this.num_cols) {
@@ -137,7 +156,7 @@ class InputTable extends Table {
         for (let i = 0, row; row = table_rows[i]; i++) {
             row.cells[this.input_index].appendChild(createNumberInputObject())
     
-            // row.cells[this.tolerance_index].innerHTML = "0.0"
+            row.cells[this.tolerance_index].appendChild(createPieChartObject())
     
             // row.cells[this.ok_index].innerHTML = "None"
         }
@@ -630,6 +649,14 @@ function createNumberInputObject() {
     return input_obj
 }
 
+function createPieChartObject() {
+    chart = document.createElement("DIV")
+    chart.className = "pie-chart"
+    chart.background = 'conic-gradient(Grey 50%, White 50% 100%)'
+    console.log(chart.background)
+    return chart
+}
+
 function convertToRadians(degrees) {
     var pi = Math.PI;
     return degrees * (pi/180);
@@ -695,6 +722,7 @@ function toggleAdditionalInfo() {
 }
 
 function showTables() {
+    if (document.forms[0].checkValidity() == false) {return}
     toggleHidables("HidableTables")
     updateTables()
     
@@ -718,8 +746,10 @@ function toggleHidables(className) {
 }
 
 function colorHTMLOk(HTML_Ok) {
-    if (HTML_Ok.innerHTML == "OK")       {HTML_Ok.style.backgroundColor='#00FF00'}
-    else if (HTML_Ok.innerHTML == "NOK") {HTML_Ok.style.backgroundColor='#FF0000'}
+    // if (HTML_Ok.innerHTML == "OK")       {HTML_Ok.style.backgroundColor='#00FF00'}
+    // else if (HTML_Ok.innerHTML == "NOK") {HTML_Ok.style.backgroundColor='#FF0000'}
+    if (HTML_Ok.innerHTML == "OK")       {HTML_Ok.className = "isOK"}
+    else if (HTML_Ok.innerHTML == "NOK") {HTML_Ok.className = "isNOK"}
 }
 
 function colorAllHTMLOk() {
@@ -748,4 +778,15 @@ function colorAllHTMLOk() {
     for (let i = 0, row; row = table_rows[i]; i++) {
         colorHTMLOk(row.cells[HoleToHoleTable.ok_index])
     }
+}
+
+
+
+
+
+// test, remove later
+
+function testChart() {
+    chart = document.getElementsByClassName("pie-chart")[0]
+    chart.style.background='conic-gradient(Grey 25%, White 25% 100%)'
 }

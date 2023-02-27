@@ -70,26 +70,36 @@ table {
   padding: 1px 1px 1px 1px;
 }
 
-table > input {
-  width: 0.8in;
-}
-
 thead {
   border:1px solid #1E1E1E;
+  /* color: white; */
 }
 
 tr:nth-child(even) {
-  background-color: #147079;
+  background-color: #167b84;
 }
 
 td {
   border-left: 1px solid #1E1E1E;
+  /* color: white; */
 }
 
-#isOK {
-  background-color: green;
+td > input {
+  width: 0.7in;
 }
 
-#isNOK {
-  background-color: red;
+.isOK {
+  background-color: #00FF00;
+}
+
+.isNOK {
+  background-color: #FF0000;
+  color: white;
+}
+
+.pie-chart {
+  background: conic-gradient(Grey 50%, White 50% 100%);
+  border-radius: 50%;
+  width: 20px;
+  height: 20px;
 }

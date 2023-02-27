@@ -18,26 +18,27 @@
 
 <!-- global inputs -->
 <main>
+<form action="javascript:void(0);">
 <div class="inputalign">
     <p>
         <label for="NumHoles">No. Holes:&nbsp</label>
-        <input type="number" step="1" min="0" id="NumHoles">
+        <input type="number" step="1" min="0" id="NumHoles" required>
     </p>
 
     <p>
         <label for="BoltHoleDia">Bolt Hole Diameter:&nbsp</label>
-        <input type="number" step="any" min="0" id="BoltHoleDia">
+        <input type="number" step="any" min="0" id="BoltHoleDia" required>
     </p>
 
     <p>
         <label>Tolerance:&nbsp</label>
-        <input type="number" step="any" min="0" id="UpperTol" placeholder="Upper Tolerance">
-        <input type="number" step="any" min="0" id="LowerTol" placeholder="Lower Tolerance">
+        <input type="number" step="any" min="0" id="UpperTol" placeholder="Upper Tolerance" required>
+        <input type="number" step="any" min="0" id="LowerTol" placeholder="Lower Tolerance" required>
     </p>
 
     <p>
         <label for="TruePosition">True Position:&nbsp</label>
-        <input type="number" step="any" min="0" id="TruePosition">
+        <input type="number" step="any" min="0" id="TruePosition" required>
     </p>
 
     <p>
@@ -50,22 +51,23 @@
 
     <p>
         <label for="BoltCircleDia">Bolt circle Diameter:&nbsp</label>
-        <input type="number" step="any" min="0" id="BoltCircleDia">
+        <input type="number" step="any" min="0" id="BoltCircleDia" required>
     </p>
 
     <p>
         <label>Pilot Hole:&nbsp</label>
-        <input type="number" step="any" min="0" id="pilotHoleMax" placeholder="Pilot Hole Max">
-        <input type="number" id="pilotHoleMin" placeholder="Pilot Hole Min">
+        <input type="number" step="any" min="0" id="pilotHoleMax" placeholder="Pilot Hole Max" required>
+        <input type="number" step="any" min="0" id="pilotHoleMin" placeholder="Pilot Hole Min" required>
     </p>
 </div>
 
-<button class="HidableTables" onclick="showTables()">Start</button>
+<button type="submit" class="HidableTables" onclick="showTables()">Start</button>
 
+</form>
 <div class="HidableTables" style="display: none;">
 <!-- run script -->
 <button onclick="calculate()">Test</button>
-
+<button>Show More</button>
 <!-- tables are created in js -->
 
 <!-- pilot hole table -->
@@ -143,6 +145,7 @@
 
 <button onclick="fillInputs()">Demo</button>
 </main>
+</div>
 
 <script src="script.js"></script>
 </body>
