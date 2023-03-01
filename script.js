@@ -89,7 +89,7 @@ class Table {
     }
 
     HideColumns(indexes) {
-        console.log(this.table)
+        // console.log(this.table)
         var table_rows = this.getHTMLTableRows()
         for (let i = 0, index; index = indexes[i]; i++) {
             for (let i = 0, row; row = table_rows[i]; i++) {
@@ -100,7 +100,7 @@ class Table {
     }
 
     ShowColumns(indexes) {
-        console.log(this.table)
+        // console.log(this.table)
         var table_rows = this.getHTMLTableRows()
         for (let i = 0, index; index = indexes[i]; i++) {
             for (let i = 0, row; row = table_rows[i]; i++) {
@@ -214,8 +214,7 @@ function setTables() {
     PilotHoleTable.calculateTolerance   = function(min, max) {
         var pilot_hole = this.getInputsTable()[0]
         // row = this.getHTMLTableRows()
-    
-        var tolerance = Math.abs((pilot_hole - (max + min) / 2) / (max - min) / 2)
+        var tolerance = Math.abs((pilot_hole - (max + min) / 2)) / ((max - min) / 2)
         this.internal_table[0][this.tolerance_index] = tolerance
         // this.writeOutputsTable(this.tolerance_index, [tol])
     }
