@@ -1,3 +1,5 @@
+
+// ===objects===
 class Table {
     constructor(HTMLTableTag, num_rows, num_cols, tolerance_index, ok_index, nom_index = null, tol_index = null, dev_index = null) {
         this.table = document.getElementById(HTMLTableTag)
@@ -117,7 +119,7 @@ class Table {
     }
 }
 
-// separate class with inputs and outputs that extends the from the Table class
+// extended class with inputs and outputs
 class InputTable extends Table {
     constructor(HTMLTableTag, num_rows, num_cols, input_index, tolerance_index, ok_index, nom_index = null, tol_index = null, dev_index = null) {
         super(HTMLTableTag, num_rows, num_cols, tolerance_index, ok_index, nom_index, tol_index, dev_index)
@@ -169,8 +171,9 @@ class InputTable extends Table {
         return list
     }
 }
+// ===
 
-
+// ===globals===
 
 //      Table(HTMLTableTag, num_rows, num_cols,              tolerance_index, ok_index, nom_index = null, tol_index = null, dev_index = null)
 // InputTable(HTMLTableTag, num_rows, num_cols, input_index, tolerance_index, ok_index, nom_index = null, tol_index = null, dev_index = null)
@@ -188,9 +191,12 @@ var show_additional_info = false
 // set individual functions
 setTables()
 
-// fillInputs()
+// ===
 
 // may be a better way
+// function setTables() {
+
+// ===Calculations===
 function setTables() {
     PilotHoleTable.calculateTolerance   = function(min, max) {
         var pilot_hole = this.getInputsTable()[0]
@@ -485,9 +491,10 @@ function setTables() {
     }
 }
 
+// ===
 
 
-
+// ===main===
 function calculate() {
     document.getElementById("toggleAdditionalInfoButton").disabled = false
 
@@ -559,7 +566,9 @@ function calculate() {
 
     colorAllHTMLOk()
 }
+// ===
 
+// ===tools===
 function updateTables() {
     const num_holes = parseInt(document.getElementById("NumHoles").value)
 
@@ -824,3 +833,4 @@ function hideHidables(className) {
         hidable.style.display = "none"
     }
 }
+// ===
