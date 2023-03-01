@@ -177,15 +177,15 @@ class InputTable extends Table {
 
 //      Table(HTMLTableTag, num_rows, num_cols,              tolerance_index, ok_index, nom_index = null, tol_index = null, dev_index = null)
 // InputTable(HTMLTableTag, num_rows, num_cols, input_index, tolerance_index, ok_index, nom_index = null, tol_index = null, dev_index = null)
-const PilotHoleTable   = new InputTable('PilotHoleTable', 1, 3, 0, 1, 2)
+const PilotHoleTable          = new InputTable('PilotHoleTable', 1, 3, 0, 1, 2)
 
-const BoltHoleTable    = new InputTable('BoltHoleTable', 1, 4, 1, 2, 3)
+const BoltHoleTable           = new InputTable('BoltHoleTable', 1, 4, 1, 2, 3)
 // BoltHoleTable.HTMLToInternalTable()
-const BoltCircleTable  = new InputTable('BoltCircleTable', 1, 7, 1, 5, 6, 2, 3, 4)
-// const AverageBoltCircleTable  = new Table('BoltCircleTable', 1, 7, 1, 5, 6, 2, 3, 4)
+const BoltCircleTable         = new InputTable('BoltCircleTable', 1, 7, 1, 5, 6, 2, 3, 4)
+const AverageBoltCircleTable  = new Table('AverageBoltCircleTable', 1, 6, 4, 5, 2, 3, 4)
 
-const HoleToPilotTable = new InputTable('HoleToPilotTable', 1, 7, 1, 5, 6, 2, 3, 4)
-const HoleToHoleTable  = new InputTable('HoleToHoleTable', 1, 7, 1, 5, 6, 2, 3, 4)
+const HoleToPilotTable        = new InputTable('HoleToPilotTable', 1, 7, 1, 5, 6, 2, 3, 4)
+const HoleToHoleTable         = new InputTable('HoleToHoleTable', 1, 7, 1, 5, 6, 2, 3, 4)
 
 var show_additional_info = false
 // set individual functions
@@ -193,10 +193,8 @@ setTables()
 
 // ===
 
-// may be a better way
-// function setTables() {
-
 // ===Calculations===
+// may be a better way
 function setTables() {
     PilotHoleTable.calculateTolerance   = function(min, max) {
         var pilot_hole = this.getInputsTable()[0]
@@ -224,7 +222,7 @@ function setTables() {
     BoltHoleTable.calculateTolerance    = function(min, max) {
         var holes = this.getInputsTable()
         // var outputs = []
-        var len = this.internal_table.length
+        var len = this.num_rows
 
         for (let i = 0; i < len; i++) {
             // add image to table here
@@ -240,7 +238,7 @@ function setTables() {
         var holes = this.getInputsTable()
         // var outputs = []
 
-        for (let i = 0; i < this.internal_table.length; i++) {
+        for (let i = 0; i < this.num_rows; i++) {
             let isOK = null
             if (holes[i] <= max) {
                 if (holes[i] >= min) {isOK = "OK"}
@@ -329,10 +327,41 @@ function setTables() {
     }
 
 
+    AverageBoltCircleTable.calculateNom = function(MMC, bolt_circle_dia, true_pos, min, bolt_circle_dia, bolt_holes_average) {
+        if (MMC == "YES") {
+            var nom = roundDecimal(bolt_circle_dia + true_pos + (bolt_holes_average - min), 3)
+        }
+        else {
+            var nom = bolt_circle_dia + true_pos
+        }
+        console.log("AverageBoltCircleTable.calculateNom: ", nom)
+    }
+
+
+    AverageBoltCircleTable.calculateTol = function(MMC, bolt_circle_dia, true_pos, bolt_holes_average, min) {
+        if (MMC == "YES") {
+            var tol = roundDecimal(bolt_circle_dia - true_pos - (bolt_holes_average - min), 3)
+        }
+        else {
+            var tol = bolt_circle_dia - true_pos
+        }
+        console.log("AverageBoltCircleTable.calculateNom: ", tol)
+    }
+
+    AverageBoltCircleTable.calculateDev = function(bolt_circle_dev_list) {
+
+        dev = averageNumbers(bolt_circle_dev_list)
+
+
+        console.log("AverageBoltCircleTable.calculateNom: ", dev)
+    }
+
+
+
     HoleToPilotTable.calculateNom = function(bolt_circle_dia, pilot_hole, bolt_holes) {
         // var outputs = []
 
-        for (let i = 0; i < this.internal_table.length; i++) {
+        for (let i = 0; i < this.num_rows; i++) {
             let nom = (bolt_circle_dia - pilot_hole) / 2 - bolt_holes[i] / 2
             // outputs.push(roundDecimal(nom, 3))
             this.internal_table[i][this.nom_index] = roundDecimal(nom, 3)
@@ -344,14 +373,14 @@ function setTables() {
         // var outputs = []
 
         if (MMC == "YES") {
-            for (let i = 0; i < this.internal_table.length; i++) {
+            for (let i = 0; i < this.num_rows; i++) {
                 let tol = (bolt_holes[i] - min + true_pos) / 2
                 // outputs.push(roundDecimal(tol, 3))
                 this.internal_table[i][this.tol_index] = roundDecimal(tol, 3)
             }
         }
         else {
-            for (let i = 0; i < this.internal_table.length; i++) {
+            for (let i = 0; i < this.num_rows; i++) {
                 let tol = true_pos / 2
                 // outputs.push(tol)
                 this.internal_table[i][this.tol_index] = roundDecimal(tol, 3)
@@ -523,6 +552,7 @@ function calculate() {
     const max                      = bolt_hole_dia + upper_tol
     const num_holes_radians        = convertToRadians(360/num_holes)
     const hole_to_hole_calculation = Math.sqrt(2 * ((bolt_circle_dia / 2) ** 2 ) - (2 * (bolt_circle_dia / 2) ** 2 * Math.cos(num_holes_radians)))
+    const bolt_holes_average       = sumNumbers(BoltHoleTable.getInputsTable()) / num_holes
 
 
     // calculate table inputs
@@ -543,6 +573,10 @@ function calculate() {
     BoltCircleTable.calculateDev(BoltHoleTable.getInputsTable())
     BoltCircleTable.calculateTolerance(bolt_circle_dia)
     BoltCircleTable.calculateOK()
+
+    AverageBoltCircleTable.calculateNom(MMC, bolt_circle_dia, true_pos, bolt_holes_average, min)
+    AverageBoltCircleTable.calculateTol(MMC, bolt_circle_dia, true_pos, bolt_holes_average, min)
+    AverageBoltCircleTable.calculateDev(bolt_circle_dev_list) // need to define bolt_circle_dev_list
 
     HoleToHoleTable.calculateNom(hole_to_hole_calculation, BoltHoleTable.getInputsTable())
     HoleToHoleTable.calculateTol(HoleToPilotTable.getRowValues(3))
@@ -576,6 +610,7 @@ function updateTables() {
     
     updateBoltHoleTable(num_holes)
     updateBoltCircleTable(num_holes)
+    AverageBoltCircleTable.updateTable()
     updateHoleToPilotTable(num_holes)
     updateHoleToHoleTable(num_holes)
 
@@ -834,3 +869,21 @@ function hideHidables(className) {
     }
 }
 // ===
+
+function sumNumbers(numbers) {
+    var sum = 0
+    for (var i = 0, number; number = numbers[i]; i++) {
+        sum += number
+    }
+
+    return sum
+}
+
+function averageNumbers(numbers) {
+    var total = numbers.length
+    var sum = sumNumbers(numbers)
+
+    var average = sum / total
+
+    return average
+}
