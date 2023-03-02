@@ -637,7 +637,7 @@ function calculate() {
     HoleToPilotTable.ShowColumns([HoleToPilotTable.ok_index, HoleToPilotTable.tolerance_index])
     HoleToHoleTable.ShowColumns([HoleToHoleTable.ok_index, HoleToHoleTable.tolerance_index])
 
-    colorAllHTMLOk()
+    colorHTMLTables()
 }
 // ===
 
@@ -780,7 +780,7 @@ function colorHTMLOk(HTML_Ok) {
     else if (HTML_Ok.innerHTML == "NOK") { HTML_Ok.className = "isNOK" }
 }
 
-function colorAllHTMLOk() {
+function colorHTMLTables() {
     var table_rows = PilotHoleTable.getHTMLTableRows()
     for (let i = 0, row; row = table_rows[i]; i++) {
         colorHTMLOk(row.cells[PilotHoleTable.ok_index])
