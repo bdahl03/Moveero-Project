@@ -15,7 +15,8 @@ Grey #CBCBCC
 
 body {
   background-color: #005760;
-  font-family: 'Times New Roman', Times, serif;
+  /* font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+  font-size: 15px; */
 }
 
 main {
@@ -98,7 +99,7 @@ td > input {
 }
 
 .pie-chart {
-  background: conic-gradient(Grey 50%, White 50% 100%); /* only changes default view */
+  background: conic-gradient(red 0%); /* only changes default view */
   border-radius: 50%;
   width: 20px;
   height: 20px;
