@@ -564,7 +564,6 @@ class HoleToHoleTable extends InputTable {
 
     }
 }
-// ===globals===
 
 
 
@@ -583,13 +582,6 @@ const HoleToHole = new HoleToHoleTable('HoleToHoleTable', 1, 7, 1, 5, 6, 2, 3, 4
 
 var show_additional_info = false
 
-// set individual functions
-// setTables()
-
-
-
-// may be a better way
-// ===
 
 
 // ===main===
