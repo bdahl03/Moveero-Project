@@ -825,6 +825,8 @@ function colorHTMLTables() {
 
     var table_rows = AverageBoltCircle.getHTMLTableRows()
     for (let i = 0, row; row = table_rows[i]; i++) {
+        row.cells[0].style.color = "White"
+        row.cells[0].style.backgroundColor = "Purple"
         colorHTMLOk(row.cells[AverageBoltCircle.ok_index])
     }
 
