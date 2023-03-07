@@ -171,39 +171,41 @@ class InputTable extends Table {
         return list
     }
 }
-// ===
+
+// table logic
+
 
 // ===globals===
 
 //      Table(HTMLTableTag, num_rows, num_cols,              tolerance_index, ok_index, nom_index = null, tol_index = null, dev_index = null)
 // InputTable(HTMLTableTag, num_rows, num_cols, input_index, tolerance_index, ok_index, nom_index = null, tol_index = null, dev_index = null)
-const PilotHoleTable = new InputTable('PilotHoleTable', 1, 3, 0, 1, 2)
+const PilotHole = new InputTable('PilotHoleTable', 1, 3, 0, 1, 2)
 
-const BoltHoleTable = new InputTable('BoltHoleTable', 1, 4, 1, 2, 3)
-// BoltHoleTable.HTMLToInternalTable()
-const BoltCircleTable = new InputTable('BoltCircleTable', 1, 7, 1, 5, 6, 2, 3, 4)
-const AverageBoltCircleTable = new Table('AverageBoltCircleTable', 1, 6, 4, 5, 1, 2, 3)
+const BoltHole = new InputTable('BoltHoleTable', 1, 4, 1, 2, 3)
+// BoltHole.HTMLToInternalTable()
+const BoltCircle = new InputTable('BoltCircleTable', 1, 7, 1, 5, 6, 2, 3, 4)
+const AverageBoltCircle = new Table('AverageBoltCircleTable', 1, 6, 4, 5, 1, 2, 3)
 
-const HoleToPilotTable = new InputTable('HoleToPilotTable', 1, 7, 1, 5, 6, 2, 3, 4)
-const HoleToHoleTable = new InputTable('HoleToHoleTable', 1, 7, 1, 5, 6, 2, 3, 4)
+const HoleToPilot = new InputTable('HoleToPilotTable', 1, 7, 1, 5, 6, 2, 3, 4)
+const HoleToHole = new InputTable('HoleToHoleTable', 1, 7, 1, 5, 6, 2, 3, 4)
 
 var show_additional_info = false
 // set individual functions
 setTables()
 
-// ===
+
 
 // ===Calculations===
 // may be a better way
 function setTables() {
-    PilotHoleTable.calculateTolerance = function (min, max) {
+    PilotHole.calculateTolerance = function (min, max) {
         var pilot_hole = this.getInputsTable()[0]
         // row = this.getHTMLTableRows()
         var tolerance = Math.abs((pilot_hole - (max + min) / 2)) / ((max - min) / 2)
         this.internal_table[0][this.tolerance_index] = tolerance
         // this.writeOutputsTable(this.tolerance_index, [tol])
     }
-    PilotHoleTable.calculateOK = function (min, max) {
+    PilotHole.calculateOK = function (min, max) {
         var pilot_hole = this.getInputsTable()[0]
 
         var isOK = null
@@ -219,7 +221,7 @@ function setTables() {
 
 
     // abs(hole-avg(max,min)) / ((max-min) / 2)
-    BoltHoleTable.calculateTolerance = function (min, max) {
+    BoltHole.calculateTolerance = function (min, max) {
         var holes = this.getInputsTable()
         // var outputs = []
         var len = this.num_rows
@@ -234,7 +236,7 @@ function setTables() {
         // this.writeOutputsTable(this.tolerance_index, outputs)
     }
     // if hole <= max: { if hole >= min: {return "OK"}} else: {return "NOK"}
-    BoltHoleTable.calculateOK = function (min, max) {
+    BoltHole.calculateOK = function (min, max) {
         var holes = this.getInputsTable()
         // var outputs = []
 
@@ -253,7 +255,7 @@ function setTables() {
     }
 
 
-    BoltCircleTable.calculateNom = function (bolt_circle_dia, hole_to_pilot_tol_rows) {
+    BoltCircle.calculateNom = function (bolt_circle_dia, hole_to_pilot_tol_rows) {
         // var outputs = []
 
         for (let i = 0; i < this.num_rows; i++) {
@@ -264,7 +266,7 @@ function setTables() {
 
         // this.writeOutputsTable(this.nom_index, outputs)
     }
-    BoltCircleTable.calculateTol = function (bolt_circle_dia, hole_to_pilot_tol_rows) {
+    BoltCircle.calculateTol = function (bolt_circle_dia, hole_to_pilot_tol_rows) {
         // var outputs = []
 
         for (let i = 0; i < this.num_rows; i++) {
@@ -275,7 +277,7 @@ function setTables() {
 
         // this.writeOutputsTable(this.tol_index, outputs)
     }
-    BoltCircleTable.calculateDev = function (bolt_holes) {
+    BoltCircle.calculateDev = function (bolt_holes) {
         // var outputs = []
         var holes = this.getInputsTable()
 
@@ -287,7 +289,7 @@ function setTables() {
 
         // this.writeOutputsTable(this.dev_index, outputs)
     }
-    BoltCircleTable.calculateTolerance = function (bolt_circle_dia) {
+    BoltCircle.calculateTolerance = function (bolt_circle_dia) {
         // var outputs = []
         var nom_values = this.getRowValues(this.nom_index)
         var dev_values = this.getRowValues(this.dev_index)
@@ -300,7 +302,7 @@ function setTables() {
 
         // this.writeOutputsTable(this.tolerance_index, outputs)
     }
-    BoltCircleTable.calculateOK = function () {
+    BoltCircle.calculateOK = function () {
         // var outputs = []
         var nom_values = this.getRowValues(this.nom_index)
         var tol_values = this.getRowValues(this.tol_index)
@@ -327,50 +329,50 @@ function setTables() {
     }
 
 
-    AverageBoltCircleTable.calculateAverageBC = function (bolt_circle_dev_list) {
+    AverageBoltCircle.calculateAverageBC = function (bolt_circle_dev_list) {
 
         var AverageBC = roundDecimal(averageNumbers(bolt_circle_dev_list), 3)
 
-        console.log("AverageBoltCircleTable.calculateDev: ", AverageBC)
+        // console.log("AverageBoltCircle.calculateDev: ", AverageBC)
         this.internal_table[0][0] = AverageBC
     }
-    AverageBoltCircleTable.calculateNom = function (MMC, bolt_circle_dia, true_pos, min, bolt_circle_dia, bolt_holes_average) {
+    AverageBoltCircle.calculateNom = function (MMC, bolt_circle_dia, true_pos, min, bolt_circle_dia, bolt_holes_average) {
         if (MMC == "YES") {
             var nom = roundDecimal(bolt_circle_dia + true_pos + (bolt_holes_average - min), 3)
         }
         else {
             var nom = bolt_circle_dia + true_pos
         }
-        console.log("AverageBoltCircleTable.calculateNom: ", nom)
+        // console.log("AverageBoltCircle.calculateNom: ", nom)
         this.internal_table[0][this.nom_index] = nom
     }
-    AverageBoltCircleTable.calculateTol = function (MMC, bolt_circle_dia, true_pos, bolt_holes_average, min) {
+    AverageBoltCircle.calculateTol = function (MMC, bolt_circle_dia, true_pos, bolt_holes_average, min) {
         if (MMC == "YES") {
             var tol = roundDecimal(bolt_circle_dia - true_pos - (bolt_holes_average - min), 3)
         }
         else {
             var tol = bolt_circle_dia - true_pos
         }
-        console.log("AverageBoltCircleTable.calculateTol: ", tol)
+        // console.log("AverageBoltCircle.calculateTol: ", tol)
         this.internal_table[0][this.tol_index] = tol
     }
-    AverageBoltCircleTable.calculateDev = function () {
+    AverageBoltCircle.calculateDev = function () {
 
         var dev = this.internal_table[0][0]
 
-        console.log("AverageBoltCircleTable.calculateDev: ", dev)
+        // console.log("AverageBoltCircle.calculateDev: ", dev)
         this.internal_table[0][this.dev_index] = dev
     }
-    AverageBoltCircleTable.calculateTolerance = function (bolt_circle_dia) {
+    AverageBoltCircle.calculateTolerance = function (bolt_circle_dia) {
         var nom = this.internal_table[0][this.nom_index]
         var dev = this.internal_table[0][this.dev_index]
 
         var tolerance = Math.abs((dev - bolt_circle_dia)) / Math.abs((nom - bolt_circle_dia))
 
-        console.log("AverageBoltCircleTable.calculateTolerance: ", tolerance)
+        // console.log("AverageBoltCircle.calculateTolerance: ", tolerance)
         this.internal_table[0][this.tolerance_index] = tolerance
     }
-    AverageBoltCircleTable.calculateOK = function () {
+    AverageBoltCircle.calculateOK = function () {
         var nom = this.internal_table[0][this.nom_index]
         var tol = this.internal_table[0][this.tol_index]
         var dev = this.internal_table[0][this.dev_index]
@@ -388,12 +390,12 @@ function setTables() {
             isOK = "NOK"
         }
 
-        console.log("AverageBoltCircleTable.calculateOK: ", isOK)
+        // console.log("AverageBoltCircle.calculateOK: ", isOK)
         this.internal_table[0][this.ok_index] = isOK
     }
 
 
-    HoleToPilotTable.calculateNom = function (bolt_circle_dia, pilot_hole, bolt_holes) {
+    HoleToPilot.calculateNom = function (bolt_circle_dia, pilot_hole, bolt_holes) {
         // var outputs = []
 
         for (let i = 0; i < this.num_rows; i++) {
@@ -404,7 +406,7 @@ function setTables() {
 
         // this.writeOutputsTable(this.nom_index, outputs)
     }
-    HoleToPilotTable.calculateTol = function (MMC, true_pos, min, bolt_holes) {
+    HoleToPilot.calculateTol = function (MMC, true_pos, min, bolt_holes) {
         // var outputs = []
 
         if (MMC == "YES") {
@@ -424,7 +426,7 @@ function setTables() {
 
         // this.writeOutputsTable(this.tol_index, outputs)
     }
-    HoleToPilotTable.calculateDev = function () {
+    HoleToPilot.calculateDev = function () {
         // var outputs = []
         var table_rows = this.getHTMLTableRows()
 
@@ -440,7 +442,7 @@ function setTables() {
 
         // this.writeOutputsTable(this.dev_index, outputs)
     }
-    HoleToPilotTable.calculateTolerance = function () {
+    HoleToPilot.calculateTolerance = function () {
         // var outputs = []
         // var table_rows = this.getHTMLTableRows()
 
@@ -457,7 +459,7 @@ function setTables() {
 
         // this.writeOutputsTable(this.tolerance_index, outputs)
     }
-    HoleToPilotTable.calculateOK = function () {
+    HoleToPilot.calculateOK = function () {
         // var outputs = []
         // var table_rows = this.getHTMLTableRows()
 
@@ -479,7 +481,7 @@ function setTables() {
     }
 
 
-    HoleToHoleTable.calculateNom = function (hole_to_hole_calculation, bolt_holes) {
+    HoleToHole.calculateNom = function (hole_to_hole_calculation, bolt_holes) {
         // var outputs = []
         var length = this.num_rows
 
@@ -491,7 +493,7 @@ function setTables() {
 
         // this.writeOutputsTable(this.nom_index, outputs)
     }
-    HoleToHoleTable.calculateTol = function (hole_to_pilot_tol_rows) {
+    HoleToHole.calculateTol = function (hole_to_pilot_tol_rows) {
         // var outputs = []
         var length = this.num_rows
 
@@ -503,7 +505,7 @@ function setTables() {
 
         // this.writeOutputsTable(this.tol_index, outputs)
     }
-    HoleToHoleTable.calculateDev = function () {
+    HoleToHole.calculateDev = function () {
         // var outputs = []
         // var table_rows = this.getHTMLTableRows()
 
@@ -518,7 +520,7 @@ function setTables() {
             // this.writeOutputsTable(this.dev_index, outputs)
         }
     }
-    HoleToHoleTable.calculateTolerance = function () {
+    HoleToHole.calculateTolerance = function () {
         // var outputs = []
         // var table_rows = this.getHTMLTableRows()
 
@@ -531,7 +533,7 @@ function setTables() {
         }
         // this.writeOutputsTable(this.tolerance_index, outputs)
     }
-    HoleToHoleTable.calculateOK = function () {
+    HoleToHole.calculateOK = function () {
         // var outputs = []
         // var table_rows = this.getHTMLTableRows()
 
@@ -562,13 +564,13 @@ function setTables() {
 function calculate() {
     document.getElementById("toggleAdditionalInfoButton").disabled = false
 
+    AverageBoltCircle.table.style.display = ""
 
-
-    PilotHoleTable.HTMLToInternalTable()
-    BoltHoleTable.HTMLToInternalTable()
-    BoltCircleTable.HTMLToInternalTable()
-    HoleToPilotTable.HTMLToInternalTable()
-    HoleToHoleTable.HTMLToInternalTable()
+    PilotHole.HTMLToInternalTable()
+    BoltHole.HTMLToInternalTable()
+    BoltCircle.HTMLToInternalTable()
+    HoleToPilot.HTMLToInternalTable()
+    HoleToHole.HTMLToInternalTable()
 
 
     const num_holes = parseFloat(document.getElementById("NumHoles").value)
@@ -578,7 +580,7 @@ function calculate() {
     const true_pos = parseFloat(document.getElementById("TruePosition").value)
     const MMC = document.getElementById("MMC").value
     const bolt_circle_dia = parseFloat(document.getElementById("BoltCircleDia").value)
-    const pilot_hole = PilotHoleTable.getInputsTable()[0]
+    const pilot_hole = PilotHole.getInputsTable()[0]
     const pilot_hole_min = parseFloat(document.getElementById("pilotHoleMin").value)
     const pilot_hole_max = parseFloat(document.getElementById("pilotHoleMax").value)
 
@@ -587,55 +589,55 @@ function calculate() {
     const max = bolt_hole_dia + upper_tol
     const num_holes_radians = convertToRadians(360 / num_holes)
     const hole_to_hole_calculation = Math.sqrt(2 * ((bolt_circle_dia / 2) ** 2) - (2 * (bolt_circle_dia / 2) ** 2 * Math.cos(num_holes_radians)))
-    const bolt_holes_average = sumNumbers(BoltHoleTable.getInputsTable()) / num_holes
+    const bolt_holes_average = sumNumbers(BoltHole.getInputsTable()) / num_holes
 
 
     // calculate table inputs
-    PilotHoleTable.calculateTolerance(pilot_hole_min, pilot_hole_max)
-    PilotHoleTable.calculateOK(pilot_hole_min, pilot_hole_max)
+    PilotHole.calculateTolerance(pilot_hole_min, pilot_hole_max)
+    PilotHole.calculateOK(pilot_hole_min, pilot_hole_max)
 
-    BoltHoleTable.calculateTolerance(min, max)
-    BoltHoleTable.calculateOK(min, max)
+    BoltHole.calculateTolerance(min, max)
+    BoltHole.calculateOK(min, max)
 
-    HoleToPilotTable.calculateNom(bolt_circle_dia, pilot_hole, BoltHoleTable.getInputsTable())
-    HoleToPilotTable.calculateTol(MMC, true_pos, min, BoltHoleTable.getInputsTable())
-    HoleToPilotTable.calculateDev()
-    HoleToPilotTable.calculateTolerance()
-    HoleToPilotTable.calculateOK()
+    HoleToPilot.calculateNom(bolt_circle_dia, pilot_hole, BoltHole.getInputsTable())
+    HoleToPilot.calculateTol(MMC, true_pos, min, BoltHole.getInputsTable())
+    HoleToPilot.calculateDev()
+    HoleToPilot.calculateTolerance()
+    HoleToPilot.calculateOK()
 
-    BoltCircleTable.calculateNom(bolt_circle_dia, HoleToPilotTable.getRowValues(3))
-    BoltCircleTable.calculateTol(bolt_circle_dia, HoleToPilotTable.getRowValues(3))
-    BoltCircleTable.calculateDev(BoltHoleTable.getInputsTable())
-    BoltCircleTable.calculateTolerance(bolt_circle_dia)
-    BoltCircleTable.calculateOK()
+    BoltCircle.calculateNom(bolt_circle_dia, HoleToPilot.getRowValues(3))
+    BoltCircle.calculateTol(bolt_circle_dia, HoleToPilot.getRowValues(3))
+    BoltCircle.calculateDev(BoltHole.getInputsTable())
+    BoltCircle.calculateTolerance(bolt_circle_dia)
+    BoltCircle.calculateOK()
 
-    AverageBoltCircleTable.calculateAverageBC(BoltCircleTable.getRowValues(BoltCircleTable.dev_index))
-    AverageBoltCircleTable.calculateNom(MMC, bolt_circle_dia, true_pos, min, bolt_circle_dia, bolt_holes_average)
-    AverageBoltCircleTable.calculateTol(MMC, bolt_circle_dia, true_pos, bolt_holes_average, min)
-    AverageBoltCircleTable.calculateDev(BoltCircleTable.getRowValues(BoltCircleTable.dev_index)) // need to define bolt_circle_dev_list
-    AverageBoltCircleTable.calculateTolerance(bolt_circle_dia)
-    AverageBoltCircleTable.calculateOK()
+    AverageBoltCircle.calculateAverageBC(BoltCircle.getRowValues(BoltCircle.dev_index))
+    AverageBoltCircle.calculateNom(MMC, bolt_circle_dia, true_pos, min, bolt_circle_dia, bolt_holes_average)
+    AverageBoltCircle.calculateTol(MMC, bolt_circle_dia, true_pos, bolt_holes_average, min)
+    AverageBoltCircle.calculateDev(BoltCircle.getRowValues(BoltCircle.dev_index)) // need to define bolt_circle_dev_list
+    AverageBoltCircle.calculateTolerance(bolt_circle_dia)
+    AverageBoltCircle.calculateOK()
 
-    HoleToHoleTable.calculateNom(hole_to_hole_calculation, BoltHoleTable.getInputsTable())
-    HoleToHoleTable.calculateTol(HoleToPilotTable.getRowValues(3))
-    HoleToHoleTable.calculateDev()
-    HoleToHoleTable.calculateTolerance()
-    HoleToHoleTable.calculateOK()
+    HoleToHole.calculateNom(hole_to_hole_calculation, BoltHole.getInputsTable())
+    HoleToHole.calculateTol(HoleToPilot.getRowValues(3))
+    HoleToHole.calculateDev()
+    HoleToHole.calculateTolerance()
+    HoleToHole.calculateOK()
 
     // write to table
-    PilotHoleTable.internalToHTMLTable()
-    BoltHoleTable.internalToHTMLTable()
-    BoltCircleTable.internalToHTMLTable()
-    AverageBoltCircleTable.internalToHTMLTable()
-    HoleToPilotTable.internalToHTMLTable()
-    HoleToHoleTable.internalToHTMLTable()
+    PilotHole.internalToHTMLTable()
+    BoltHole.internalToHTMLTable()
+    BoltCircle.internalToHTMLTable()
+    AverageBoltCircle.internalToHTMLTable()
+    HoleToPilot.internalToHTMLTable()
+    HoleToHole.internalToHTMLTable()
 
     // show columns
-    PilotHoleTable.ShowColumns([PilotHoleTable.ok_index, PilotHoleTable.tolerance_index])
-    BoltHoleTable.ShowColumns([BoltHoleTable.ok_index, BoltHoleTable.tolerance_index])
-    BoltCircleTable.ShowColumns([BoltCircleTable.ok_index, BoltCircleTable.tolerance_index])
-    HoleToPilotTable.ShowColumns([HoleToPilotTable.ok_index, HoleToPilotTable.tolerance_index])
-    HoleToHoleTable.ShowColumns([HoleToHoleTable.ok_index, HoleToHoleTable.tolerance_index])
+    PilotHole.ShowColumns([PilotHole.ok_index, PilotHole.tolerance_index])
+    BoltHole.ShowColumns([BoltHole.ok_index, BoltHole.tolerance_index])
+    BoltCircle.ShowColumns([BoltCircle.ok_index, BoltCircle.tolerance_index])
+    HoleToPilot.ShowColumns([HoleToPilot.ok_index, HoleToPilot.tolerance_index])
+    HoleToHole.ShowColumns([HoleToHole.ok_index, HoleToHole.tolerance_index])
 
     colorHTMLTables()
 }
@@ -645,11 +647,11 @@ function calculate() {
 function updateTables() {
     const num_holes = parseInt(document.getElementById("NumHoles").value)
 
-    PilotHoleTable.updateTable()
+    PilotHole.updateTable()
 
     updateBoltHoleTable(num_holes)
     updateBoltCircleTable(num_holes)
-    AverageBoltCircleTable.updateTable()
+    AverageBoltCircle.updateTable()
     updateHoleToPilotTable(num_holes)
     updateHoleToHoleTable(num_holes)
 
@@ -657,8 +659,8 @@ function updateTables() {
 
 function updateBoltHoleTable(num_holes) {
 
-    BoltHoleTable.updateTable(num_holes)
-    var table_rows = BoltHoleTable.getHTMLTableRows()
+    BoltHole.updateTable(num_holes)
+    var table_rows = BoltHole.getHTMLTableRows()
 
     for (let i = 0, row; row = table_rows[i]; i++) {
         row.cells[0].innerHTML = i + 1
@@ -668,8 +670,8 @@ function updateBoltHoleTable(num_holes) {
 function updateBoltCircleTable(num_holes) {
     num_holes = Math.floor(num_holes / 2)
 
-    BoltCircleTable.updateTable(num_holes)
-    var table_rows = BoltCircleTable.getHTMLTableRows()
+    BoltCircle.updateTable(num_holes)
+    var table_rows = BoltCircle.getHTMLTableRows()
 
     for (let i = 0, row; row = table_rows[i]; i++) {
         row.cells[0].innerHTML = (1 + i) + " to " + (num_holes + 1 + i)
@@ -677,8 +679,8 @@ function updateBoltCircleTable(num_holes) {
 }
 
 function updateHoleToPilotTable(num_holes) {
-    HoleToPilotTable.updateTable(num_holes)
-    var table_rows = HoleToPilotTable.getHTMLTableRows()
+    HoleToPilot.updateTable(num_holes)
+    var table_rows = HoleToPilot.getHTMLTableRows()
 
     for (let i = 0, row; row = table_rows[i]; i++) {
         row.cells[0].innerHTML = i + 1
@@ -686,8 +688,8 @@ function updateHoleToPilotTable(num_holes) {
 }
 
 function updateHoleToHoleTable(num_holes) {
-    HoleToHoleTable.updateTable(num_holes)
-    var table_rows = HoleToHoleTable.getHTMLTableRows()
+    HoleToHole.updateTable(num_holes)
+    var table_rows = HoleToHole.getHTMLTableRows()
 
     for (let i = 0, row; row = table_rows[i]; i++) {
 
@@ -781,35 +783,35 @@ function colorHTMLOk(HTML_Ok) {
 }
 
 function colorHTMLTables() {
-    var table_rows = PilotHoleTable.getHTMLTableRows()
+    var table_rows = PilotHole.getHTMLTableRows()
     for (let i = 0, row; row = table_rows[i]; i++) {
-        colorHTMLOk(row.cells[PilotHoleTable.ok_index])
+        colorHTMLOk(row.cells[PilotHole.ok_index])
     }
 
 
-    var table_rows = BoltHoleTable.getHTMLTableRows()
+    var table_rows = BoltHole.getHTMLTableRows()
     for (let i = 0, row; row = table_rows[i]; i++) {
-        colorHTMLOk(row.cells[BoltHoleTable.ok_index])
+        colorHTMLOk(row.cells[BoltHole.ok_index])
     }
 
-    var table_rows = BoltCircleTable.getHTMLTableRows()
+    var table_rows = BoltCircle.getHTMLTableRows()
     for (let i = 0, row; row = table_rows[i]; i++) {
-        colorHTMLOk(row.cells[BoltCircleTable.ok_index])
+        colorHTMLOk(row.cells[BoltCircle.ok_index])
     }
 
-    var table_rows = AverageBoltCircleTable.getHTMLTableRows()
+    var table_rows = AverageBoltCircle.getHTMLTableRows()
     for (let i = 0, row; row = table_rows[i]; i++) {
-        colorHTMLOk(row.cells[AverageBoltCircleTable.ok_index])
+        colorHTMLOk(row.cells[AverageBoltCircle.ok_index])
     }
 
-    var table_rows = HoleToPilotTable.getHTMLTableRows()
+    var table_rows = HoleToPilot.getHTMLTableRows()
     for (let i = 0, row; row = table_rows[i]; i++) {
-        colorHTMLOk(row.cells[HoleToPilotTable.ok_index])
+        colorHTMLOk(row.cells[HoleToPilot.ok_index])
     }
 
-    var table_rows = HoleToHoleTable.getHTMLTableRows()
+    var table_rows = HoleToHole.getHTMLTableRows()
     for (let i = 0, row; row = table_rows[i]; i++) {
-        colorHTMLOk(row.cells[HoleToHoleTable.ok_index])
+        colorHTMLOk(row.cells[HoleToHole.ok_index])
     }
 }
 
@@ -838,12 +840,13 @@ function showTables() {
     updateTables()
     show_additional_info = false
 
-    PilotHoleTable.HideColumns([PilotHoleTable.ok_index, PilotHoleTable.tolerance_index])
-    BoltHoleTable.HideColumns([BoltHoleTable.ok_index, BoltHoleTable.tolerance_index])
-    BoltCircleTable.HideColumns([BoltCircleTable.nom_index, BoltCircleTable.tol_index, BoltCircleTable.dev_index, BoltCircleTable.ok_index, BoltCircleTable.tolerance_index])
-    // AverageBoltCircleTable.HideColumns([AverageBoltCircleTable.nom_index, AverageBoltCircleTable.tol_index, AverageBoltCircleTable.dev_index, AverageBoltCircleTable.ok_index, AverageBoltCircleTable.tolerance_index])
-    HoleToPilotTable.HideColumns([BoltCircleTable.nom_index, BoltCircleTable.tol_index, BoltCircleTable.dev_index, HoleToPilotTable.ok_index, HoleToPilotTable.tolerance_index])
-    HoleToHoleTable.HideColumns([BoltCircleTable.nom_index, BoltCircleTable.tol_index, BoltCircleTable.dev_index, HoleToHoleTable.ok_index, HoleToHoleTable.tolerance_index])
+    PilotHole.HideColumns([PilotHole.ok_index, PilotHole.tolerance_index])
+    BoltHole.HideColumns([BoltHole.ok_index, BoltHole.tolerance_index])
+    BoltCircle.HideColumns([BoltCircle.nom_index, BoltCircle.tol_index, BoltCircle.dev_index, BoltCircle.ok_index, BoltCircle.tolerance_index])
+    AverageBoltCircle.HideColumns([AverageBoltCircle.nom_index, AverageBoltCircle.tol_index, AverageBoltCircle.dev_index])
+    AverageBoltCircle.table.style.display = "none"
+    HoleToPilot.HideColumns([BoltCircle.nom_index, BoltCircle.tol_index, BoltCircle.dev_index, HoleToPilot.ok_index, HoleToPilot.tolerance_index])
+    HoleToHole.HideColumns([BoltCircle.nom_index, BoltCircle.tol_index, BoltCircle.dev_index, HoleToHole.ok_index, HoleToHole.tolerance_index])
 }
 
 function resetTables() {
@@ -854,12 +857,13 @@ function resetTables() {
     document.getElementById("toggleAdditionalInfoButton").disabled = true
     show_additional_info = false
 
-    PilotHoleTable.HideColumns([PilotHoleTable.ok_index, PilotHoleTable.tolerance_index])
-    BoltHoleTable.HideColumns([BoltHoleTable.ok_index, BoltHoleTable.tolerance_index])
-    BoltCircleTable.HideColumns([BoltCircleTable.nom_index, BoltCircleTable.tol_index, BoltCircleTable.dev_index, BoltCircleTable.ok_index, BoltCircleTable.tolerance_index])
-    // AverageBoltCircleTable.HideColumns([AverageBoltCircleTable.nom_index, AverageBoltCircleTable.tol_index, AverageBoltCircleTable.dev_index, AverageBoltCircleTable.ok_index, AverageBoltCircleTable.tolerance_index])
-    HoleToPilotTable.HideColumns([BoltCircleTable.nom_index, BoltCircleTable.tol_index, BoltCircleTable.dev_index, HoleToPilotTable.ok_index, HoleToPilotTable.tolerance_index])
-    HoleToHoleTable.HideColumns([BoltCircleTable.nom_index, BoltCircleTable.tol_index, BoltCircleTable.dev_index, HoleToHoleTable.ok_index, HoleToHoleTable.tolerance_index])
+    PilotHole.HideColumns([PilotHole.ok_index, PilotHole.tolerance_index])
+    BoltHole.HideColumns([BoltHole.ok_index, BoltHole.tolerance_index])
+    BoltCircle.HideColumns([BoltCircle.nom_index, BoltCircle.tol_index, BoltCircle.dev_index, BoltCircle.ok_index, BoltCircle.tolerance_index])
+    AverageBoltCircle.HideColumns([AverageBoltCircle.nom_index, AverageBoltCircle.tol_index, AverageBoltCircle.dev_index])
+    AverageBoltCircle.table.style.display = "none"
+    HoleToPilot.HideColumns([BoltCircle.nom_index, BoltCircle.tol_index, BoltCircle.dev_index, HoleToPilot.ok_index, HoleToPilot.tolerance_index])
+    HoleToHole.HideColumns([BoltCircle.nom_index, BoltCircle.tol_index, BoltCircle.dev_index, HoleToHole.ok_index, HoleToHole.tolerance_index])
 }
 
 function resetAll() {
@@ -879,12 +883,13 @@ function toggleAdditionalInfo() {
         document.getElementById("toggleAdditionalInfoButton").textContent = "Show More"
         show_additional_info = false
     }
-    // PilotHoleTable.toggleHideColumns  ([PilotHoleTable.ok_index,   PilotHoleTable.tolerance_index])
-    // BoltHoleTable.toggleHideColumns   ([BoltHoleTable.ok_index,    BoltHoleTable.tolerance_index])
+    // PilotHole.toggleHideColumns  ([PilotHole.ok_index,   PilotHole.tolerance_index])
+    // BoltHole.toggleHideColumns   ([BoltHole.ok_index,    BoltHole.tolerance_index])
     toggleHidables("HidableInfo")
-    BoltCircleTable.toggleHideColumns([BoltCircleTable.nom_index, BoltCircleTable.tol_index, BoltCircleTable.dev_index])
-    HoleToPilotTable.toggleHideColumns([BoltCircleTable.nom_index, BoltCircleTable.tol_index, BoltCircleTable.dev_index])
-    HoleToHoleTable.toggleHideColumns([BoltCircleTable.nom_index, BoltCircleTable.tol_index, BoltCircleTable.dev_index])
+    BoltCircle.toggleHideColumns([BoltCircle.nom_index, BoltCircle.tol_index, BoltCircle.dev_index])
+    AverageBoltCircle.toggleHideColumns([AverageBoltCircle.nom_index, AverageBoltCircle.tol_index, AverageBoltCircle.dev_index])
+    HoleToPilot.toggleHideColumns([HoleToPilot.nom_index, HoleToPilot.tol_index, HoleToPilot.dev_index])
+    HoleToHole.toggleHideColumns([HoleToHole.nom_index, HoleToHole.tol_index, HoleToHole.dev_index])
 }
 
 function toggleHidables(className) {
