@@ -122,7 +122,9 @@ class Table {
 // extended class with inputs and outputs
 class InputTable extends Table {
     constructor(HTMLTableTag, num_rows, num_cols, input_index, tolerance_index, ok_index, nom_index = null, tol_index = null, dev_index = null) {
+        // inherit the Table class properties
         super(HTMLTableTag, num_rows, num_cols, tolerance_index, ok_index, nom_index, tol_index, dev_index)
+
         this.input_index = input_index
         // this.tolerance_index = tolerance_index
         // this.ok_index = ok_index
@@ -173,39 +175,18 @@ class InputTable extends Table {
 }
 
 // table logic
-
-
-// ===globals===
-
-//      Table(HTMLTableTag, num_rows, num_cols,              tolerance_index, ok_index, nom_index = null, tol_index = null, dev_index = null)
-// InputTable(HTMLTableTag, num_rows, num_cols, input_index, tolerance_index, ok_index, nom_index = null, tol_index = null, dev_index = null)
-const PilotHole = new InputTable('PilotHoleTable', 1, 3, 0, 1, 2)
-
-const BoltHole = new InputTable('BoltHoleTable', 1, 4, 1, 2, 3)
-// BoltHole.HTMLToInternalTable()
-const BoltCircle = new InputTable('BoltCircleTable', 1, 7, 1, 5, 6, 2, 3, 4)
-const AverageBoltCircle = new Table('AverageBoltCircleTable', 1, 6, 4, 5, 1, 2, 3)
-
-const HoleToPilot = new InputTable('HoleToPilotTable', 1, 7, 1, 5, 6, 2, 3, 4)
-const HoleToHole = new InputTable('HoleToHoleTable', 1, 7, 1, 5, 6, 2, 3, 4)
-
-var show_additional_info = false
-// set individual functions
-setTables()
-
-
-
-// ===Calculations===
-// may be a better way
-function setTables() {
-    PilotHole.calculateTolerance = function (min, max) {
+class PilotHoleTable extends InputTable {
+    constructor(HTMLTableTag, num_rows, num_cols, input_index, tolerance_index, ok_index, nom_index = null, tol_index = null, dev_index = null) {
+        super(HTMLTableTag, num_rows, num_cols, input_index, tolerance_index, ok_index, nom_index, tol_index, dev_index)
+    }
+    calculateTolerance(min, max) {
         var pilot_hole = this.getInputsTable()[0]
         // row = this.getHTMLTableRows()
         var tolerance = Math.abs((pilot_hole - (max + min) / 2)) / ((max - min) / 2)
         this.internal_table[0][this.tolerance_index] = tolerance
         // this.writeOutputsTable(this.tolerance_index, [tol])
     }
-    PilotHole.calculateOK = function (min, max) {
+    calculateOK(min, max) {
         var pilot_hole = this.getInputsTable()[0]
 
         var isOK = null
@@ -218,10 +199,13 @@ function setTables() {
         // this.writeOutputsTable(this.ok_index, [isOK])
         this.internal_table[0][this.ok_index] = isOK
     }
+}
 
-
-    // abs(hole-avg(max,min)) / ((max-min) / 2)
-    BoltHole.calculateTolerance = function (min, max) {
+class BoltHoleTable extends InputTable {
+    constructor(HTMLTableTag, num_rows, num_cols, input_index, tolerance_index, ok_index, nom_index = null, tol_index = null, dev_index = null) {
+        super(HTMLTableTag, num_rows, num_cols, input_index, tolerance_index, ok_index, nom_index, tol_index, dev_index)
+    }
+    calculateTolerance(min, max) {
         var holes = this.getInputsTable()
         // var outputs = []
         var len = this.num_rows
@@ -236,7 +220,7 @@ function setTables() {
         // this.writeOutputsTable(this.tolerance_index, outputs)
     }
     // if hole <= max: { if hole >= min: {return "OK"}} else: {return "NOK"}
-    BoltHole.calculateOK = function (min, max) {
+    calculateOK(min, max) {
         var holes = this.getInputsTable()
         // var outputs = []
 
@@ -253,9 +237,13 @@ function setTables() {
 
         // this.writeOutputsTable(this.ok_index, outputs)
     }
+}
 
-
-    BoltCircle.calculateNom = function (bolt_circle_dia, hole_to_pilot_tol_rows) {
+class BoltCircleTable extends InputTable {
+    constructor(HTMLTableTag, num_rows, num_cols, input_index, tolerance_index, ok_index, nom_index = null, tol_index = null, dev_index = null) {
+        super(HTMLTableTag, num_rows, num_cols, input_index, tolerance_index, ok_index, nom_index, tol_index, dev_index)
+    }
+    calculateNom(bolt_circle_dia, hole_to_pilot_tol_rows) {
         // var outputs = []
 
         for (let i = 0; i < this.num_rows; i++) {
@@ -266,7 +254,7 @@ function setTables() {
 
         // this.writeOutputsTable(this.nom_index, outputs)
     }
-    BoltCircle.calculateTol = function (bolt_circle_dia, hole_to_pilot_tol_rows) {
+    calculateTol(bolt_circle_dia, hole_to_pilot_tol_rows) {
         // var outputs = []
 
         for (let i = 0; i < this.num_rows; i++) {
@@ -277,7 +265,7 @@ function setTables() {
 
         // this.writeOutputsTable(this.tol_index, outputs)
     }
-    BoltCircle.calculateDev = function (bolt_holes) {
+    calculateDev(bolt_holes) {
         // var outputs = []
         var holes = this.getInputsTable()
 
@@ -289,7 +277,7 @@ function setTables() {
 
         // this.writeOutputsTable(this.dev_index, outputs)
     }
-    BoltCircle.calculateTolerance = function (bolt_circle_dia) {
+    calculateTolerance(bolt_circle_dia) {
         // var outputs = []
         var nom_values = this.getRowValues(this.nom_index)
         var dev_values = this.getRowValues(this.dev_index)
@@ -302,7 +290,7 @@ function setTables() {
 
         // this.writeOutputsTable(this.tolerance_index, outputs)
     }
-    BoltCircle.calculateOK = function () {
+    calculateOK() {
         // var outputs = []
         var nom_values = this.getRowValues(this.nom_index)
         var tol_values = this.getRowValues(this.tol_index)
@@ -327,6 +315,160 @@ function setTables() {
 
         // this.writeOutputsTable(this.ok_index, outputs)
     }
+
+}
+// ===globals===
+
+//      Table(HTMLTableTag, num_rows, num_cols,              tolerance_index, ok_index, nom_index = null, tol_index = null, dev_index = null)
+// InputTable(HTMLTableTag, num_rows, num_cols, input_index, tolerance_index, ok_index, nom_index = null, tol_index = null, dev_index = null)
+const PilotHole = new PilotHoleTable('PilotHoleTable', 1, 3, 0, 1, 2)
+
+const BoltHole = new BoltHoleTable('BoltHoleTable', 1, 4, 1, 2, 3)
+// BoltHole.HTMLToInternalTable()
+const BoltCircle = new BoltCircleTable('BoltCircleTable', 1, 7, 1, 5, 6, 2, 3, 4)
+const AverageBoltCircle = new Table('AverageBoltCircleTable', 1, 6, 4, 5, 1, 2, 3)
+
+const HoleToPilot = new InputTable('HoleToPilotTable', 1, 7, 1, 5, 6, 2, 3, 4)
+const HoleToHole = new InputTable('HoleToHoleTable', 1, 7, 1, 5, 6, 2, 3, 4)
+
+var show_additional_info = false
+// set individual functions
+setTables()
+
+
+
+// ===Calculations===
+// may be a better way
+function setTables() {
+    // PilotHole.calculateTolerance = function (min, max) {
+    //     var pilot_hole = this.getInputsTable()[0]
+    //     // row = this.getHTMLTableRows()
+    //     var tolerance = Math.abs((pilot_hole - (max + min) / 2)) / ((max - min) / 2)
+    //     this.internal_table[0][this.tolerance_index] = tolerance
+    //     // this.writeOutputsTable(this.tolerance_index, [tol])
+    // }
+    // PilotHole.calculateOK = function (min, max) {
+    //     var pilot_hole = this.getInputsTable()[0]
+
+    //     var isOK = null
+    //     if (pilot_hole <= max) {
+    //         if (pilot_hole >= min) { isOK = "OK" }
+    //         else { isOK = "NOK" }
+    //     }
+    //     else { isOK = "NOK" }
+
+    //     // this.writeOutputsTable(this.ok_index, [isOK])
+    //     this.internal_table[0][this.ok_index] = isOK
+    // }
+
+
+    // abs(hole-avg(max,min)) / ((max-min) / 2)
+    // BoltHole.calculateTolerance = function (min, max) {
+    //     var holes = this.getInputsTable()
+    //     // var outputs = []
+    //     var len = this.num_rows
+
+    //     for (let i = 0; i < len; i++) {
+    //         // add image to table here
+    //         let tolerance = Math.abs(holes[i] - ((max + min) / 2)) / ((max - min) / 2)
+    //         // outputs.push(tol)
+    //         this.internal_table[i][this.tolerance_index] = tolerance
+    //     }
+
+    //     // this.writeOutputsTable(this.tolerance_index, outputs)
+    // }
+    // // if hole <= max: { if hole >= min: {return "OK"}} else: {return "NOK"}
+    // BoltHole.calculateOK = function (min, max) {
+    //     var holes = this.getInputsTable()
+    //     // var outputs = []
+
+    //     for (let i = 0; i < this.num_rows; i++) {
+    //         let isOK = null
+    //         if (holes[i] <= max) {
+    //             if (holes[i] >= min) { isOK = "OK" }
+    //             else { isOK = "NOK" }
+    //         }
+    //         else { isOK = "NOK" }
+    //         // outputs.push(isOK)
+    //         this.internal_table[i][this.ok_index] = isOK
+    //     }
+
+    //     // this.writeOutputsTable(this.ok_index, outputs)
+    // }
+
+
+    // BoltCircle.calculateNom = function (bolt_circle_dia, hole_to_pilot_tol_rows) {
+    //     // var outputs = []
+
+    //     for (let i = 0; i < this.num_rows; i++) {
+    //         let nom = bolt_circle_dia + hole_to_pilot_tol_rows[i] + hole_to_pilot_tol_rows[i + 4]
+    //         // outputs.push(roundDecimal(nom, 3))
+    //         this.internal_table[i][this.nom_index] = roundDecimal(nom, 3)
+    //     }
+
+    //     // this.writeOutputsTable(this.nom_index, outputs)
+    // }
+    // BoltCircle.calculateTol = function (bolt_circle_dia, hole_to_pilot_tol_rows) {
+    //     // var outputs = []
+
+    //     for (let i = 0; i < this.num_rows; i++) {
+    //         let tol = bolt_circle_dia - hole_to_pilot_tol_rows[i] - hole_to_pilot_tol_rows[i + 4]
+    //         // outputs.push(roundDecimal(tol, 3))
+    //         this.internal_table[i][this.tol_index] = roundDecimal(tol, 3)
+    //     }
+
+    //     // this.writeOutputsTable(this.tol_index, outputs)
+    // }
+    // BoltCircle.calculateDev = function (bolt_holes) {
+    //     // var outputs = []
+    //     var holes = this.getInputsTable()
+
+    //     for (let i = 0; i < this.num_rows; i++) {
+    //         let dev = holes[i] + bolt_holes[i] / 2 + bolt_holes[i + 4] / 2
+    //         // outputs.push(roundDecimal(dev, 3))
+    //         this.internal_table[i][this.dev_index] = roundDecimal(dev, 3)
+    //     }
+
+    //     // this.writeOutputsTable(this.dev_index, outputs)
+    // }
+    // BoltCircle.calculateTolerance = function (bolt_circle_dia) {
+    //     // var outputs = []
+    //     var nom_values = this.getRowValues(this.nom_index)
+    //     var dev_values = this.getRowValues(this.dev_index)
+
+    //     for (let i = 0; i < this.num_rows; i++) {
+    //         let tolerance = Math.abs(dev_values[i] - bolt_circle_dia) / Math.abs(nom_values[i] - bolt_circle_dia)
+    //         // outputs.push(roundDecimal(tolerance, 3))
+    //         this.internal_table[i][this.tolerance_index] = roundDecimal(tolerance, 3)
+    //     }
+
+    //     // this.writeOutputsTable(this.tolerance_index, outputs)
+    // }
+    // BoltCircle.calculateOK = function () {
+    //     // var outputs = []
+    //     var nom_values = this.getRowValues(this.nom_index)
+    //     var tol_values = this.getRowValues(this.tol_index)
+    //     var dev_values = this.getRowValues(this.dev_index)
+
+    //     for (let i = 0; i < this.num_rows; i++) {
+    //         let isOK = null
+    //         if (dev_values[i] <= nom_values[i]) {
+    //             if (dev_values[i] >= tol_values[i]) {
+    //                 isOK = "OK"
+    //             }
+    //             else {
+    //                 isOK = "NOK"
+    //             }
+    //         }
+    //         else {
+    //             isOK = "NOK"
+    //         }
+    //         // outputs.push(isOK)
+    //         this.internal_table[i][this.ok_index] = isOK
+    //     }
+
+    //     // this.writeOutputsTable(this.ok_index, outputs)
+    // }
 
 
     AverageBoltCircle.calculateAverageBC = function (bolt_circle_dev_list) {
@@ -555,6 +697,8 @@ function setTables() {
         // this.writeOutputsTable(this.ok_index, outputs)
 
     }
+
+    return
 }
 
 // ===
