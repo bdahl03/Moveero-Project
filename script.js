@@ -1,5 +1,6 @@
 
 // ===objects===
+// adjust classes to have nom dev and tol variables to be created in there own class
 class Table {
     constructor(HTMLTableTag, num_rows, num_cols, tolerance_index, ok_index, nom_index = null, tol_index = null, dev_index = null) {
         this.table = document.getElementById(HTMLTableTag)
@@ -569,7 +570,7 @@ class HoleToHoleTable extends InputTable {
 
 // ===globals===
 
-    //  Table(HTMLTableTag, num_rows, num_cols,              tolerance_index, ok_index, nom_index = null, tol_index = null, dev_index = null)
+//      Table(HTMLTableTag, num_rows, num_cols,              tolerance_index, ok_index, nom_index = null, tol_index = null, dev_index = null)
 // InputTable(HTMLTableTag, num_rows, num_cols, input_index, tolerance_index, ok_index, nom_index = null, tol_index = null, dev_index = null)
 const PilotHole = new PilotHoleTable('PilotHoleTable', 1, 3, 0, 1, 2)
 
@@ -665,7 +666,6 @@ function calculate() {
 
     colorHTMLTables()
 }
-// ===
 
 // ===tools===
 function updateTables() {
@@ -800,8 +800,6 @@ function roundDecimal(number, digits) {
 }
 
 function colorHTMLOk(HTML_Ok) {
-    // if (HTML_Ok.innerHTML == "OK")       {HTML_Ok.style.backgroundColor='#00FF00'}
-    // else if (HTML_Ok.innerHTML == "NOK") {HTML_Ok.style.backgroundColor='#FF0000'}
     if (HTML_Ok.innerHTML == "OK") { HTML_Ok.className = "isOK" }
     else if (HTML_Ok.innerHTML == "NOK") { HTML_Ok.className = "isNOK" }
 }
@@ -843,7 +841,7 @@ function colorHTMLTables() {
 
 function turnOnGlobals() {
     document.getElementById("StartButton").style.display = ""
-    // find a better word then Disableable
+    // find a better word then "disableable"
     let disableables = document.getElementsByClassName("DisableableInput")
     for (let i = 0, disableable; disableable = disableables[i]; i++) {
         disableable.disabled = false
@@ -852,7 +850,7 @@ function turnOnGlobals() {
 
 function turnOffGlobals() {
     document.getElementById("StartButton").style.display = "none"
-    // find a better word then Disableable
+    // find a better word then "disableable"
     let disableables = document.getElementsByClassName("DisableableInput")
     for (let i = 0, disableable; disableable = disableables[i]; i++) {
         disableable.disabled = true
@@ -909,8 +907,6 @@ function toggleAdditionalInfo() {
         document.getElementById("toggleAdditionalInfoButton").textContent = "Show More"
         show_additional_info = false
     }
-    // PilotHole.toggleHideColumns  ([PilotHole.ok_index,   PilotHole.tolerance_index])
-    // BoltHole.toggleHideColumns   ([BoltHole.ok_index,    BoltHole.tolerance_index])
     toggleHidables("HidableInfo")
     BoltCircle.toggleHideColumns([BoltCircle.nom_index, BoltCircle.tol_index, BoltCircle.dev_index])
     AverageBoltCircle.toggleHideColumns([AverageBoltCircle.nom_index, AverageBoltCircle.tol_index, AverageBoltCircle.dev_index])
