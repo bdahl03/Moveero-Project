@@ -47,6 +47,13 @@ input {
   width: 1.2in;
 }
 
+/* remove inputs arrows */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
 .inputalign  {
   display: table;
   margin: 10px 0px;

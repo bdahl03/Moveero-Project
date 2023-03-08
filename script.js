@@ -2,16 +2,16 @@
 // ===objects===
 // adjust classes to have nom dev and tol variables to be created in there own class
 class Table {
-    constructor(HTMLTableTag, num_rows, num_cols, tolerance_index, ok_index, nom_index = null, tol_index = null, dev_index = null) {
+    constructor(HTMLTableTag, num_rows, num_cols) {
         this.table = document.getElementById(HTMLTableTag)
-        this.tolerance_index = tolerance_index
-        this.ok_index = ok_index
         this.num_rows = num_rows
         this.num_cols = num_cols
 
-        this.nom_index = nom_index
-        this.tol_index = tol_index
-        this.dev_index = dev_index
+        // this.tolerance_index = tolerance_index
+        // this.ok_index = ok_index
+        // this.nom_index = nom_index
+        // this.tol_index = tol_index
+        // this.dev_index = dev_index
     }
 
     updateTableSize(num_rows = this.num_rows, num_cols = this.num_cols) {
@@ -122,9 +122,9 @@ class Table {
 
 // extended class with inputs and outputs
 class InputTable extends Table {
-    constructor(HTMLTableTag, num_rows, num_cols, input_index, tolerance_index, ok_index, nom_index = null, tol_index = null, dev_index = null) {
+    constructor(HTMLTableTag, num_rows, num_cols, input_index) {
         // inherit the Table class properties
-        super(HTMLTableTag, num_rows, num_cols, tolerance_index, ok_index, nom_index, tol_index, dev_index)
+        super(HTMLTableTag, num_rows, num_cols)
 
         this.input_index = input_index
         // this.tolerance_index = tolerance_index
@@ -177,8 +177,13 @@ class InputTable extends Table {
 
 // ===Table Calculations===
 class PilotHoleTable extends InputTable {
-    constructor(HTMLTableTag, num_rows, num_cols, input_index, tolerance_index, ok_index, nom_index = null, tol_index = null, dev_index = null) {
-        super(HTMLTableTag, num_rows, num_cols, input_index, tolerance_index, ok_index, nom_index, tol_index, dev_index)
+    constructor(HTMLTableTag, num_rows, num_cols, input_index = 0, tolerance_index = 1, ok_index = 2) {
+        super(HTMLTableTag, num_rows, num_cols, input_index)
+        this.tolerance_index = tolerance_index
+        this.ok_index = ok_index
+        // this.nom_index = nom_index
+        // this.tol_index = tol_index
+        // this.dev_index = dev_index
     }
     calculateTolerance(min, max) {
         var pilot_hole = this.getInputsTable()[0]
@@ -203,8 +208,14 @@ class PilotHoleTable extends InputTable {
 }
 
 class BoltHoleTable extends InputTable {
-    constructor(HTMLTableTag, num_rows, num_cols, input_index, tolerance_index, ok_index, nom_index = null, tol_index = null, dev_index = null) {
-        super(HTMLTableTag, num_rows, num_cols, input_index, tolerance_index, ok_index, nom_index, tol_index, dev_index)
+    constructor(HTMLTableTag, num_rows, num_cols, input_index = 1, tolerance_index = 2, ok_index = 3) {
+        super(HTMLTableTag, num_rows, num_cols, input_index)
+
+        this.tolerance_index = tolerance_index
+        this.ok_index = ok_index
+        // this.nom_index = nom_index
+        // this.tol_index = tol_index
+        // this.dev_index = dev_index
     }
     calculateTolerance(min, max) {
         var holes = this.getInputsTable()
@@ -241,8 +252,14 @@ class BoltHoleTable extends InputTable {
 }
 
 class BoltCircleTable extends InputTable {
-    constructor(HTMLTableTag, num_rows, num_cols, input_index, tolerance_index, ok_index, nom_index = null, tol_index = null, dev_index = null) {
-        super(HTMLTableTag, num_rows, num_cols, input_index, tolerance_index, ok_index, nom_index, tol_index, dev_index)
+    constructor(HTMLTableTag, num_rows, num_cols, input_index = 1, tolerance_index = 5, ok_index = 6, nom_index = 2, tol_index = 3, dev_index = 4) {
+        super(HTMLTableTag, num_rows, num_cols, input_index)
+        
+        this.tolerance_index = tolerance_index
+        this.ok_index = ok_index
+        this.nom_index = nom_index
+        this.tol_index = tol_index
+        this.dev_index = dev_index
     }
     calculateNom(bolt_circle_dia, hole_to_pilot_tol_rows) {
         // var outputs = []
@@ -320,8 +337,14 @@ class BoltCircleTable extends InputTable {
 }
 
 class AverageBoltCircleTable extends Table {
-    constructor(HTMLTableTag, num_rows, num_cols, tolerance_index, ok_index, nom_index = null, tol_index = null, dev_index = null) {
-        super(HTMLTableTag, num_rows, num_cols, tolerance_index, ok_index, nom_index, tol_index, dev_index);
+    constructor(HTMLTableTag, num_rows, num_cols, tolerance_index = 4, ok_index = 5, nom_index = 1, tol_index = 2, dev_index = 3) {
+        super(HTMLTableTag, num_rows, num_cols), 4, 5, 1, 2, 3
+        
+        this.tolerance_index = tolerance_index
+        this.ok_index = ok_index
+        this.nom_index = nom_index
+        this.tol_index = tol_index
+        this.dev_index = dev_index
     }
     
     calculateAverageBC(bolt_circle_dev_list) {
@@ -396,8 +419,14 @@ class AverageBoltCircleTable extends Table {
 }
 
 class HoleToPilotTable extends InputTable {
-    constructor(HTMLTableTag, num_rows, num_cols, input_index, tolerance_index, ok_index, nom_index = null, tol_index = null, dev_index = null) {
-        super(HTMLTableTag, num_rows, num_cols, input_index, tolerance_index, ok_index, nom_index, tol_index, dev_index)
+    constructor(HTMLTableTag, num_rows, num_cols, input_index = 1, tolerance_index = 5, ok_index = 6, nom_index = 2, tol_index = 3, dev_index = 4) {
+        super(HTMLTableTag, num_rows, num_cols, input_index)
+        
+        this.tolerance_index = tolerance_index
+        this.ok_index = ok_index
+        this.nom_index = nom_index
+        this.tol_index = tol_index
+        this.dev_index = dev_index
     }
     calculateNom(bolt_circle_dia, pilot_hole, bolt_holes) {
         // var outputs = []
@@ -486,8 +515,14 @@ class HoleToPilotTable extends InputTable {
 }
 
 class HoleToHoleTable extends InputTable {
-    constructor(HTMLTableTag, num_rows, num_cols, input_index, tolerance_index, ok_index, nom_index = null, tol_index = null, dev_index = null) {
-        super(HTMLTableTag, num_rows, num_cols, input_index, tolerance_index, ok_index, nom_index, tol_index, dev_index)
+    constructor(HTMLTableTag, num_rows, num_cols, input_index = 1, tolerance_index = 5, ok_index = 6, nom_index = 2, tol_index = 3, dev_index = 4) {
+        super(HTMLTableTag, num_rows, num_cols, input_index)
+        
+        this.tolerance_index = tolerance_index
+        this.ok_index = ok_index
+        this.nom_index = nom_index
+        this.tol_index = tol_index
+        this.dev_index = dev_index
     }
     
     calculateNom(hole_to_hole_calculation, bolt_holes) {
@@ -572,14 +607,15 @@ class HoleToHoleTable extends InputTable {
 
 //      Table(HTMLTableTag, num_rows, num_cols,              tolerance_index, ok_index, nom_index = null, tol_index = null, dev_index = null)
 // InputTable(HTMLTableTag, num_rows, num_cols, input_index, tolerance_index, ok_index, nom_index = null, tol_index = null, dev_index = null)
-const PilotHole = new PilotHoleTable('PilotHoleTable', 1, 3, 0, 1, 2)
+const PilotHole = new PilotHoleTable('PilotHoleTable', 1, 3)
 
-const BoltHole = new BoltHoleTable('BoltHoleTable', 1, 4, 1, 2, 3)
-const BoltCircle = new BoltCircleTable('BoltCircleTable', 1, 7, 1, 5, 6, 2, 3, 4)
-const AverageBoltCircle = new AverageBoltCircleTable('AverageBoltCircleTable', 1, 6, 4, 5, 1, 2, 3)
+const BoltHole = new BoltHoleTable('BoltHoleTable', 1, 4)
 
-const HoleToPilot = new HoleToPilotTable('HoleToPilotTable', 1, 7, 1, 5, 6, 2, 3, 4)
-const HoleToHole = new HoleToHoleTable('HoleToHoleTable', 1, 7, 1, 5, 6, 2, 3, 4)
+const BoltCircle = new BoltCircleTable('BoltCircleTable', 1, 7)
+const AverageBoltCircle = new AverageBoltCircleTable('AverageBoltCircleTable', 1, 6)
+
+const HoleToPilot = new HoleToPilotTable('HoleToPilotTable', 1, 7)
+const HoleToHole = new HoleToHoleTable('HoleToHoleTable', 1, 7)
 
 var show_additional_info = false
 
