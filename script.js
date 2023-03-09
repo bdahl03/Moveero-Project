@@ -119,6 +119,22 @@ class Table {
             // row.cells[this.ok_index].innerHTML = "None"
         }
     }
+
+    getRowValues(index) {
+        // input_index: the column for inputs
+        // console.log(table)
+        var list = []
+
+        // loop though rows and cols of the table
+        // var table_rows = this.getHTMLTableRows(this.table)
+        for (let i = 0, row; row = this.internal_table[i]; i++) {
+
+            let col_val = parseFloat(row[index])
+            list.push(col_val)
+        }
+
+        return list
+    }
 }
 
 // extended class with inputs and outputs
@@ -157,22 +173,6 @@ class InputTable extends Table {
         }
 
         return input_list
-    }
-
-    getRowValues(index) {
-        // input_index: the column for inputs
-        // console.log(table)
-        var list = []
-
-        // loop though rows and cols of the table
-        // var table_rows = this.getHTMLTableRows(this.table)
-        for (let i = 0, row; row = this.internal_table[i]; i++) {
-
-            let col_val = parseFloat(row[index])
-            list.push(col_val)
-        }
-
-        return list
     }
 }
 
@@ -473,7 +473,7 @@ class OddBoltCircleTable extends Table {
             let dev = this.internal_table[i][this.dev_index]
             
             let tolerance = Math.abs((nom - bolt_circle_dia)) / Math.abs((dev - bolt_circle_dia))
-            this.internal_table[i][this.dev_index] = tolerance
+            this.internal_table[i][this.tolerance_index] = tolerance
         }
     }
 
@@ -497,7 +497,7 @@ class OddBoltCircleTable extends Table {
                 isOK = "NOK"
             }
 
-            this.internal_table[i][this.nom_index] = isOK
+            this.internal_table[i][this.ok_index] = isOK
         }
     }
 }
@@ -816,7 +816,7 @@ function calculate() {
     HoleToPilot.calculateTolerance()
     HoleToPilot.calculateOK()
 
-    BoltCircle.calculateNom(bolt_circle_dia, HoleToPilot.getRowValues(3))
+    BoltCircle.calculateNom(bolt_circle_dia, HoleToPilot.getRowValues(3)) // replace hardcoded
     BoltCircle.calculateTol(bolt_circle_dia, HoleToPilot.getRowValues(3))
     BoltCircle.calculateDev(BoltHole.getInputsTable())
     BoltCircle.calculateTolerance(bolt_circle_dia)
@@ -825,9 +825,23 @@ function calculate() {
     AverageBoltCircle.calculateAverageBC(BoltCircle.getRowValues(BoltCircle.dev_index))
     AverageBoltCircle.calculateNom(MMC, bolt_circle_dia, true_pos, min, bolt_holes_average)
     AverageBoltCircle.calculateTol(MMC, bolt_circle_dia, true_pos, bolt_holes_average, min)
-    AverageBoltCircle.calculateDev(BoltCircle.getRowValues(BoltCircle.dev_index)) // need to define bolt_circle_dev_list
+    AverageBoltCircle.calculateDev(BoltCircle.getRowValues(BoltCircle.dev_index))
     AverageBoltCircle.calculateTolerance(bolt_circle_dia)
     AverageBoltCircle.calculateOK()
+
+    OddBoltCircle.calculateNom(bolt_circle_dia, HoleToPilot.getRowValues(HoleToPilot.tol_index))
+    OddBoltCircle.calculateTol(bolt_circle_dia, HoleToPilot.getRowValues(HoleToPilot.tol_index))
+    OddBoltCircle.calculateDev(pilot_hole, BoltHole.getInputsTable(), HoleToPilot.getInputsTable())
+    OddBoltCircle.calculateTolerance(bolt_circle_dia)
+    OddBoltCircle.calculateOK()
+    OddBoltCircle.calculateOutput()
+
+    OddAverageBoltCircle.calculateOutput(OddBoltCircle.getRowValues(OddBoltCircle.dev_index))
+    OddAverageBoltCircle.calculateNom(bolt_holes_average, true_pos, bolt_circle_dia, min)
+    OddAverageBoltCircle.calculateTol(bolt_holes_average, true_pos, bolt_circle_dia)
+    OddAverageBoltCircle.calculateDev()
+    OddAverageBoltCircle.calculateTolerance(bolt_circle_dia)
+    OddAverageBoltCircle.calculateOK(OddBoltCircle.getRowValues(OddBoltCircle.nom_index)[0], OddBoltCircle.getRowValues(OddBoltCircle.tol_index)[0])
 
     HoleToHole.calculateNom(hole_to_hole_calculation, BoltHole.getInputsTable())
     HoleToHole.calculateTol(HoleToPilot.getRowValues(3))
@@ -840,6 +854,8 @@ function calculate() {
     BoltHole.internalToHTMLTable()
     BoltCircle.internalToHTMLTable()
     AverageBoltCircle.internalToHTMLTable()
+    OddBoltCircle.internalToHTMLTable()
+    OddAverageBoltCircle.internalToHTMLTable()
     HoleToPilot.internalToHTMLTable()
     HoleToHole.internalToHTMLTable()
 
@@ -847,6 +863,7 @@ function calculate() {
     PilotHole.ShowColumns([PilotHole.ok_index, PilotHole.tolerance_index])
     BoltHole.ShowColumns([BoltHole.ok_index, BoltHole.tolerance_index])
     BoltCircle.ShowColumns([BoltCircle.ok_index, BoltCircle.tolerance_index])
+    OddBoltCircle.ShowColumns([BoltCircle.ok_index, BoltCircle.tolerance_index])
     HoleToPilot.ShowColumns([HoleToPilot.ok_index, HoleToPilot.tolerance_index])
     HoleToHole.ShowColumns([HoleToHole.ok_index, HoleToHole.tolerance_index])
 
@@ -862,6 +879,8 @@ function updateTables() {
     updateBoltHoleTable(num_holes)
     updateBoltCircleTable(num_holes)
     AverageBoltCircle.updateTable()
+    updateOddBoltCircleTable(num_holes)
+    OddAverageBoltCircle.updateTable()
     updateHoleToPilotTable(num_holes)
     updateHoleToHoleTable(num_holes)
 
@@ -889,6 +908,16 @@ function updateBoltCircleTable(num_holes) {
         row.cells[0].innerHTML = (1 + i) + " to " + (num_holes + 1 + i)
     }
 }
+function updateOddBoltCircleTable(num_holes) {
+    num_holes = Math.floor(num_holes)
+
+    OddBoltCircle.updateTable(num_holes)
+    var table_rows = OddBoltCircle.internal_table
+
+    for (let i = 0, row; row = table_rows[i]; i++) {
+        row[0] = i + 1
+    }
+}
 
 function updateHoleToPilotTable(num_holes) {
     HoleToPilot.updateTable(num_holes)
@@ -908,6 +937,7 @@ function updateHoleToHoleTable(num_holes) {
         row.cells[0].innerHTML = (i + 1) + " to " + (((i + 1) % num_holes) + 1)
     }
 }
+
 
 function createNumberInputObject() {
     // <input type="number" step="any" min="0" value="0.8360">
