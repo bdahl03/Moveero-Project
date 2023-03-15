@@ -432,56 +432,56 @@ class OddBoltCircleTable extends Table {
         this.output_index = output_index
         this.tolerance_index = tolerance_index
         this.ok_index = ok_index
-        this.nom_index = nom_index
-        this.tol_index = tol_index
-        this.dev_index = dev_index
+        this.max_index = nom_index
+        this.min_index = tol_index
+        this.act_index = dev_index
     }
     
     calculateOutput() {
         // unfinished
-        var dev_list = this.getRowValues(this.dev_index)
+        var dev_list = this.getRowValues(this.act_index)
 
         for (let i = 0, dev; dev = dev_list[i]; i++) {
-            this.internal_table[i][this.output_index] = dev
+            this.internal_table[i][this.output_index] = roundDecimal(dev, 3)
         }
     }
 
     calculateNom(bolt_circle_dia, hole_to_pilot_tol_rows) {
         for (let i = 0, hole_to_pilot_tol; hole_to_pilot_tol = hole_to_pilot_tol_rows[i]; i++) {
             let nom = bolt_circle_dia + 2 * hole_to_pilot_tol
-            this.internal_table[i][this.nom_index] = nom
+            this.internal_table[i][this.max_index] = roundDecimal(nom, 3)
         }
     }
 
     calculateTol(bolt_circle_dia, hole_to_pilot_tol_rows) {
         for (let i = 0, hole_to_pilot_tol; hole_to_pilot_tol = hole_to_pilot_tol_rows[i]; i++) {
             let tol = bolt_circle_dia - 2 * hole_to_pilot_tol
-            this.internal_table[i][this.tol_index] = tol
+            this.internal_table[i][this.min_index] = roundDecimal(tol, 3)
         }
     }
 
     calculateDev(pilot_hole, bolt_holes, hole_to_pilot_input_rows) {
         for (let i = 0; i < this.internal_table.length; i++) {
-            let dev = pilot_hole + 2 * bolt_holes[i] + hole_to_pilot_input_rows[i]
-            this.internal_table[i][this.dev_index] = dev
+            let dev = pilot_hole + 2 * hole_to_pilot_input_rows[i] + bolt_holes[i]
+            this.internal_table[i][this.act_index] = roundDecimal(dev, 3)
         }
     }
 
     calculateTolerance(bolt_circle_dia) {
         for (let i = 0; i < this.internal_table.length; i++) {
-            let nom = this.internal_table[i][this.nom_index]
-            let dev = this.internal_table[i][this.dev_index]
+            let nom = this.internal_table[i][this.max_index]
+            let dev = this.internal_table[i][this.act_index]
             
-            let tolerance = Math.abs((nom - bolt_circle_dia)) / Math.abs((dev - bolt_circle_dia))
+            let tolerance = Math.abs((dev - bolt_circle_dia)) / Math.abs((nom - bolt_circle_dia))
             this.internal_table[i][this.tolerance_index] = tolerance
         }
     }
 
     calculateOK() {
         for (let i = 0; i < this.internal_table.length; i++) {
-            let nom = this.internal_table[i][this.nom_index]
-            let tol = this.internal_table[i][this.tol_index]
-            let dev = this.internal_table[i][this.dev_index]
+            let nom = this.internal_table[i][this.max_index]
+            let tol = this.internal_table[i][this.min_index]
+            let dev = this.internal_table[i][this.act_index]
 
             let isOK = null
 
@@ -515,17 +515,17 @@ class OddAverageBoltCircleTable extends Table {
     }
 
     calculateOutput(bolt_circle_dev_list) {
-        this.internal_table[0][this.output_index] = averageNumbers(bolt_circle_dev_list)
+        this.internal_table[0][this.output_index] = roundDecimal(averageNumbers(bolt_circle_dev_list), 3)
     }
 
     calculateNom(bolt_holes_average, true_pos, bolt_circle_dia, min) {
         var nom = bolt_circle_dia + true_pos + (bolt_holes_average - min)
-        this.internal_table[0][this.nom_index] = nom
+        this.internal_table[0][this.nom_index] = roundDecimal(nom, 3)
     }
 
     calculateTol(bolt_holes_average, true_pos, bolt_circle_dia, min) {
         var tol = bolt_circle_dia - true_pos - (bolt_holes_average - min)
-        this.internal_table[0][this.tol_index] = tol
+        this.internal_table[0][this.tol_index] = roundDecimal(tol, 3)
     }
 
     calculateDev() {
@@ -771,7 +771,6 @@ var show_additional_info = false
 function calculate() {
     document.getElementById("toggleAdditionalInfoButton").disabled = false
 
-    AverageBoltCircle.table.style.display = ""
 
     // likely not necessary
     PilotHole.HTMLToInternalTable()
@@ -802,6 +801,16 @@ function calculate() {
 
     const is_even_num_holes = isEven(num_holes)
 
+    if (is_even_num_holes) {
+        AverageBoltCircle.table.style.display = ""
+        OddBoltCircle.table.style.display = "none"
+        OddAverageBoltCircle.table.style.display = "none"
+    }
+    else {
+        AverageBoltCircle.table.style.display = "none"
+        OddBoltCircle.table.style.display = ""
+        OddAverageBoltCircle.table.style.display = ""
+    }
 
     // calculate table inputs
     PilotHole.calculateTolerance(pilot_hole_min, pilot_hole_max)
@@ -836,12 +845,12 @@ function calculate() {
     OddBoltCircle.calculateOK()
     OddBoltCircle.calculateOutput()
 
-    OddAverageBoltCircle.calculateOutput(OddBoltCircle.getRowValues(OddBoltCircle.dev_index))
+    OddAverageBoltCircle.calculateOutput(OddBoltCircle.getRowValues(OddBoltCircle.act_index))
     OddAverageBoltCircle.calculateNom(bolt_holes_average, true_pos, bolt_circle_dia, min)
-    OddAverageBoltCircle.calculateTol(bolt_holes_average, true_pos, bolt_circle_dia)
+    OddAverageBoltCircle.calculateTol(bolt_holes_average, true_pos, bolt_circle_dia, min)
     OddAverageBoltCircle.calculateDev()
     OddAverageBoltCircle.calculateTolerance(bolt_circle_dia)
-    OddAverageBoltCircle.calculateOK(OddBoltCircle.getRowValues(OddBoltCircle.nom_index)[0], OddBoltCircle.getRowValues(OddBoltCircle.tol_index)[0])
+    OddAverageBoltCircle.calculateOK(OddBoltCircle.getRowValues(OddBoltCircle.max_index)[0], OddBoltCircle.getRowValues(OddBoltCircle.min_index)[0])
 
     HoleToHole.calculateNom(hole_to_hole_calculation, BoltHole.getInputsTable())
     HoleToHole.calculateTol(HoleToPilot.getRowValues(3))
@@ -1012,6 +1021,47 @@ function fillInputs() {
         // console.log(input.value)
     }
 }
+function fillInputs2() {
+    var all_inputs = document.getElementsByTagName("input");
+
+    var demo_list = [
+        5,
+        0.846,
+        0.020,
+        0.020,
+        0.020,
+        10.827,
+        8.721,
+        8.701,
+
+        8.7210,
+
+        0.8360,
+        0.8390,
+        0.8350,
+        0.8390,
+        0.8500,
+        
+        0,0,
+
+        0.6580,
+        0.6450,
+        0.6480,
+        0.6500,
+        0.6410,
+
+        5.5230,
+        5.5150,
+        5.5180,
+        5.5060,
+        5.5070
+    ]
+
+    for (let i = 0, input; input = all_inputs[i]; i++) {
+        input.value = demo_list[i]
+        // console.log(input.value)
+    }
+}
 
 function colorHTMLOk(HTML_Ok) {
     if (HTML_Ok.innerHTML == "OK") { HTML_Ok.className = "isOK" }
@@ -1036,6 +1086,20 @@ function colorHTMLTables() {
     }
 
     var table_rows = AverageBoltCircle.getHTMLTableRows()
+    for (let i = 0, row; row = table_rows[i]; i++) {
+        row.cells[0].style.color = "White"
+        row.cells[0].style.backgroundColor = "Purple"
+        colorHTMLOk(row.cells[AverageBoltCircle.ok_index])
+    }
+
+    var table_rows = OddBoltCircle.getHTMLTableRows()
+    for (let i = 0, row; row = table_rows[i]; i++) {
+        row.cells[OddBoltCircle.output_index].style.color = "White"
+        row.cells[OddBoltCircle.output_index].style.backgroundColor = "Purple"
+        colorHTMLOk(row.cells[BoltCircle.ok_index])
+    }
+
+    var table_rows = OddAverageBoltCircle.getHTMLTableRows()
     for (let i = 0, row; row = table_rows[i]; i++) {
         row.cells[0].style.color = "White"
         row.cells[0].style.backgroundColor = "Purple"
@@ -1075,16 +1139,40 @@ function showTables() {
     if (document.forms[0].checkValidity() == false) { return }
     turnOffGlobals()
     showHidables("HidableTables")
-    updateTables()
+    // updateTables()
     show_additional_info = false
 
-    PilotHole.HideColumns([PilotHole.ok_index, PilotHole.tolerance_index])
-    BoltHole.HideColumns([BoltHole.ok_index, BoltHole.tolerance_index])
-    BoltCircle.HideColumns([BoltCircle.nom_index, BoltCircle.tol_index, BoltCircle.dev_index, BoltCircle.ok_index, BoltCircle.tolerance_index])
-    AverageBoltCircle.HideColumns([AverageBoltCircle.nom_index, AverageBoltCircle.tol_index, AverageBoltCircle.dev_index])
-    AverageBoltCircle.table.style.display = "none"
-    HoleToPilot.HideColumns([BoltCircle.nom_index, BoltCircle.tol_index, BoltCircle.dev_index, HoleToPilot.ok_index, HoleToPilot.tolerance_index])
-    HoleToHole.HideColumns([BoltCircle.nom_index, BoltCircle.tol_index, BoltCircle.dev_index, HoleToHole.ok_index, HoleToHole.tolerance_index])
+    resetTables()
+    // updateTables()
+
+    // hideHidables("HidableInfo")
+    // document.getElementById("toggleAdditionalInfoButton").textContent = "Show More"
+    // document.getElementById("toggleAdditionalInfoButton").disabled = true
+    // show_additional_info = false
+    // is_even_num_holes = isEven(parseFloat(document.getElementById("NumHoles").value))
+
+    // if (is_even_num_holes) {
+    //     // showHidables("EvenTables")
+    //     // hideHidables("OddTables")
+    //     document.getElementById("EvenTables").style.display = ""
+    //     document.getElementById("OddTables").style.display = "none"
+    // }
+    // else {
+    //     // showHidables("OddTables")
+    //     // hideHidables("EvenTables")
+    //     document.getElementById("EvenTables").style.display = "none"
+    //     document.getElementById("OddTables").style.display = ""
+    // }
+
+    // PilotHole.HideColumns([PilotHole.ok_index, PilotHole.tolerance_index])
+    // BoltHole.HideColumns([BoltHole.ok_index, BoltHole.tolerance_index])
+    // BoltCircle.HideColumns([BoltCircle.nom_index, BoltCircle.tol_index, BoltCircle.dev_index, BoltCircle.ok_index, BoltCircle.tolerance_index])
+    // AverageBoltCircle.HideColumns([AverageBoltCircle.nom_index, AverageBoltCircle.tol_index, AverageBoltCircle.dev_index])
+    // AverageBoltCircle.table.style.display = "none"
+    // OddBoltCircle.table.style.display = "none"
+    // OddAverageBoltCircle.table.style.display = "none"
+    // HoleToPilot.HideColumns([BoltCircle.nom_index, BoltCircle.tol_index, BoltCircle.dev_index, HoleToPilot.ok_index, HoleToPilot.tolerance_index])
+    // HoleToHole.HideColumns([BoltCircle.nom_index, BoltCircle.tol_index, BoltCircle.dev_index, HoleToHole.ok_index, HoleToHole.tolerance_index])
 }
 
 function resetTables() {
@@ -1094,14 +1182,38 @@ function resetTables() {
     document.getElementById("toggleAdditionalInfoButton").textContent = "Show More"
     document.getElementById("toggleAdditionalInfoButton").disabled = true
     show_additional_info = false
+    is_even_num_holes = isEven(parseFloat(document.getElementById("NumHoles").value))
+
+    if (is_even_num_holes) {
+        // showHidables("EvenTables")
+        // hideHidables("OddTables")
+        document.getElementById("EvenTables").style.display = ""
+        document.getElementById("OddTables").style.display = "none"
+    }
+    else {
+        // showHidables("OddTables")
+        // hideHidables("EvenTables")
+        document.getElementById("EvenTables").style.display = "none"
+        document.getElementById("OddTables").style.display = ""
+    }
 
     PilotHole.HideColumns([PilotHole.ok_index, PilotHole.tolerance_index])
+
     BoltHole.HideColumns([BoltHole.ok_index, BoltHole.tolerance_index])
+
     BoltCircle.HideColumns([BoltCircle.nom_index, BoltCircle.tol_index, BoltCircle.dev_index, BoltCircle.ok_index, BoltCircle.tolerance_index])
+
     AverageBoltCircle.HideColumns([AverageBoltCircle.nom_index, AverageBoltCircle.tol_index, AverageBoltCircle.dev_index])
     AverageBoltCircle.table.style.display = "none"
+    
+    OddBoltCircle.HideColumns([OddBoltCircle.max_index, OddBoltCircle.min_index, OddBoltCircle.act_index])
+
+    OddAverageBoltCircle.HideColumns([OddAverageBoltCircle.nom_index, OddAverageBoltCircle.tol_index, OddAverageBoltCircle.dev_index])
+    OddAverageBoltCircle.table.style.display = "none"
+
     HoleToPilot.HideColumns([BoltCircle.nom_index, BoltCircle.tol_index, BoltCircle.dev_index, HoleToPilot.ok_index, HoleToPilot.tolerance_index])
-    HoleToHole.HideColumns([BoltCircle.nom_index, BoltCircle.tol_index, BoltCircle.dev_index, HoleToHole.ok_index, HoleToHole.tolerance_index])
+
+    HoleToHole.HideColumns([BoltCircle.nom_index, BoltCircle.tol_index, BoltCircle.dev_index, HoleToHole.ok_index, HoleToHole.tolerance_index])    
 }
 
 function resetAll() {
@@ -1123,9 +1235,17 @@ function toggleAdditionalInfo() {
     }
     toggleHidables("HidableInfo")
     BoltCircle.toggleHideColumns([BoltCircle.nom_index, BoltCircle.tol_index, BoltCircle.dev_index])
+
     AverageBoltCircle.toggleHideColumns([AverageBoltCircle.nom_index, AverageBoltCircle.tol_index, AverageBoltCircle.dev_index])
+
+    OddBoltCircle.toggleHideColumns([OddBoltCircle.max_index, OddBoltCircle.min_index, OddBoltCircle.act_index])
+
+    OddAverageBoltCircle.toggleHideColumns([OddAverageBoltCircle.nom_index, OddAverageBoltCircle.tol_index, OddAverageBoltCircle.dev_index])
+
     HoleToPilot.toggleHideColumns([HoleToPilot.nom_index, HoleToPilot.tol_index, HoleToPilot.dev_index])
+
     HoleToHole.toggleHideColumns([HoleToHole.nom_index, HoleToHole.tol_index, HoleToHole.dev_index])
+
 }
 
 function toggleHidables(className) {

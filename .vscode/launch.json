@@ -8,7 +8,8 @@
             "type": "msedge",
             "request": "launch",
             "name": "Open main.html",
-            "file": "w:\\Formulas\\Moveero-Project\\main.html"
+            // "file": "w:\\Formulas\\Moveero-Project\\main.html"
+            "file": "${workspaceFolder}/main.html"
         }
     ]
 }

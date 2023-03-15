@@ -13,6 +13,11 @@ Orange #E14F10
 Grey #CBCBCC
 */
 
+/* debug */
+/* div {
+  border: 1px solid black;
+} */
+
 body {
   background-color: #005760;
   /* font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
@@ -24,8 +29,8 @@ main {
   box-shadow: 0px 3px 5px 5px #1E1E1E;
   margin: auto;
   /* padding: 5px 5px 5px 5px; */
-  max-width: 15in;
-  min-width: 4in;
+  max-width: 90%;
+  min-width: 5in;
   /* align-self: center; */
 }
 
