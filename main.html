@@ -27,8 +27,8 @@
 <!-- global inputs -->
 <div id="content">
 
-<div id="top">
-<img src="images/4_hl_simple.jpg" alt="temp image" width="200" style="float: right; box-shadow: 0px 0px 5px 1px;" id="diagram">
+<div id="top" style="overflow: auto;">
+<img src="images/hole_example.jpg" alt="Hole Example" width="250" style="float: right;" class="clearfix" id="diagram">
 <!-- Bolt Hole True Position Calculator -->
 <form action="javascript:void(0);">
 <div class="inputalign">
@@ -75,7 +75,8 @@
 
 <button type="submit" id="StartButton" onclick="showTables()">Start</button>
 
-</form>
+</form> 
+
 </div>
 
 <div class="HidableTables" style="display: none;">
@@ -90,13 +91,14 @@
 <div id="TableContainer">
 
 
-
-<table id="PilotHoleTable" style="margin: 10px 10px 10px 10px;">
+<div>
+<table id="PilotHoleTable">
     <caption>Pilot Hole</caption>
     <!-- row header doesn't work with js -->
     <tbody>
     </tbody>
 </table>
+</div>
 
 
 <div class="flex-container">

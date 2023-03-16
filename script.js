@@ -801,13 +801,13 @@ function calculate() {
 
     const is_even_num_holes = isEven(num_holes)
 
-    if (is_even_num_holes) {
-        AverageBoltCircle.table.style.display = ""
-        OddBoltCircle.table.style.display = "none"
-        OddAverageBoltCircle.table.style.display = "none"
-    }
-    else {
-        AverageBoltCircle.table.style.display = "none"
+    // if (! is_even_num_holes) {
+    //     AverageBoltCircle.table.style.display = ""
+    //     OddBoltCircle.table.style.display = "none"
+    //     OddAverageBoltCircle.table.style.display = "none"
+    // }
+    if (! is_even_num_holes) {
+        // AverageBoltCircle.table.style.display = "none"
         OddBoltCircle.table.style.display = ""
         OddAverageBoltCircle.table.style.display = ""
     }
@@ -1207,6 +1207,7 @@ function resetTables() {
     AverageBoltCircle.table.style.display = "none"
     
     OddBoltCircle.HideColumns([OddBoltCircle.max_index, OddBoltCircle.min_index, OddBoltCircle.act_index])
+    OddBoltCircle.table.style.display = "none"
 
     OddAverageBoltCircle.HideColumns([OddAverageBoltCircle.nom_index, OddAverageBoltCircle.tol_index, OddAverageBoltCircle.dev_index])
     OddAverageBoltCircle.table.style.display = "none"

@@ -28,8 +28,8 @@ main {
   background-color: #5FBBC4;
   box-shadow: 0px 3px 5px 5px #1E1E1E;
   margin: auto;
-  /* padding: 5px 5px 5px 5px; */
-  max-width: 90%;
+  padding: 5px 5px 5px 5px;
+  max-width: 80%;
   min-width: 5in;
   /* align-self: center; */
 }
@@ -45,6 +45,12 @@ header {
 #content {
   padding: 10px 5px 5px 5px;
   /* margin: 5px 5px 5px 5px; */
+}
+
+.clearfix::after {
+  content: "";
+  clear: both;
+  display: table;
 }
 
 /* ===inputs=== */
@@ -74,22 +80,25 @@ input::-webkit-inner-spin-button {
   display: table-cell;
 }
 
+#TableContainer {
+  border: 1px dotted #147079;
+}
+
+#TableContainer > div {
+  margin: 10px 10px 10px 10px;
+}
+
+#TableContainer > .flex-container > div > table {
+  margin: auto;
+  /* margin: 10px 10px 10px 10px; */
+}
 
 .flex-container {
   display: flex;
   flex-wrap: wrap;
   justify-content:space-between;
+  /* margin: 10px 10px; */
 }
-
-#TableContainer {
-  border: 1px dotted #147079;
-  margin: 10px 10px;
-}
-
-#TableContainer > .flex-container > div > table {
-  margin: auto;
-}
-
 
 /* ===table=== */
 table {
@@ -97,7 +106,7 @@ table {
   border-collapse: collapse;
   background-color: #CBCBCC;
   text-align: center;
-  padding: 1px 1px 1px 1px;
+  /* padding: 1px 1px 1px 1px; */
 }
 
 thead {
@@ -132,4 +141,10 @@ td > input {
   border-radius: 50%;
   width: 20px;
   height: 20px;
+  border: 1px solid black;
+}
+
+#diagram {
+  box-shadow: 0px 0px 5px 1px #1E1E1E;
+  margin: 5px 5px 5px 5px;
 }
