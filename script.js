@@ -1139,6 +1139,7 @@ function showTables() {
     if (document.forms[0].checkValidity() == false) { return }
     turnOffGlobals()
     showHidables("HidableTables")
+    showHidables("HidableButtons")
     // updateTables()
     show_additional_info = false
 
@@ -1220,6 +1221,7 @@ function resetTables() {
 function resetAll() {
     turnOnGlobals()
     hideHidables("HidableTables")
+    hideHidables("HidableButtons")
 
     resetTables()
 }
