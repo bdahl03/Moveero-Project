@@ -30,7 +30,7 @@
 <div id="top" style="overflow: auto;">
 <img src="images/hole_example.jpg" alt="Hole Example" width="250" style="float: right;" class="clearfix" id="diagram">
 <!-- Bolt Hole True Position Calculator -->
-<form action="javascript:void(0);">
+<form action="javascript:void(0);" id="InputForm">
 <div class="inputalign">
     <div>
         <label for="NumHoles">No. Holes:&nbsp</label>
@@ -62,7 +62,7 @@
     </div>
 
     <div>
-        <label for="BoltCircleDia">Bolt circle Diameter:&nbsp</label>
+        <label for="BoltCircleDia">Bolt Circle Diameter:&nbsp</label>
         <input type="number" step="any" min="0" id="BoltCircleDia" required>
     </div>
 
@@ -77,13 +77,17 @@
 
 </form>
 
-<!-- run script -->
-<button class="HidableButtons" style="display: none;" onclick="calculate()">Results</button>
-<button class="HidableButtons" style="display: none;" id="toggleAdditionalInfoButton" onclick="toggleAdditionalInfo()" disabled>Show More</button>
-
 </div>
 
-<form action="javascript:void(0);" class="HidableTables" style="display: none;">
+
+
+<div id="bottom">
+
+<form action="javascript:void(0);" id="TableForm">
+<!-- run script -->
+<button type="submit" class="HidableButtons" style="display: none;" onclick="calculate()">Results</button>
+<button class="HidableButtons" style="display: none;" id="toggleAdditionalInfoButton" onclick="toggleAdditionalInfo()" disabled>Show More</button>
+<div class="HidableTables" style="display: none;">
 
 <!-- tables are created in js -->
 
@@ -135,7 +139,7 @@
         </table>
 
         <table id="AverageBoltCircleTable" style="display: none;">
-            <caption>Average Bolt Circle</caption>
+            <!-- <caption>Average Bolt Circle</caption> -->
             <thead>
                 <tr>
                     <th>Average</th>
@@ -166,7 +170,7 @@
         </table>
 
         <table id="OddAverageBoltCircleTable" style="display: none;">
-            <caption>Average Bolt Circle</caption>
+            <!-- <caption>Average Bolt Circle</caption> -->
             <thead>
                 <tr>
                     <th>Average</th>
@@ -219,21 +223,22 @@
 </div>
 </div>
 
+</div>
+</form>
 
 <button onclick="resetTables()">Reset</button>
 <button onclick="resetAll()">Reset All</button>
-</form>
+</div>
 
 
+</div>
+</main>
 
 <!-- debug -->
 <button onclick="fillInputs()">Demo</button>
 <button onclick="fillInputs2()">Demo 2</button>
 
 
-
-</div></main>
-</div>
 
 <script src="script.js"></script>
 </body>

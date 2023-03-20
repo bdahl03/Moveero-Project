@@ -14,9 +14,9 @@ Grey #CBCBCC
 */
 
 /* debug */
-div {
+/* div {
   border: 1px solid black;
-}
+} */
 
 html {
   /* for gradient to spread to the entire height of the page */
@@ -26,7 +26,7 @@ html {
 body {
   /* gradient or no gradient? */
   background-image: linear-gradient(#005760, #147079);
-  background-color: #005760;
+  /* background-color: #005760; */
   /* font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
   font-size: 15px; */
 }
@@ -103,7 +103,10 @@ input::-webkit-inner-spin-button {
 }
 
 #TableContainer > .flex-container > div > table {
-  margin: auto;
+  /* margin: auto; */
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 5px;
   /* margin: 10px 10px 10px 10px; */
 }
 

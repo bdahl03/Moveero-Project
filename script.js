@@ -769,6 +769,7 @@ var show_additional_info = false
 
 // ===main===
 function calculate() {
+    if (document.getElementById("TableForm").checkValidity() == false) { return }
     document.getElementById("toggleAdditionalInfoButton").disabled = false
 
 
@@ -806,7 +807,11 @@ function calculate() {
     //     OddBoltCircle.table.style.display = "none"
     //     OddAverageBoltCircle.table.style.display = "none"
     // }
-    if (! is_even_num_holes) {
+    if (is_even_num_holes) {
+        BoltCircle.table.style.display = ""
+        AverageBoltCircle.table.style.display = ""
+    }
+    else {
         // AverageBoltCircle.table.style.display = "none"
         OddBoltCircle.table.style.display = ""
         OddAverageBoltCircle.table.style.display = ""
@@ -955,6 +960,7 @@ function createNumberInputObject() {
     input_obj.setAttribute("step", "any")
     input_obj.setAttribute("min", "0")
     input_obj.setAttribute("placeholder", "Enter...")
+    input_obj.required = true;
     return input_obj
 }
 
@@ -1136,7 +1142,7 @@ function turnOffGlobals() {
 }
 
 function showTables() {
-    if (document.forms[0].checkValidity() == false) { return }
+    if (document.getElementById("InputForm").checkValidity() == false) { return }
     turnOffGlobals()
     showHidables("HidableTables")
     showHidables("HidableButtons")
