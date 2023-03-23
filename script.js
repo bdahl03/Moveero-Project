@@ -979,7 +979,7 @@ function createNumberInputObject() {
     input_obj.setAttribute("min", "0")
     input_obj.setAttribute("placeholder", "Enter...")
     input_obj.setAttribute("onClick", "this.select();")
-    input_obj.required = true;
+    // input_obj.required = true;
     return input_obj
 }
 
