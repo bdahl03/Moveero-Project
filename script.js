@@ -575,7 +575,7 @@ class OddAverageBoltCircleTable extends Table {
         var nom = this.internal_table[0][this.max_index]
         var dev = this.internal_table[0][this.act_index]
 
-        var tolerance = Math.abs((nom - bolt_circle_dia)) / Math.abs((dev - bolt_circle_dia))
+        var tolerance = Math.abs((dev - bolt_circle_dia)) / Math.abs((nom - bolt_circle_dia)) 
         this.internal_table[0][this.tolerance_index] = tolerance
     }
 
@@ -1075,12 +1075,12 @@ function fillInputs2() {
         0.6500,
         0.6410,
 
-        5.5230,
-        5.5150,
-        5.5180,
-        5.5060,
-        5.5070
-    ]
+        3.3230,
+        3.3150,
+        3.3180,
+        3.3060,
+        3.3070,
+        ]
 
     for (let i = 0, input; input = all_inputs[i]; i++) {
         input.value = demo_list[i]
