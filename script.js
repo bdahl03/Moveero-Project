@@ -1272,6 +1272,14 @@ function hideHidables(className) {
     }
 }
 
+function clearTable(table_id) {
+    var table = document.getElementById(table_id)
+    var inputs = table.getElementsByTagName("input")
+
+    for (let i = 0, input; input = inputs[i]; i++) {
+        input.value = ''
+    }
+}
 
 // simple number functions
 function roundDecimal(number, digits) {

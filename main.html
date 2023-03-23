@@ -90,7 +90,7 @@
 <form action="javascript:void(0);" id="TableForm">
 <!-- run script -->
 <button type="submit" class="HidableButtons" style="display: none;" onclick="calculate()">Results</button>
-<button class="HidableButtons" style="display: none;" id="toggleAdditionalInfoButton" onclick="toggleAdditionalInfo()" disabled>Show More</button>
+<button type="button" class="HidableButtons" style="display: none;" id="toggleAdditionalInfoButton" onclick="toggleAdditionalInfo()" disabled>Show More</button>
 <div class="HidableTables" style="display: none;">
 
 <!-- tables are created in js -->
@@ -108,6 +108,7 @@
             <tbody>
             </tbody>
         </table>
+        <button onclick="clearTable('PilotHoleTable')" type="button">Reset</button>
     </div>
     
 
@@ -124,6 +125,7 @@
             <tbody>
             </tbody>
         </table>
+        <button onclick="clearTable('BoltHoleTable')" type="button">Reset</button>
     </div>
 
 
@@ -157,6 +159,7 @@
             <tbody>
             </tbody>
         </table>
+        <button onclick="clearTable('BoltCircleTable')" type="button">Reset</button>
     </div>
 
     <div id="OddTables">
@@ -208,6 +211,7 @@
             <tbody>
             </tbody>
         </table>
+        <button onclick="clearTable('HoleToPilotTable')" type="button">Reset</button>
     </div>
 
 
@@ -227,6 +231,7 @@
             <tbody>
             </tbody>
         </table>
+        <button onclick="clearTable('HoleToHoleTable')" type="button">Reset</button>
     </div>
 
 </div>
