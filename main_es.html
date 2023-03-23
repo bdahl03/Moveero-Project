@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 
 
 <head>
@@ -22,38 +22,37 @@
 <main>
 
 <header>
-    <h2>Bolt-Hole True Position Calculator</h2>
+    <h2>Calculadora de posición verdadera de agujeros para pernos</h2>
 </header>
     
 <!-- global inputs -->
 <div id="content">
 
 <div id="top" style="overflow: auto;">
-
 <img src="images/hole_example.jpg" alt="Hole Example" width="250" style="float: right;" class="clearfix" id="diagram">
 
-<p><a href="main_es.html">Español</a></p>
+<p><a href="main.html">English</a></p>
 <!-- Bolt Hole True Position Calculator -->
 <form action="javascript:void(0);" id="InputForm">
 <div class="inputalign">
     <div>
-        <label for="NumHoles">No. Holes:&nbsp</label>
+        <label for="NumHoles">Número de agujeros:&nbsp</label>
         <input type="number" step="1" min="0" id="NumHoles" class="DisableableInput" required>
     </div>
 
     <div>
-        <label for="BoltHoleDia">Bolt Hole Diameter:&nbsp</label>
+        <label for="BoltHoleDia">Diámetro del orificio del perno:&nbsp</label>
         <input type="number" step="any" min="0" id="BoltHoleDia" required>
     </div>
 
     <div>
-        <label>Tolerance:&nbsp</label>
+        <label>Tolerancia:&nbsp</label>
         <input type="number" step="any" min="0" id="UpperTol" placeholder="Upper Tolerance" required>
         <input type="number" step="any" min="0" id="LowerTol" placeholder="Lower Tolerance" required>
     </div>
 
     <div>
-        <label for="TruePosition">True Position:&nbsp</label>
+        <label for="TruePosition">Posición verdadera:&nbsp</label>
         <input type="number" step="any" min="0" id="TruePosition" required>
     </div>
 
@@ -66,12 +65,12 @@
     </div>
 
     <div>
-        <label for="BoltCircleDia">Bolt Circle Diameter:&nbsp</label>
+        <label for="BoltCircleDia">Diámetro del círculo de pernos:&nbsp</label>
         <input type="number" step="any" min="0" id="BoltCircleDia" required>
     </div>
 
     <div>
-        <label>Pilot Hole:&nbsp</label>
+        <label>Agujero piloto:&nbsp</label>
         <input type="number" step="any" min="0" id="pilotHoleMax" placeholder="Pilot Hole Max" required>
         <input type="number" step="any" min="0" id="pilotHoleMin" placeholder="Pilot Hole Min" required>
     </div>
@@ -102,7 +101,7 @@
 <div class="flex-container">
 
     <div>
-        Pilot Hole - "A"
+        Orificio piloto - "A"
         <table id="PilotHoleTable">
             <!-- <caption>Pilot Hole - "A"</caption> -->
             <tbody>
@@ -112,12 +111,12 @@
     
 
     <div>
-        Bolt Hole - "B"
+        Orificio de perno - "B"
         <table id="BoltHoleTable">
             <!-- <caption>Bolt Hole - "B"</caption> -->
             <thead>
                 <tr>
-                    <th>Hole Number</th>
+                    <th>Número de agujero</th>
                     <th></th>
                 </tr>
             </thead>
@@ -128,12 +127,12 @@
 
 
     <div id="EvenTables">
-        Bolt Circle - "C"
+        Círculo de pernos - "C"
         <table id="BoltCircleTable">
             <!-- <caption>Bolt Circle - "C"</caption> -->
             <thead>
                 <tr>
-                    <th>Hole Number</th>
+                    <th>Número de agujero</th>
                     <th></th>
                     <th class="HidableInfo" style="display: none;">Max</th>
                     <th class="HidableInfo" style="display: none;">Min</th>
@@ -145,10 +144,10 @@
         </table>
 
         <table id="AverageBoltCircleTable" style="display: none;">
-            <!-- <caption>Average Bolt Circle</caption> -->
+            <!-- <caption>Promedio Bolt Circle</caption> -->
             <thead>
                 <tr>
-                    <th>Average</th>
+                    <th>Promedio</th>
                     <th class="HidableInfo" style="display: none;">Max</th>
                     <th class="HidableInfo" style="display: none;">Min</th>
                     <th class="HidableInfo" style="display: none;">Act</th>
@@ -160,13 +159,13 @@
     </div>
 
     <div id="OddTables">
-        Bolt Circle - "C"
+        Círculo de pernos - "C"
         <table id="OddBoltCircleTable">
             <!-- <caption>Bolt Circle - "C"</caption> -->
             <thead>
                 <tr>
-                    <th>Hole Number</th>
-                    <th>Average</th>
+                    <th>Número de agujero</th>
+                    <th>Promedio</th>
                     <th class="HidableInfo" style="display: none;">Max</th>
                     <th class="HidableInfo" style="display: none;">Min</th>
                     <th class="HidableInfo" style="display: none;">Act</th>
@@ -177,10 +176,10 @@
         </table>
 
         <table id="OddAverageBoltCircleTable">
-            <!-- <caption>Average Bolt Circle</caption> -->
+            <!-- <caption>Promedio Bolt Circle</caption> -->
             <thead>
                 <tr>
-                    <th>Average</th>
+                    <th>Promedio</th>
                     <th class="HidableInfo" style="display: none;">Max</th>
                     <th class="HidableInfo" style="display: none;">Min</th>
                     <th class="HidableInfo" style="display: none;">Act</th>
@@ -193,12 +192,12 @@
 
     
     <div>
-        Hole to Pilot - "D"
+        Agujero a Piloto - "D"
         <table id="HoleToPilotTable">
-            <!-- <caption>Hole to Pilot - "D"</caption> -->
+            <!-- <caption>Agujero a Piloto - "D"</caption> -->
             <thead>
                 <tr>
-                    <th>Hole Number</th>
+                    <th>Número de agujero</th>
                     <th></th>
                     <th class="HidableInfo" style="display: none;">Nom</th>
                     <th class="HidableInfo" style="display: none;">Tol</th>
@@ -212,12 +211,12 @@
 
 
     <div>
-        Hole to Hole - "F"
+        Hoyo a hoyo - "F"
         <table id="HoleToHoleTable">
-            <!-- <caption>Hole to Hole - "F"</caption> -->
+            <!-- <caption>Hoyo a hoyo - "F"</caption> -->
             <thead>
                 <tr>
-                    <th>Hole Number</th>
+                    <th>Número de agujero</th>
                     <th></th>
                     <th class="HidableInfo" style="display: none;">Nom</th>
                     <th class="HidableInfo" style="display: none;">Tol</th>

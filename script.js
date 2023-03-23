@@ -290,7 +290,7 @@ class BoltCircleTable extends InputTable {
         var table_rows = BoltCircle.getHTMLTableRows()
     
         for (let i = 0, row; row = table_rows[i]; i++) {
-            row.cells[0].innerHTML = (1 + i) + " to " + (num_holes + 1 + i)
+            row.cells[0].innerHTML = (1 + i) + " &rarr; " + (num_holes + 1 + i)
         }
     }
     calculateNom(bolt_circle_dia, hole_to_pilot_tol_rows) {
@@ -733,7 +733,7 @@ class HoleToHoleTable extends InputTable {
     
         for (let i = 0, row; row = table_rows[i]; i++) {
     
-            row.cells[0].innerHTML = (i + 1) + " to " + (((i + 1) % num_holes) + 1)
+            row.cells[0].innerHTML = (i + 1) + " &rarr; " + (((i + 1) % num_holes) + 1)
         }
     }
     
@@ -978,6 +978,7 @@ function createNumberInputObject() {
     input_obj.setAttribute("step", "any")
     input_obj.setAttribute("min", "0")
     input_obj.setAttribute("placeholder", "Enter...")
+    input_obj.setAttribute("onClick", "this.select();")
     input_obj.required = true;
     return input_obj
 }
