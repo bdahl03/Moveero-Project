@@ -3,7 +3,7 @@
 
 
 <head>
-    <title>BTPC</title>
+    <title>Disc GDT</title>
     <link rel="stylesheet" href="style.css">
     <meta name="viewport" content="width=device-width">
 <head>
@@ -29,7 +29,11 @@
 <div id="content">
 
 <div id="top" style="overflow: auto;">
-<img src="images/hole_example.jpg" alt="Hole Example" width="250" style="float: right;" class="clearfix" id="diagram">
+
+<figure style="float: right;" class="clearfix" id="diagram">
+<figcaption>Medicones</figcaption>
+<img src="images/hole_example.jpg" alt="Hole Example" width="250">
+</figure>
 
 <p><a href="main.html">English</a></p>
 <!-- Bolt Hole True Position Calculator -->
@@ -47,8 +51,8 @@
 
     <div>
         <label>Tolerancia:&nbsp</label>
-        <input type="number" step="any" min="0" id="UpperTol" placeholder="Upper Tolerance" required>
-        <input type="number" step="any" min="0" id="LowerTol" placeholder="Lower Tolerance" required>
+        <input type="number" step="any" min="0" id="UpperTol" placeholder="Tolerancia superior" required>
+        <input type="number" step="any" min="0" id="LowerTol" placeholder="Tolerancia más baja" required>
     </div>
 
     <div>
@@ -59,8 +63,8 @@
     <div>
         <label for="MMC">MMC:&nbsp</label>
         <select name="MMC" id="MMC">
-            <option value="YES">Yes</option>
-            <option value="NO">No</option>
+            <option value="YES">Sí</option>
+            <option value="NO">No</option> <!-- No is similar to No in spanish (maybe) -->
         </select>
     </div>
 
@@ -71,8 +75,8 @@
 
     <div>
         <label>Agujero piloto:&nbsp</label>
-        <input type="number" step="any" min="0" id="pilotHoleMax" placeholder="Pilot Hole Max" required>
-        <input type="number" step="any" min="0" id="pilotHoleMin" placeholder="Pilot Hole Min" required>
+        <input type="number" step="any" min="0" id="pilotHoleMax" placeholder="Agujero piloto máx" required>
+        <input type="number" step="any" min="0" id="pilotHoleMin" placeholder="Agujero piloto min" required>
     </div>
 </div>
 
@@ -101,17 +105,18 @@
 <div class="flex-container">
 
     <div>
-        Orificio piloto - "A"
+        Agujero piloto - "A"
         <table id="PilotHoleTable">
             <!-- <caption>Pilot Hole - "A"</caption> -->
             <tbody>
             </tbody>
         </table>
+        <button onclick="clearTable('PilotHoleTable')" type="button">Reiniciar</button>
     </div>
     
 
     <div>
-        Orificio de perno - "B"
+        Agujero de perno - "B"
         <table id="BoltHoleTable">
             <!-- <caption>Bolt Hole - "B"</caption> -->
             <thead>
@@ -123,6 +128,7 @@
             <tbody>
             </tbody>
         </table>
+        <button onclick="clearTable('BoltHoleTable')" type="button">Reiniciar</button>
     </div>
 
 
@@ -156,6 +162,7 @@
             <tbody>
             </tbody>
         </table>
+        <button onclick="clearTable('BoltCircleTable')" type="button">Reiniciar</button>
     </div>
 
     <div id="OddTables">
@@ -207,11 +214,12 @@
             <tbody>
             </tbody>
         </table>
+        <button onclick="clearTable('HoleToPilotTable')" type="button">Reiniciar</button>
     </div>
 
 
     <div>
-        Hoyo a hoyo - "F"
+        Agujero a Agujero - "F"
         <table id="HoleToHoleTable">
             <!-- <caption>Hoyo a hoyo - "F"</caption> -->
             <thead>
@@ -226,16 +234,17 @@
             <tbody>
             </tbody>
         </table>
+        <button onclick="clearTable('HoleToHoleTable')" type="button">Reiniciar</button>
     </div>
 
 </div>
 </div>
 
+<button type="button" onclick="resetTables()">Reiniciar</button>
+<button type="button" onclick="resetAll()">Reiniciar todo</button>
+
 </div>
 </form>
-
-<button onclick="resetTables()">Reiniciar</button>
-<button onclick="resetAll()">Resetear todo</button>
 </div>
 
 

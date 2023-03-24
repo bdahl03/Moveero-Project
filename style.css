@@ -66,7 +66,7 @@ header {
 
 /* ===inputs=== */
 input {
-  width: 1.1in;
+  width: 1.25in;
 }
 
 /* remove inputs arrows */
@@ -127,7 +127,7 @@ table {
   border: 1px solid #1E1E1E;
   border-collapse: collapse;
   background-color: #CBCBCC;
-  text-align: center;
+  /* text-align: center; */
   /* font-family: 'Courier New', Courier, monospace; */
   /* padding: 1px 1px 1px 1px; */
 }
@@ -144,6 +144,10 @@ tr:nth-child(even) {
 td {
   border-left: 1px solid #1E1E1E;
   /* color: white; */
+}
+
+td:first-child {
+  text-align: center;
 }
 
 td > input {
@@ -168,6 +172,10 @@ td > input {
 }
 
 #diagram {
+  text-align: center;
+}
+
+#diagram > img {
   box-shadow: 0px 0px 5px 1px #1E1E1E;
   margin: 5px 5px 5px 5px;
   border-radius: 1%;

@@ -971,15 +971,15 @@ function updateTables() {
 
 }
 
-function createNumberInputObject() {
+function createNumberInputObject(is_required=true) {
     // <input type="number" step="any" min="0" value="0.8360">
     var input_obj = document.createElement("INPUT")
     input_obj.setAttribute("type", "number")
     input_obj.setAttribute("step", "any")
     input_obj.setAttribute("min", "0")
-    input_obj.setAttribute("placeholder", "Enter...")
+    input_obj.setAttribute("placeholder", "...")
     input_obj.setAttribute("onClick", "this.select();")
-    // input_obj.required = true;
+    input_obj.required = is_required;
     return input_obj
 }
 
