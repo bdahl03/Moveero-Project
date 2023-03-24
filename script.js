@@ -836,7 +836,7 @@ var show_additional_info = false
 
 // ===main===
 function calculate() {
-    if (document.getElementById("TableForm").checkValidity() == false) { return }
+    // if (document.getElementById("TableForm").checkValidity() == false) { return }
     document.getElementById("toggleAdditionalInfoButton").disabled = false
 
 
@@ -880,13 +880,18 @@ function calculate() {
         document.getElementById("EvenTables").style.display = ""
         AverageBoltCircle.table.style.display = ""
         document.getElementById("OddTables").style.display = "none"
+        changeTableInputRequired("BoltCircleTable", true)
     }
     else {
         // showHidables("OddTables")
         // hideHidables("EvenTables")
         document.getElementById("EvenTables").style.display = "none"
         document.getElementById("OddTables").style.display = ""
+        changeTableInputRequired("BoltCircleTable", false)
     }
+
+    
+    if (document.getElementById("TableForm").checkValidity() == false) { return }
 
     // calculate table inputs
     PilotHole.calculateTolerance(pilot_hole_min, pilot_hole_max)
@@ -990,102 +995,18 @@ function createPieChartObject() {
     return chart
 }
 
+function changeTableInputRequired(table_id, is_required) {
+    var table = document.getElementById(table_id)
+    var inputs = table.getElementsByTagName("input")
+
+    for (let i = 0, input; input = inputs[i]; i++) {
+        input.required = is_required
+    }
+}
+
 function convertToRadians(degrees) {
     var pi = Math.PI;
     return degrees * (pi / 180);
-}
-
-// demo
-function fillInputs() {
-    var all_inputs = document.getElementsByTagName("input");
-
-    var demo_list = [
-        8,
-        0.846,
-        0.020,
-        0.020,
-        0.020,
-        10.827,
-        8.721,
-        8.701,
-
-        8.7210,
-        0.8360,
-        0.8390,
-        0.8350,
-        0.8390,
-        0.8500,
-        0.8380,
-        0.8390,
-        0.8390,
-        10.0170,
-        10.0175,
-        10.0185,
-        10.0180,
-        0.6580,
-        0.6450,
-        0.6480,
-        0.6500,
-        0.6410,
-        0.6510,
-        0.6500,
-        0.6490,
-        3.3230,
-        3.3150,
-        3.3180,
-        3.3060,
-        3.3070,
-        3.3110,
-        3.3160,
-        3.3120
-
-    ]
-
-    for (let i = 0, input; input = all_inputs[i]; i++) {
-        input.value = demo_list[i]
-        // console.log(input.value)
-    }
-}
-function fillInputs2() {
-    var all_inputs = document.getElementsByTagName("input");
-
-    var demo_list = [
-        5,
-        0.846,
-        0.020,
-        0.020,
-        0.020,
-        10.827,
-        8.721,
-        8.701,
-
-        8.7210,
-
-        0.8360,
-        0.8390,
-        0.8350,
-        0.8390,
-        0.8500,
-        
-        0,0,
-
-        0.6580,
-        0.6450,
-        0.6480,
-        0.6500,
-        0.6410,
-
-        3.3230,
-        3.3150,
-        3.3180,
-        3.3060,
-        3.3070,
-        ]
-
-    for (let i = 0, input; input = all_inputs[i]; i++) {
-        input.value = demo_list[i]
-        // console.log(input.value)
-    }
 }
 
 function colorHTMLOk(HTML_Ok) {
@@ -1278,6 +1199,99 @@ function clearTable(table_id) {
 
     for (let i = 0, input; input = inputs[i]; i++) {
         input.value = ''
+    }
+}
+
+// demo
+function fillInputs() {
+    var all_inputs = document.getElementsByTagName("input");
+
+    var demo_list = [
+        8,
+        0.846,
+        0.020,
+        0.020,
+        0.020,
+        10.827,
+        8.721,
+        8.701,
+
+        8.7210,
+        0.8360,
+        0.8390,
+        0.8350,
+        0.8390,
+        0.8500,
+        0.8380,
+        0.8390,
+        0.8390,
+        10.0170,
+        10.0175,
+        10.0185,
+        10.0180,
+        0.6580,
+        0.6450,
+        0.6480,
+        0.6500,
+        0.6410,
+        0.6510,
+        0.6500,
+        0.6490,
+        3.3230,
+        3.3150,
+        3.3180,
+        3.3060,
+        3.3070,
+        3.3110,
+        3.3160,
+        3.3120
+
+    ]
+
+    for (let i = 0, input; input = all_inputs[i]; i++) {
+        input.value = demo_list[i]
+        // console.log(input.value)
+    }
+}
+function fillInputs2() {
+    var all_inputs = document.getElementsByTagName("input");
+
+    var demo_list = [
+        5,
+        0.846,
+        0.020,
+        0.020,
+        0.020,
+        10.827,
+        8.721,
+        8.701,
+
+        8.7210,
+
+        0.8360,
+        0.8390,
+        0.8350,
+        0.8390,
+        0.8500,
+        
+        0,0,
+
+        0.6580,
+        0.6450,
+        0.6480,
+        0.6500,
+        0.6410,
+
+        3.3230,
+        3.3150,
+        3.3180,
+        3.3060,
+        3.3070,
+        ]
+
+    for (let i = 0, input; input = all_inputs[i]; i++) {
+        input.value = demo_list[i]
+        // console.log(input.value)
     }
 }
 

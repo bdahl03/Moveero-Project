@@ -43,23 +43,23 @@
 <div class="inputalign">
     <div>
         <label for="NumHoles">No. Holes:&nbsp</label>
-        <input type="number" step="1" min="0" id="NumHoles" class="DisableableInput" required>
+        <input type="number" onclick="this.select();" step="1" min="0" id="NumHoles" class="DisableableInput" required>
     </div>
 
     <div>
         <label for="BoltHoleDia">Bolt Hole Diameter:&nbsp</label>
-        <input type="number" step="any" min="0" id="BoltHoleDia" required>
+        <input type="number" onclick="this.select();" step="any" min="0" id="BoltHoleDia" required>
     </div>
 
     <div>
         <label>Tolerance:&nbsp</label>
-        <input type="number" step="any" min="0" id="UpperTol" placeholder="Upper Tolerance" required>
-        <input type="number" step="any" min="0" id="LowerTol" placeholder="Lower Tolerance" required>
+        <input type="number" onclick="this.select();" step="any" min="0" id="UpperTol" placeholder="Upper Tolerance" required>
+        <input type="number" onclick="this.select();" step="any" min="0" id="LowerTol" placeholder="Lower Tolerance" required>
     </div>
 
     <div>
         <label for="TruePosition">True Position:&nbsp</label>
-        <input type="number" step="any" min="0" id="TruePosition" required>
+        <input type="number" onclick="this.select();" step="any" min="0" id="TruePosition" required>
     </div>
 
     <div>
@@ -72,13 +72,13 @@
 
     <div>
         <label for="BoltCircleDia">Bolt Circle Diameter:&nbsp</label>
-        <input type="number" step="any" min="0" id="BoltCircleDia" required>
+        <input type="number" onclick="this.select();" step="any" min="0" id="BoltCircleDia" required>
     </div>
 
     <div>
         <label>Pilot Hole:&nbsp</label>
-        <input type="number" step="any" min="0" id="pilotHoleMax" placeholder="Pilot Hole Max" required>
-        <input type="number" step="any" min="0" id="pilotHoleMin" placeholder="Pilot Hole Min" required>
+        <input type="number" onclick="this.select();" step="any" min="0" id="pilotHoleMax" placeholder="Pilot Hole Max" required>
+        <input type="number" onclick="this.select();" step="any" min="0" id="pilotHoleMin" placeholder="Pilot Hole Min" required>
     </div>
 </div>
 
