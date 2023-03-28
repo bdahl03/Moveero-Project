@@ -233,7 +233,7 @@ class BoltHoleTable extends InputTable {
 
         BoltHole.updateTable(num_holes)
         var table_rows = BoltHole.getHTMLTableRows()
-    
+
         for (let i = 0, row; row = table_rows[i]; i++) {
             row.cells[0].innerHTML = i + 1
         }
@@ -276,7 +276,7 @@ class BoltHoleTable extends InputTable {
 class BoltCircleTable extends InputTable {
     constructor(HTMLTableTag, num_rows, num_cols, input_index = 1, tolerance_index = 5, ok_index = 6, max_index = 2, min_index = 3, act_index = 4) {
         super(HTMLTableTag, num_rows, num_cols, input_index)
-        
+
         this.tolerance_index = tolerance_index
         this.ok_index = ok_index
         this.max_index = max_index
@@ -285,10 +285,10 @@ class BoltCircleTable extends InputTable {
     }
     update(num_holes) {
         num_holes = Math.floor(num_holes / 2)
-    
+
         BoltCircle.updateTable(num_holes)
         var table_rows = BoltCircle.getHTMLTableRows()
-    
+
         for (let i = 0, row; row = table_rows[i]; i++) {
             row.cells[0].innerHTML = (1 + i) + " &rarr; " + (num_holes + 1 + i)
         }
@@ -370,7 +370,7 @@ class BoltCircleTable extends InputTable {
 class AverageBoltCircleTable extends Table {
     constructor(HTMLTableTag, num_rows, num_cols, output_index = 0, tolerance_index = 4, ok_index = 5, max_index = 1, min_index = 2, act_index = 3) {
         super(HTMLTableTag, num_rows, num_cols)
-        
+
         this.output_index = output_index
         this.tolerance_index = tolerance_index
         this.ok_index = ok_index
@@ -381,7 +381,7 @@ class AverageBoltCircleTable extends Table {
     update() {
         this.updateTable()
     }
-    
+
     calculateAverageBC(bolt_circle_dev_list) {
 
         var AverageBC = roundDecimal(averageNumbers(bolt_circle_dev_list), 4)
@@ -466,10 +466,10 @@ class OddBoltCircleTable extends Table {
     }
     update(num_holes) {
         num_holes = Math.floor(num_holes)
-    
+
         OddBoltCircle.updateTable(num_holes)
         var table_rows = OddBoltCircle.internal_table
-    
+
         for (let i = 0, row; row = table_rows[i]; i++) {
             row[0] = i + 1
         }
@@ -508,7 +508,7 @@ class OddBoltCircleTable extends Table {
         for (let i = 0; i < this.internal_table.length; i++) {
             let nom = this.internal_table[i][this.max_index]
             let dev = this.internal_table[i][this.act_index]
-            
+
             let tolerance = Math.abs((dev - bolt_circle_dia)) / Math.abs((nom - bolt_circle_dia))
             this.internal_table[i][this.tolerance_index] = tolerance
         }
@@ -541,7 +541,7 @@ class OddBoltCircleTable extends Table {
 class OddAverageBoltCircleTable extends Table {
     constructor(HTMLTableTag, num_rows, num_cols, output_index = 0, tolerance_index = 4, ok_index = 5, max_index = 1, min_index = 2, act_index = 3) {
         super(HTMLTableTag, num_rows, num_cols)
-        
+
         this.output_index = output_index
         this.tolerance_index = tolerance_index
         this.ok_index = ok_index
@@ -575,7 +575,7 @@ class OddAverageBoltCircleTable extends Table {
         var nom = this.internal_table[0][this.max_index]
         var dev = this.internal_table[0][this.act_index]
 
-        var tolerance = Math.abs((dev - bolt_circle_dia)) / Math.abs((nom - bolt_circle_dia)) 
+        var tolerance = Math.abs((dev - bolt_circle_dia)) / Math.abs((nom - bolt_circle_dia))
         this.internal_table[0][this.tolerance_index] = tolerance
     }
 
@@ -617,7 +617,7 @@ class OddAverageBoltCircleTable extends Table {
 class HoleToPilotTable extends InputTable {
     constructor(HTMLTableTag, num_rows, num_cols, input_index = 1, tolerance_index = 5, ok_index = 6, nom_index = 2, tol_index = 3, dev_index = 4) {
         super(HTMLTableTag, num_rows, num_cols, input_index)
-        
+
         this.tolerance_index = tolerance_index
         this.ok_index = ok_index
         this.nom_index = nom_index
@@ -627,7 +627,7 @@ class HoleToPilotTable extends InputTable {
     update(num_holes) {
         HoleToPilot.updateTable(num_holes)
         var table_rows = HoleToPilot.getHTMLTableRows()
-    
+
         for (let i = 0, row; row = table_rows[i]; i++) {
             row.cells[0].innerHTML = i + 1
         }
@@ -720,7 +720,7 @@ class HoleToPilotTable extends InputTable {
 class HoleToHoleTable extends InputTable {
     constructor(HTMLTableTag, num_rows, num_cols, input_index = 1, tolerance_index = 5, ok_index = 6, nom_index = 2, tol_index = 3, dev_index = 4) {
         super(HTMLTableTag, num_rows, num_cols, input_index)
-        
+
         this.tolerance_index = tolerance_index
         this.ok_index = ok_index
         this.nom_index = nom_index
@@ -730,13 +730,13 @@ class HoleToHoleTable extends InputTable {
     update(num_holes) {
         HoleToHole.updateTable(num_holes)
         var table_rows = HoleToHole.getHTMLTableRows()
-    
+
         for (let i = 0, row; row = table_rows[i]; i++) {
-    
+
             row.cells[0].innerHTML = (i + 1) + " &rarr; " + (((i + 1) % num_holes) + 1)
         }
     }
-    
+
     calculateNom(hole_to_hole_calculation, bolt_holes) {
         // var outputs = []
         var length = this.num_rows
@@ -890,7 +890,7 @@ function calculate() {
         changeTableInputRequired("BoltCircleTable", false)
     }
 
-    
+
     if (document.getElementById("TableForm").checkValidity() == false) { return }
 
     // calculate table inputs
@@ -976,7 +976,7 @@ function updateTables() {
 
 }
 
-function createNumberInputObject(is_required=true) {
+function createNumberInputObject(is_required = true) {
     // <input type="number" step="any" min="0" value="0.8360">
     var input_obj = document.createElement("INPUT")
     input_obj.setAttribute("type", "number")
@@ -1122,14 +1122,14 @@ function resetTables() {
     BoltCircle.HideColumns([BoltCircle.max_index, BoltCircle.min_index, BoltCircle.act_index, BoltCircle.ok_index, BoltCircle.tolerance_index])
 
     AverageBoltCircle.HideColumns([AverageBoltCircle.max_index, AverageBoltCircle.min_index, AverageBoltCircle.act_index])
-    
+
     OddBoltCircle.HideColumns([OddBoltCircle.max_index, OddBoltCircle.min_index, OddBoltCircle.act_index])
 
     OddAverageBoltCircle.HideColumns([OddAverageBoltCircle.max_index, OddAverageBoltCircle.min_index, OddAverageBoltCircle.act_index])
 
     HoleToPilot.HideColumns([HoleToPilot.nom_index, HoleToPilot.tol_index, HoleToPilot.dev_index, HoleToPilot.ok_index, HoleToPilot.tolerance_index])
 
-    HoleToHole.HideColumns([HoleToHole.nom_index, HoleToHole.tol_index, HoleToHole.dev_index, HoleToHole.ok_index, HoleToHole.tolerance_index])    
+    HoleToHole.HideColumns([HoleToHole.nom_index, HoleToHole.tol_index, HoleToHole.dev_index, HoleToHole.ok_index, HoleToHole.tolerance_index])
 }
 
 function resetAll() {
@@ -1273,8 +1273,8 @@ function fillInputs2() {
         0.8350,
         0.8390,
         0.8500,
-        
-        0,0,
+
+        0, 0,
 
         0.6580,
         0.6450,
@@ -1287,7 +1287,7 @@ function fillInputs2() {
         3.3180,
         3.3060,
         3.3070,
-        ]
+    ]
 
     for (let i = 0, input; input = all_inputs[i]; i++) {
         input.value = demo_list[i]
