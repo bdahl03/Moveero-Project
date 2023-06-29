@@ -293,34 +293,34 @@ class BoltCircleTable extends InputTable {
             row.cells[0].innerHTML = (1 + i) + " &rarr; " + (num_holes + 1 + i)
         }
     }
-    calculateNom(bolt_circle_dia, hole_to_pilot_tol_rows) {
+    calculateNom(bolt_circle_dia, hole_to_pilot_tol_rows, num_holes) {
         // var outputs = []
 
         for (let i = 0; i < this.num_rows; i++) {
-            let nom = bolt_circle_dia + hole_to_pilot_tol_rows[i] + hole_to_pilot_tol_rows[i + 4]
+            let nom = bolt_circle_dia + hole_to_pilot_tol_rows[i] + hole_to_pilot_tol_rows[i + Math.floor(num_holes/2)]
             // outputs.push(roundDecimal(nom, 3))
             this.internal_table[i][this.max_index] = roundDecimal(nom, 4)
         }
 
         // this.writeOutputsTable(this.nom_index, outputs)
     }
-    calculateTol(bolt_circle_dia, hole_to_pilot_tol_rows) {
+    calculateTol(bolt_circle_dia, hole_to_pilot_tol_rows, num_holes) {
         // var outputs = []
 
         for (let i = 0; i < this.num_rows; i++) {
-            let tol = bolt_circle_dia - hole_to_pilot_tol_rows[i] - hole_to_pilot_tol_rows[i + 4]
+            let tol = bolt_circle_dia - hole_to_pilot_tol_rows[i] - hole_to_pilot_tol_rows[i + Math.floor(num_holes/2)]
             // outputs.push(roundDecimal(tol, 3))
             this.internal_table[i][this.min_index] = roundDecimal(tol, 4)
         }
 
         // this.writeOutputsTable(this.tol_index, outputs)
     }
-    calculateDev(bolt_holes) {
+    calculateDev(bolt_holes, num_holes) {
         // var outputs = []
         var holes = this.getInputsTable()
 
         for (let i = 0; i < this.num_rows; i++) {
-            let dev = holes[i] + bolt_holes[i] / 2 + bolt_holes[i + 4] / 2
+            let dev = holes[i] + bolt_holes[i] / 2 + bolt_holes[i + Math.floor(num_holes/2)] / 2
             // outputs.push(roundDecimal(dev, 3))
             this.internal_table[i][this.act_index] = roundDecimal(dev, 4)
         }
@@ -906,9 +906,9 @@ function calculate() {
     HoleToPilot.calculateTolerance()
     HoleToPilot.calculateOK()
 
-    BoltCircle.calculateNom(bolt_circle_dia, HoleToPilot.getRowValues(3)) // replace hardcoded
-    BoltCircle.calculateTol(bolt_circle_dia, HoleToPilot.getRowValues(3))
-    BoltCircle.calculateDev(BoltHole.getInputsTable())
+    BoltCircle.calculateNom(bolt_circle_dia, HoleToPilot.getRowValues(3), num_holes) // replace hardcoded
+    BoltCircle.calculateTol(bolt_circle_dia, HoleToPilot.getRowValues(3), num_holes)
+    BoltCircle.calculateDev(BoltHole.getInputsTable(), num_holes)
     BoltCircle.calculateTolerance(bolt_circle_dia)
     BoltCircle.calculateOK()
 
@@ -1287,6 +1287,53 @@ function fillInputs2() {
         3.3180,
         3.3060,
         3.3070,
+    ]
+
+    for (let i = 0, input; input = all_inputs[i]; i++) {
+        input.value = demo_list[i]
+        // console.log(input.value)
+    }
+}
+
+function fillInputs3() {
+    var all_inputs = document.getElementsByTagName("input");
+
+    var demo_list = [
+        6,
+        0.531,
+        0.010,
+        0.010,
+        0.020,
+        5.5,
+        4.120,
+        4.1,
+
+        4.11,
+
+        0.531,
+        0.531,
+        0.531,
+        0.531,
+        0.531,
+        0.531,
+
+        4.969,
+        4.969,
+        4.969,
+
+        0.427,
+        0.425,
+        0.425,
+        0.430,
+        0.425,
+        0.430,
+
+        2.223,
+        2.222,
+        2.222,
+        2.222,
+        2.222,
+        2.222
     ]
 
     for (let i = 0, input; input = all_inputs[i]; i++) {
